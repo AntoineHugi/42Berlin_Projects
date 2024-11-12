@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 10:52:40 by ahugi             #+#    #+#             */
-/*   Updated: 2024/11/11 10:52:42 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/11 14:49:42 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/11 14:50:25 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char		*temp_ptr;
-	size_t		i;
+	size_t	s1_size;
+	size_t	s2_size;
+	char	*result;
 
-	if (!b)
+	if (!s1 && !s2)
 	{
 		return (NULL);
 	}
-	temp_ptr = (char *)b;
-	i = 0;
-	while (i < len)
-	{
-		temp_ptr[i] = c;
-		i++;
-	}
-	return (b);
+	s1_size = ft_strlen(s1);
+	s2_size = ft_strlen(s2);
+	result = (char *)malloc(sizeof(char) * (s1_size + s2_size + 1));
+	ft_memcpy(&result[0], s1, s1_size);
+	ft_memcpy(&result[s1_size], s2, s2_size);
+	result[s1_size + s2_size] = '\0';
+	return (result);
 }

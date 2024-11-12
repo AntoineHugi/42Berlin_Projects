@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 10:52:40 by ahugi             #+#    #+#             */
-/*   Updated: 2024/11/11 10:52:42 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/07 11:46:28 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/07 11:47:31 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	char		*temp_ptr;
-	size_t		i;
+	size_t	i;
+	size_t	j;
 
-	if (!b)
+	if (*little == 0)
 	{
-		return (NULL);
+		return ((char *)big);
 	}
-	temp_ptr = (char *)b;
 	i = 0;
-	while (i < len)
+	while (i < len && big[i])
 	{
-		temp_ptr[i] = c;
+		if (big[i] == little[0])
+		{
+			j = 0;
+			while (big[i + j] == little[j] && j + i < len)
+			{
+				j++;
+				if (little[j] == '\0')
+				{
+					return ((char *)&big[i]);
+				}
+			}
+		}
 		i++;
 	}
-	return (b);
+	return (0);
 }

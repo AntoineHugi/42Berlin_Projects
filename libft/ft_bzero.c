@@ -11,20 +11,21 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 void	ft_bzero(void *s, size_t n)
 {
-	if (s == NULL)
-	{
-		printf("\nnull\n");
-		return;
-	}
 	unsigned char	*ptr;
-	ptr = (unsigned char*)s;
-	while (n--)
+	size_t			i;
+
+	if (s == 0)
 	{
-		*ptr = 0;
-		ptr++;
+		return ;
+	}
+	i = 0;
+	ptr = (unsigned char *)s;
+	while (i < n)
+	{
+		ptr[i] = 0;
+		i++;
 	}
 }

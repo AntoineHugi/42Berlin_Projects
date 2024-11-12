@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 10:52:40 by ahugi             #+#    #+#             */
-/*   Updated: 2024/11/11 10:52:42 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/12 13:34:41 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/12 13:36:17 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char		*temp_ptr;
-	size_t		i;
+	char	*number;
 
-	if (!b)
-	{
-		return (NULL);
-	}
-	temp_ptr = (char *)b;
-	i = 0;
-	while (i < len)
-	{
-		temp_ptr[i] = c;
-		i++;
-	}
-	return (b);
+	number = ft_itoa(n);
+	write(fd, number, ft_strlen(number));
 }

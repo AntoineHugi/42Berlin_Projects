@@ -1,32 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 10:52:40 by ahugi             #+#    #+#             */
-/*   Updated: 2024/11/11 10:52:42 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/07 12:59:46 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/07 13:00:37 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+int	ft_atoi(const char *nptr)
 {
-	char		*temp_ptr;
-	size_t		i;
+	int	sign;
+	int	result;
 
-	if (!b)
+	sign = 1;
+	result = 0;
+	while (*nptr != '\0' && (*nptr == ' ' || (*nptr >= 9 && *nptr <= 13)))
 	{
-		return (NULL);
+		nptr++;
 	}
-	temp_ptr = (char *)b;
-	i = 0;
-	while (i < len)
+	if (*nptr == '-' || *nptr == '+')
 	{
-		temp_ptr[i] = c;
-		i++;
+		if (*nptr == '-')
+		{
+			sign = -sign;
+		}
+		nptr++;
 	}
-	return (b);
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		result = result * 10;
+		result = result + *nptr - 48;
+		nptr++;
+	}
+	return (sign * result);
 }

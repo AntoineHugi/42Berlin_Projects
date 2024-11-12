@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 10:52:40 by ahugi             #+#    #+#             */
-/*   Updated: 2024/11/11 10:52:42 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/11 16:59:21 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/11 17:00:02 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-void	*ft_memset(void *b, int c, size_t len)
+/*
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	char		*temp_ptr;
-	size_t		i;
+    int start;
+    int end;
+    size_t i;
+    size_t s1_len;
 
-	if (!b)
-	{
-		return (NULL);
-	}
-	temp_ptr = (char *)b;
-	i = 0;
-	while (i < len)
-	{
-		temp_ptr[i] = c;
-		i++;
-	}
-	return (b);
-}
+    s1_len = ft_strlen(s1);
+    while (s1[i])
+    {}
+}*/
