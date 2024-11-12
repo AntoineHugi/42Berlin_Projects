@@ -19,14 +19,9 @@ static int	ft_num_size(int n)
 	num_size = 1;
 	if (n < 0)
 	{
-		if (n == -2147483648)
-		{
-			return (11);
-		}
-		n = -n;
 		num_size++;
 	}
-	while (n / 10 > 0)
+	while (n / 10 != 0)
 	{
 		num_size++;
 		n = n / 10;
@@ -38,24 +33,20 @@ char	*ft_itoa(int n)
 {
 	char	*number;
 	int		num_size;
+	int		sign;
 
+	sign = 1;
 	num_size = ft_num_size(n);
-	number = (char *)malloc(sizeof(char) * num_size + 1);
+	number = (char *)malloc((num_size + 1) * sizeof(char));
 	number[num_size] = '\0';
 	if (n < 0)
 	{
-		if (n == -2147483648)
-		{
-			number = "-2147483648";
-			return (number);
-		}
 		number[0] = '-';
-		n = -n;
-		num_size--;
+		sign = -sign;
 	}
-	while (num_size > 0)
+	while (n != 0)
 	{
-		number[num_size] = n % 10 + 48;
+		number[num_size - 1] = (sign * n) % 10 + 48;
 		n = n / 10;
 		num_size--;
 	}

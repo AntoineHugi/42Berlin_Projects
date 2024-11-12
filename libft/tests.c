@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*!!MEMMOVE not working!!*/
-
-
 #include <bsd/string.h>
 #include "libft.h"
 #include <stdio.h>
@@ -72,7 +69,7 @@ int	main(void)
 	size_t	testmemcpyn = 5;
 	char	testmemmove1[12] = "hello world";
 	char	testmemmove2[12] = "hello world";
-	size_t	testmemmoven = 6;
+	size_t	testmemmoven = 2;
 	char	testmemset1[] = "hello";
 	char	testmemset2[] = "hello";
 	int	testmemsetc = 65;
@@ -87,8 +84,8 @@ int	main(void)
 	char	testsubstr[] = "hello world";
 	char	teststrjoin1[] = "hello ";
 	char	teststrjoin2[] = "world";
-	char	testsplit[] = "hello world how are you?";
-	char	testsplitsep = ' ';
+	char	testsplit[] = "hello,world,how,,are,you?";
+	char	testsplitsep = ',';
 	char	**splitresult;
 	int		testitoa = -1213;
 	char	teststrmapi[] = "1234";
@@ -287,9 +284,9 @@ int	main(void)
 
 	printf("\n\n");
 	printf("Testing for memmove\n");
-	printf("copying %s on %s up to byte %zu\n", testmemmove1, (testmemmove1 + 2), testmemmoven);
-	printf("my result       : %s\n", (char*)ft_memcpy((testmemmove1 + 2), testmemmove1, testmemmoven));
-	printf("official result : %s\n", (char*)memcpy((testmemmove2 + 2), testmemmove2, testmemmoven));
+	printf("copying %zu bytes from %s on %s \n", testmemmoven, testmemmove1, (testmemmove1 + 5));
+	printf("my result       : %s\n", (char*)ft_memmove((testmemmove1 + 5), testmemmove1, testmemmoven));
+	printf("official result : %s\n", (char*)memmove((testmemmove2 + 5), testmemmove2, testmemmoven));
 
 	printf("\n\n");
 	printf("Testing for memset\n");

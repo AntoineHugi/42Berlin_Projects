@@ -14,8 +14,5 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	char	*number;
-
-	number = ft_itoa(n);
-	write(fd, number, ft_strlen(number));
+	write(fd, ft_itoa(n), ft_strlen(ft_itoa(n)));
 }
