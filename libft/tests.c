@@ -90,6 +90,8 @@ int	main(void)
 	int		testitoa = -1213;
 	char	teststrmapi[] = "1234";
 	char	teststriteri[] = "1234";
+	char	testtrimstr[] = "//hello//";
+	char	testtrimset[] = "//";
 
 	printf("\nTesting for isalpha\n");
 	printf("result of test1          %i\n", ft_isalpha(test1));
@@ -386,4 +388,8 @@ int	main(void)
 	printf("\n\n");
 	printf("Testing ft_putnbr_fd\n");
 	ft_putnbr_fd(1122345, 1);
+
+	printf("\n\n");
+	printf("Testing strtrim\n");
+	printf("testing trimming %s of characters %s, which become %s", testtrimstr, testtrimset, ft_strtrim(testtrimstr, testtrimset));
 }

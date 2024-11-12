@@ -11,15 +11,50 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-/*
+#include <stdio.h>
+
+size_t ft_check_set(char const *s1, char const *set)
+{
+    size_t len;
+    size_t len_set;
+
+    len = 0;
+    len_set = ft_strlen(set);
+    while (*s1 && *set)
+    {
+        if (*s1 == *set)
+        {
+            len++;
+        }
+        s1++;
+        set++;
+    }
+    if (len == len_set)
+    {
+        return (len);
+    }
+    else
+    {
+        return (0);
+    }
+}
+
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
-    int start;
-    int end;
+    size_t start;
+    size_t end;
     size_t i;
-    size_t s1_len;
+    char    *result;
 
-    s1_len = ft_strlen(s1);
-    while (s1[i])
-    {}
-}*/
+    i = 0;
+    start = ft_check_set(&s1[0], set);
+    end = ft_check_set(&s1[ft_strlen(s1) - ft_strlen(set)], set);
+    result = (char *)malloc(sizeof(char) * (ft_strlen(s1) - start - end + 1));
+    while (start < ft_strlen(s1) - end)
+    {
+        result[i++] = s1[start++];
+    }
+    result[i] = '\0';
+    return (result);
+}
