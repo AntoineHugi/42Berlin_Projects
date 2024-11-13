@@ -14,5 +14,28 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	write(fd, ft_itoa(n), ft_strlen(ft_itoa(n)));
+	char	number;
+
+	if (n == 0)
+		write(fd, "0", 1);
+	else if (n < 0)
+	{
+		if (n == -2147483648)
+			write(fd, "-2147483648", 11);
+		else
+		{
+			n = -1 * n;
+			write(fd, "-", 1);
+			ft_putnbr_fd(n, fd);
+		}
+	}
+	else
+	{
+		if (n >= 10)
+		{
+			ft_putnbr_fd(n / 10, fd);
+		}
+		number = n % 10 + 48;
+		write(fd, &number, 1);
+	}
 }
