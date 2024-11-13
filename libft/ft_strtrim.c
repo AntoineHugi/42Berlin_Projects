@@ -51,6 +51,10 @@ char	*ft_strtrim(char const *s1, char const *set)
     start = ft_check_set(&s1[0], set);
     end = ft_check_set(&s1[ft_strlen(s1) - ft_strlen(set)], set);
     result = (char *)malloc(sizeof(char) * (ft_strlen(s1) - start - end + 1));
+    if (!result)
+    {
+        return (NULL);
+    }
     while (start < ft_strlen(s1) - end)
     {
         result[i++] = s1[start++];

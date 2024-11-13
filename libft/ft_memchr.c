@@ -17,10 +17,6 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	char		*temp_src;
 	size_t		i;
 
-	//if (!s)
-	//{
-	//	return (NULL);
-	//}
 	i = 0;
 	temp_src = (char *)s;
 	while (i < n)
