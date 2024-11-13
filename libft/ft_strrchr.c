@@ -25,9 +25,9 @@ char	*ft_strrchr(const char *s, int c)
 		}
 		s++;
 	}
-	if (*s == (unsigned char)c)
-	{
-		ptr = s;
-	}
+	//if (*s == (unsigned char)c)
+	//{
+	//	ptr = s;
+	//}
 	return ((char *)ptr);
 }
