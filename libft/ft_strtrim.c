@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-size_t ft_check_set(char const *s1, char const *set)
+static size_t ft_check_set(char const *s1, char const *set)
 {
     size_t len;
     size_t len_set;

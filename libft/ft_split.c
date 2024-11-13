@@ -16,14 +16,21 @@ static int	ft_str_count(char const *s, char c)
 {
 	int	str_count;
 	int	i;
+	int	flag;
 
 	i = 0;
+	flag = 0;
 	str_count = 1;
 	while (s[i])
 	{
-		if (s[i] == c)
+		if (s[i] == c && flag == 0)
 		{
 			str_count++;
+			flag = 1;
+		}
+		if (s[i] != c)
+		{
+			flag = 1;
 		}
 		i++;
 	}
@@ -65,6 +72,16 @@ static void	ft_malloc_words(char **result, char const *s, char c, int str_count)
 			s++;
 		}
 		result[str_iter] = (char *)malloc(sizeof(char) * letter_iter + 1);
+		if (result[str_iter] == NULL)
+		{
+			str_iter--;
+			while (str_iter <= 0)
+			{
+				free(result[str_iter]);
+				str_iter--;
+			}
+			return (NULL);
+		}
 		s++;
 		str_iter++;
 	}
@@ -81,7 +98,16 @@ char	**ft_split(char const *s, char c)
 	}
 	str_count = ft_str_count(s, c);
 	result = (char **)malloc(sizeof(char *) * (str_count + 1));
+	if (result == NULL)
+	{
+		return (NULL);
+	}
 	ft_malloc_words(result, s, c, str_count);
+	if (!result[0])
+	{
+		free(result);
+		return (NULL);
+	}
 	ft_fill_grid(result, s, c, str_count);
 	result[str_count] = NULL;
 	return (result);
