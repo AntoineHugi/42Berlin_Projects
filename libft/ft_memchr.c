@@ -22,6 +22,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		return (NULL);
 	}
 	i = 0;
+	n = n * sizeof(*s);
 	temp_src = (char *)s;
 	while (i < n)
 	{
