@@ -37,8 +37,11 @@ char	*ft_itoa(int n)
 
 	sign = 1;
 	num_size = ft_num_size(n);
-	number = (char *)malloc((num_size + 1) * sizeof(char));
-	number[num_size] = '\0';
+	number = (char *)ft_calloc((num_size + 1), sizeof(char));
+	if (number == NULL)
+	{
+		return (NULL);
+	}
 	if (n < 0)
 	{
 		number[0] = '-';

@@ -80,7 +80,7 @@ static void	ft_malloc_words(char **result, char const *s, char c, int str_count)
 				free(result[str_iter]);
 				str_iter--;
 			}
-			return (NULL);
+			return ;
 		}
 		s++;
 		str_iter++;
@@ -103,7 +103,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	}
 	ft_malloc_words(result, s, c, str_count);
-	if (!result[0])
+	if (result[0] == NULL)
 	{
 		free(result);
 		return (NULL);

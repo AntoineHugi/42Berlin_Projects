@@ -22,11 +22,10 @@ void	*ft_memchr(const void *s, int c, size_t n)
 		return (NULL);
 	}
 	i = 0;
-	n = n * sizeof(*s);
 	temp_src = (char *)s;
 	while (i < n)
 	{
-		if (*temp_src == (unsigned char)c)
+		if ((unsigned char)*temp_src == (unsigned char)c)
 		{
 			return (temp_src);
 		}
