@@ -17,7 +17,7 @@ void	ft_bzero(void *s, size_t n)
 	unsigned char	*ptr;
 	size_t			i;
 
-	if (s == 0)
+	if (!s)
 	{
 		return ;
 	}
