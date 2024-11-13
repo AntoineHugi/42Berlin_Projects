@@ -20,18 +20,19 @@ static int	ft_str_count(char const *s, char c)
 
 	i = 0;
 	flag = 0;
-	str_count = 1;
+	str_count = 1;	
 	while (s[i])
 	{
 		if (s[i] == c && flag == 0)
 		{
-			str_count++;
 			flag = 1;
 		}
-		if (s[i] != c)
+		if (s[i] != c && flag == 1)
 		{
-			flag = 1;
+			flag = 0;
+			str_count++;
 		}
+		else
 		i++;
 	}
 	return (str_count);
