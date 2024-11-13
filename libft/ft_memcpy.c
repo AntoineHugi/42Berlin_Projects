@@ -21,9 +21,9 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	i = 0;
 	tempsrc = (unsigned char *)src;
 	tempdst = (unsigned char *)dst;
-	while (i < n)
+	while (i < n && tempsrc[i] && tempdst[i])
 	{
-		tempdst[i] = tempsrc[i];
+		tempdst = tempsrc[i];
 		i++;
 	}
 	return (dst);
