@@ -43,8 +43,10 @@ char	*ft_itoa(int n)
 	if (n == 0)
 		number[0] = '0';
 	if (n == -2147483648)
-			number = "-2147483648";
-			return (number);
+	{
+		number = "-2147483648";
+		return (number);
+	}	
 	if (n < 0)
 	{
 		number[0] = '-';

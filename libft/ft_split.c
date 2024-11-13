@@ -32,7 +32,6 @@ static int	ft_str_count(char const *s, char c)
 			flag = 0;
 			str_count++;
 		}
-		else
 		i++;
 	}
 	return (str_count);
