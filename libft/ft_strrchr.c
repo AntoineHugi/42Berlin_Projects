@@ -19,7 +19,7 @@ char	*ft_strrchr(const char *s, int c)
 
 	i = 0;
 	ptr = 0;
-	while (i < ft_strlen(s))
+	while (i < ft_strlen(s) + 1)
 	{
 		if (s[i] == (unsigned char)c)
 		{
@@ -27,9 +27,6 @@ char	*ft_strrchr(const char *s, int c)
 		}
 		i++;
 	}
-	//if (*s == (unsigned char)c)
-	//{
-	//	ptr = s;
-	//}
+
 	return ((char *)ptr);
 }
