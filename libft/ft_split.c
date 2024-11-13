@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_str_count(char const *s, char c)
+static int	ft_str_count(char const *s, char c)
 {
 	int	str_count;
 	int	i;
@@ -30,7 +30,7 @@ int	ft_str_count(char const *s, char c)
 	return (str_count);
 }
 
-void	ft_fill_grid(char **result, char const *s, char c, int str_count)
+static void	ft_fill_grid(char **result, char const *s, char c, int str_count)
 {
 	int	str_iter;
 	int	letter_iter;
@@ -50,7 +50,7 @@ void	ft_fill_grid(char **result, char const *s, char c, int str_count)
 	}
 }
 
-void	ft_malloc_words(char **result, char const *s, char c, int str_count)
+static void	ft_malloc_words(char **result, char const *s, char c, int str_count)
 {
 	int	str_iter;
 	int	letter_iter;
