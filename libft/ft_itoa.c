@@ -42,11 +42,6 @@ char	*ft_itoa(int n)
 		return (NULL);
 	if (n == 0)
 		number[0] = '0';
-	if (n == -2147483648)
-	{
-		number = "-2147483648";
-		return (number);
-	}	
 	if (n < 0)
 	{
 		number[0] = '-';
@@ -54,7 +49,7 @@ char	*ft_itoa(int n)
 	}
 	while (n != 0)
 	{
-		number[num_size - 1] = (sign * n) % 10 + 48;
+		number[num_size - 1] = sign * (n % 10) + 48;
 		n = n / 10;
 		num_size--;
 	}
