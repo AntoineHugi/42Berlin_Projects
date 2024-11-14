@@ -15,24 +15,22 @@
 static int	ft_str_count(char const *s, char c)
 {
 	int	str_count;
-	int	i;
 	int	flag;
 
-	i = 0;
 	flag = 0;
-	str_count = 1;	
-	while (s[i])
+	str_count = 0;
+	while (*s)
 	{
-		if (s[i] == c && flag == 0)
-		{
-			flag = 1;
-		}
-		if (s[i] != c && flag == 1)
+		if (*s == c)
 		{
 			flag = 0;
-			str_count++;
 		}
-		i++;
+		if (*s != c && flag == 0)
+		{
+			str_count++;
+			flag = 1;
+		}
+		s++;
 	}
 	return (str_count);
 }
@@ -41,50 +39,83 @@ static void	ft_fill_grid(char **result, char const *s, char c, int str_count)
 {
 	int	str_iter;
 	int	letter_iter;
+	int	flag;
 
 	str_iter = 0;
+	flag = 0;
 	while (str_iter < str_count)
 	{
 		letter_iter = 0;
 		while (*s != 0 && *s != c)
 		{
-			result[str_iter][letter_iter++] = *s;
+			result[str_iter][letter_iter] = *s;
+			flag = 1;
 			s++;
+			letter_iter++;
 		}
-		result[str_iter][letter_iter] = '\0';
+		if (flag == 1)
+		{
+			flag = 0;
+			result[str_iter][letter_iter] = '\0';
+			str_iter++;
+		}
 		s++;
-		str_iter++;
 	}
 }
 
-static void	ft_malloc_words(char **result, char const *s, char c, int str_count)
+static void	ft_letter_count(int *w_arr, char const *s, char c, int s_count)
 {
-	int	str_iter;
+	int	flag;
 	int	letter_iter;
+	int	s_iter;
 
-	str_iter = 0;
-	while (str_iter < str_count)
+	s_iter = 0;
+	flag = 0;
+	while (s_iter < s_count)
 	{
 		letter_iter = 0;
-		while (*s != 0 && *s != c)
+		while (*s != '\0' && *s != c)
 		{
 			letter_iter++;
 			s++;
+			flag = 1;
 		}
-		result[str_iter] = (char *)malloc(sizeof(char) * letter_iter + 1);
-		if (result[str_iter] == NULL)
+		if (flag == 1)
 		{
-			str_iter--;
-			while (str_iter <= 0)
-			{
-				free(result[str_iter]);
-				str_iter--;
-			}
-			return ;
+			w_arr[s_iter] = letter_iter;
+			s_iter++;
+			flag = 0;
 		}
 		s++;
-		str_iter++;
 	}
+}
+
+static int	ft_malloc_words(char **result, char const *s, char c, int str_count)
+{
+	int	s_iter;
+	int	*w_arr;
+
+	w_arr = (int *)malloc((str_count) * sizeof(int));
+	if (!w_arr)
+		return (0);
+	ft_letter_count(w_arr, s, c, str_count);
+	s_iter = 0;
+	while (s_iter < str_count)
+	{
+		result[s_iter] = (char *)malloc(sizeof(char) * w_arr[s_iter] + 1);
+		if (!result[s_iter])
+		{
+			s_iter--;
+			while (s_iter >= 0)
+			{
+				free(result[s_iter--]);
+				free(w_arr);
+			}
+			return (0);
+		}
+		s_iter++;
+	}
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
@@ -98,12 +129,11 @@ char	**ft_split(char const *s, char c)
 	}
 	str_count = ft_str_count(s, c);
 	result = (char **)malloc(sizeof(char *) * (str_count + 1));
-	if (result == NULL)
+	if (!result)
 	{
 		return (NULL);
 	}
-	ft_malloc_words(result, s, c, str_count);
-	if (result[0] == NULL)
+	if (!ft_malloc_words(result, s, c, str_count))
 	{
 		free(result);
 		return (NULL);

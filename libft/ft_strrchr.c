@@ -15,7 +15,7 @@
 char	*ft_strrchr(const char *s, int c)
 {
 	const char	*ptr;
-	size_t	i;
+	size_t		i;
 
 	if (!s)
 	{

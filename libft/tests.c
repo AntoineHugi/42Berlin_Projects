@@ -75,23 +75,24 @@ int	main(void)
 	int	testmemsetc = 65;
 	size_t	testmemsetn = 4;
 	size_t	testcallocnmemb = 4;
-	size_t	testcallocsize = 1;
+	size_t	testcallocsize;
 	char	*callocptr1;
 	char	*callocptr2;
 	int		*callocptr3;
 	int		*callocptr4;
 	char	teststrdupsrc[] = "hello world";
 	char	testsubstr[] = "hello world";
-	char	teststrjoin1[] = "hello ";
-	char	teststrjoin2[] = "world";
-	char	testsplit[] = "hello,world,how,,are,you?";
+	char	teststrjoin1[] = "";
+	char	teststrjoin2[] = "";
+	char	testsplit[] = ",,,,,hello,world,how,,,are,you?,,";
 	char	testsplitsep = ',';
 	char	**splitresult;
 	int		testitoa = -1213;
 	char	teststrmapi[] = "1234";
 	char	teststriteri[] = "1234";
-	char	testtrimstr[] = "//hello//";
-	char	testtrimset[] = "//";
+	char	testtrimstr[] = "abcbcahelloabcacbaa";
+	char	testtrimset[] = "abc";
+	char	*testtrimresult = NULL;
 
 	printf("\nTesting for isalpha\n");
 	printf("result of test1          %i\n", ft_isalpha(test1));
@@ -299,9 +300,10 @@ int	main(void)
 	printf("\n\n");
 	printf("Testing calloc for char array\n");
 	i = 0;
+	testcallocsize = sizeof(char);
 	printf("my function outputs\n");  
 	callocptr1 = (char*)ft_calloc(testcallocnmemb, testcallocsize);
-	while (i < testcallocnmemb*testcallocsize)
+	while (i < testcallocnmemb)
 	{
 		printf("%c/", callocptr1[i]);
 		i++;
@@ -310,7 +312,7 @@ int	main(void)
 	i = 0;
 	printf("\nreal function outputs\n"); 
 	callocptr2 = (char*)calloc(testcallocnmemb, testcallocsize);
-	while (i < testcallocnmemb*testcallocsize)
+	while (i < testcallocnmemb)
 	{
 		printf("%c/", callocptr2[i]);
 		i++;
@@ -318,9 +320,10 @@ int	main(void)
 	printf("\n");
 	printf("Testing calloc for int array\n");
 	i = 0;
+	testcallocsize = sizeof(int);
 	printf("my function outputs\n");  
 	callocptr3 = (int*)ft_calloc(testcallocnmemb, testcallocsize);
-	while (i < testcallocnmemb*testcallocsize)
+	while (i < testcallocnmemb)
 	{
 		printf("%i/", callocptr3[i]);
 		i++;
@@ -329,7 +332,7 @@ int	main(void)
 	i = 0;
 	printf("\nreal function outputs\n"); 
 	callocptr4 = (int*)calloc(testcallocnmemb, testcallocsize);
-	while (i < testcallocnmemb*testcallocsize)
+	while (i < testcallocnmemb)
 	{
 		printf("%i/", callocptr4[i]);
 		i++;
@@ -363,6 +366,7 @@ int	main(void)
 	printf("Testing itoa\n");
 	printf("My function turns %i into %s\n", testitoa, ft_itoa(testitoa));
 
+
 	printf("\n\n");
 	printf("Testing strmapi\n");
 	printf("My function transform %s to %s\n", teststrmapi, ft_strmapi(teststrmapi, f1));
@@ -387,9 +391,11 @@ int	main(void)
 
 	printf("\n\n");
 	printf("Testing ft_putnbr_fd\n");
-	ft_putnbr_fd(1122345, 1);
+	ft_putnbr_fd(-1012345, 1);
 
 	printf("\n\n");
 	printf("Testing strtrim\n");
-	printf("testing trimming %s of characters %s, which become %s", testtrimstr, testtrimset, ft_strtrim(testtrimstr, testtrimset));
+	testtrimresult = ft_strtrim(testtrimstr, testtrimset);
+	printf("testing trimming %s of characters %s, which become %s", testtrimstr, testtrimset, testtrimresult);
+	free (testtrimresult);
 }
