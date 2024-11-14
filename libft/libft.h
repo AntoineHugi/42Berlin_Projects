@@ -14,6 +14,12 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+typedef struct  s_list
+{
+    void    *content;
+    struct s_list   *next;
+}   t_list;
+
 int		ft_atoi(const char *nptr);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);

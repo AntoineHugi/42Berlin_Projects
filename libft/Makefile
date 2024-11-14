@@ -21,9 +21,15 @@ MY_SOURCES = $(CUR_DIR)/ft_atoi.c $(CUR_DIR)/ft_bzero.c $(CUR_DIR)/ft_calloc.c \
 	     $(CUR_DIR)/ft_strtrim.c $(CUR_DIR)/ft_substr.c $(CUR_DIR)/ft_tolower.c \
 	     $(CUR_DIR)/ft_toupper.c
 
-MY_HEADERS = includes/libft.h
+MY_SOURCES_BONUS = $(CUR_DIR)/ft_lstnew.c $(CUR_DIR)/ft_lstadd_front.c $(CUR_DIR)/ft_lstsize.c \
+		   $(CUR_DIR)/ft_lstlast.c $(CUR_DIR)/ft_lstadd_back.c $(CUR_DIR)/ft_lstdelone.c \
+		   $(CUR_DIR)/ft_lstclear.c $(CUR_DIR)/ft_lstiter.c $(CUR_DIR)/ft_lstmap.c
+
+MY_HEADERS = libft.h
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
+
+MY_OBJECTS_BONUS = $(MY_SOURCES_BONUS:.c=.o)
 
 all:	$(NAME)
 
@@ -31,15 +37,17 @@ $(NAME): $(MY_OBJECTS)
 	ar rcs $(NAME) $(MY_OBJECTS) 
 
 %.o: %.c $(MY_HEADERS)
-	$(CC) $(CFLAGS) -c -o
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean: 	
-	$(RM) $(MY_OBJECTS)
+	$(RM) $(MY_OBJECTS) $(MY_OBJECTS_BONUS)
 
 fclean: clean
 	$(RM) $(NAME)
 
-re:	fclean all 
+re:	fclean all
 
-.PHONY: all clean fclean re
+bonus:	$(MY_OBJECTS) $(MY_OBJECTS_BONUS)
+	ar rcs $(NAME) $(MY_OBJECTS) $(MY_OBJECTS_BONUS)
 
+.PHONY: all clean fclean re bonus
