@@ -26,7 +26,7 @@ t_list	*ft_lstnew(void *content)
 	new_elem->next = NULL;
 	return (new_elem);
 }
-
+/*
 int	main()
 {
 	t_list	*new_elem;
@@ -51,4 +51,4 @@ int	main()
 		printf("Here's the content : %i\n", *(int *)new_elem->content);
 	}
 	free (new_elem);
-}
+}*/

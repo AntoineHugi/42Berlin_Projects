@@ -21,9 +21,7 @@ MY_SOURCES = $(CUR_DIR)/ft_atoi.c $(CUR_DIR)/ft_bzero.c $(CUR_DIR)/ft_calloc.c \
 	     $(CUR_DIR)/ft_strtrim.c $(CUR_DIR)/ft_substr.c $(CUR_DIR)/ft_tolower.c \
 	     $(CUR_DIR)/ft_toupper.c
 
-MY_SOURCES_BONUS = $(CUR_DIR)/ft_lstnew.c $(CUR_DIR)/ft_lstadd_front.c $(CUR_DIR)/ft_lstsize.c \
-		   $(CUR_DIR)/ft_lstlast.c $(CUR_DIR)/ft_lstadd_back.c $(CUR_DIR)/ft_lstdelone.c \
-		   $(CUR_DIR)/ft_lstclear.c $(CUR_DIR)/ft_lstiter.c $(CUR_DIR)/ft_lstmap.c
+MY_SOURCES_BONUS = $(CUR_DIR)/ft_lstnew.c 
 
 MY_HEADERS = libft.h
 

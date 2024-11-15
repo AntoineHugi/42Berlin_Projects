@@ -16,10 +16,15 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*result;
 	size_t	i;
+	size_t	s_len;
 
-	if (!s)
+	s_len = ft_strlen(s);
+	if ((long)len > (long)(s_len - (size_t)start) || len > 9223372036854775807)
 	{
-		return (NULL);
+		if ((size_t)start < s_len)
+			len = s_len - (size_t)start;
+		else
+			len = 0;
 	}
 	result = (char *)malloc(sizeof(char) * (len + 1));
 	if (!result)
