@@ -64,9 +64,13 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	end;
 	char	*result;
 
+	if (!s1)
+	{
+		return (NULL);
+	}
 	i = 0;
 	start = ft_start(s1, set);
-	end = ft_end(s1, set);
+	end = ft_end(s1 + start, set);
 	result = (char *)malloc(sizeof(char) * (ft_strlen(s1) - start - end + 1));
 	if (!result)
 	{

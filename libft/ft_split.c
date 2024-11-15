@@ -115,6 +115,7 @@ static int	ft_malloc_words(char **result, char const *s, char c, int str_count)
 		}
 		s_iter++;
 	}
+	free(w_arr);
 	return (1);
 }
 
@@ -123,7 +124,7 @@ char	**ft_split(char const *s, char c)
 	char	**result;
 	int		str_count;
 
-	if (!s)
+	if (!s || !ft_isascii((unsigned char)c))
 	{
 		return (NULL);
 	}
@@ -133,12 +134,15 @@ char	**ft_split(char const *s, char c)
 	{
 		return (NULL);
 	}
-	if (!ft_malloc_words(result, s, c, str_count))
+	if (str_count)
 	{
-		free(result);
-		return (NULL);
+		if (!ft_malloc_words(result, s, c, str_count))
+		{
+			free(result);
+			return (NULL);
+		}
+		ft_fill_grid(result, s, c, str_count);
 	}
-	ft_fill_grid(result, s, c, str_count);
 	result[str_count] = NULL;
 	return (result);
 }
