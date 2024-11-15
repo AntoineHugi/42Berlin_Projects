@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 t_list	*ft_lstnew(void *content)
 {
@@ -27,6 +26,8 @@ t_list	*ft_lstnew(void *content)
 	return (new_elem);
 }
 /*
+#include <stdio.h>
+
 int	main()
 {
 	t_list	*new_elem;
