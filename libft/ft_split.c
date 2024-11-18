@@ -22,9 +22,7 @@ static int	ft_str_count(char const *s, char c)
 	while (*s)
 	{
 		if (*s == c)
-		{
 			flag = 0;
-		}
 		if (*s != c && flag == 0)
 		{
 			str_count++;
@@ -102,7 +100,7 @@ static int	ft_malloc_words(char **result, char const *s, char c, int str_count)
 	s_iter = 0;
 	while (s_iter < str_count)
 	{
-		result[s_iter] = (char *)malloc(sizeof(char) * w_arr[s_iter] + 1);
+		result[s_iter] = (char *)malloc(sizeof(char) * (w_arr[s_iter] + 1));
 		if (!result[s_iter])
 		{
 			s_iter--;
@@ -125,15 +123,11 @@ char	**ft_split(char const *s, char c)
 	int		str_count;
 
 	if (!s || !ft_isascii((unsigned char)c))
-	{
 		return (NULL);
-	}
 	str_count = ft_str_count(s, c);
 	result = (char **)malloc(sizeof(char *) * (str_count + 1));
 	if (!result)
-	{
 		return (NULL);
-	}
 	if (str_count)
 	{
 		if (!ft_malloc_words(result, s, c, str_count))

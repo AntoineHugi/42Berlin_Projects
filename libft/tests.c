@@ -29,6 +29,14 @@ void	f2(unsigned int a, char *b)
 	*b = a + *b;
 }
 
+void	del(void* content)
+{
+	int	temp;
+
+	temp = 0;
+	*(int *)content = temp;
+}
+
 int	main(void)
 {
 	size_t	i = 0;
@@ -51,7 +59,7 @@ int	main(void)
 	char	teststrnstrb[] = "hello world";
 	char	teststrnstrl[] = "";
 	int		teststrnstrn = 15;
-	char	testatoi1[] = "    	+0217";
+	char	testatoi1[] = "    	-2147483648";
 	char	teststrlcatsrc2[50] = "hello world";
 	char	teststrlcatdest2[50] = "well ";
 	char	teststrlcatsrc1[50] = "hello world";
@@ -398,4 +406,88 @@ int	main(void)
 	testtrimresult = ft_strtrim(testtrimstr, testtrimset);
 	printf("testing trimming %s of characters %s, which become %s", testtrimstr, testtrimset, testtrimresult);
 	free (testtrimresult);
+
+	printf("\n\n");
+	//Bonus tests
+	t_list	**list;
+	t_list	*first;
+	t_list	*elem1;
+	int	content1 = 111;
+    t_list	*elem2;
+	int	content2 = 222;
+	t_list	*elem3;
+	int	content3 = 333;
+	t_list	*elem4;
+	int	content4 = 444;
+	/*t_list	*elem5;
+	int	content5 = 555;
+	t_list	*elem6;
+	int	content6 = 666;
+	t_list	*elem7;
+	int	content7 = 777;
+	t_list	*elem8;
+	int	content8 = 888;
+	t_list	*elem9;
+	int	content9 = 999;*/
+	list = (t_list**)malloc(sizeof(t_list*) * 9);
+	
+	int counter;
+	elem1 = ft_lstnew(&content1);
+    elem2 = ft_lstnew(&content2);
+	elem3 = ft_lstnew(&content3);
+	elem4 = ft_lstnew(&content4);
+	//elem5 = ft_lstnew(&content5);
+	//elem6 = ft_lstnew(&content6);
+	//elem7 = ft_lstnew(&content7);
+	//elem8 = ft_lstnew(&content8);
+	//elem9 = ft_lstnew(&content9);
+    elem1->next = elem2;
+	*list = elem1;
+
+	printf("\n new elem test\n");
+	first = elem1;
+	counter = 1;
+	while (first)
+	{
+		printf("%i node content %i\n", counter++, *(int*)first->content);
+		first = first->next;
+	}
+
+	printf("\n list add front test\n");
+	ft_lstadd_front(list, elem3);
+	first = *list;
+	counter = 1;
+	while (first)
+	{
+		printf("%i node content %i\n", counter++, *(int*)first->content);
+		first = first->next;
+	}
+
+	printf("\nlist add back test\n");
+	first = *list;
+	ft_lstadd_back(list, elem4);
+	counter = 1;
+	while (first)
+	{
+		printf("%i node content %i\n", counter++, *(int*)first->content);
+		first = first->next;
+	}
+	printf("\nlist last test\n");
+	printf("the last node's content is %i\n", *(int*)ft_lstlast(*list)->content);
+
+	printf("\nlist size test\n");
+    printf("here's the size %i\n", ft_lstsize(*list));
+	
+	printf("\nlist delete one test\n");
+	ft_lstdelone(elem1, del);
+	elem3->next = elem2;
+	first = *list;
+	counter = 1;
+	while (first)
+	{
+		printf("%i node content %i\n", counter++, *(int*)first->content);
+		first = first->next;
+	}
+
+	printf("\nlist clear test\n");
 }
