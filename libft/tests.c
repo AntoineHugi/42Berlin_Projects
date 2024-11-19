@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <bsd/string.h>
+//#include <bsd/string.h>
 #include "libft.h"
 #include <stdio.h>
 #include <ctype.h>
@@ -29,13 +29,25 @@ void	f2(unsigned int a, char *b)
 	*b = a + *b;
 }
 
-void	del(void* content)
+void	del(void *content)
 {
 	int	temp;
 
 	temp = 0;
 	*(int *)content = temp;
 }
+
+void	f_iter(void *content)
+{
+	*(int *)content = *(int *)content - 1;
+}
+
+void	*f_map(void *content)
+{
+	*(int *)content = *(int *)content - 1;
+	return (content);
+}
+
 
 int	main(void)
 {
@@ -419,33 +431,29 @@ int	main(void)
 	int	content3 = 333;
 	t_list	*elem4;
 	int	content4 = 444;
-	/*t_list	*elem5;
+	t_list	*elem5;
 	int	content5 = 555;
 	t_list	*elem6;
 	int	content6 = 666;
 	t_list	*elem7;
 	int	content7 = 777;
-	t_list	*elem8;
-	int	content8 = 888;
-	t_list	*elem9;
-	int	content9 = 999;*/
-	list = (t_list**)malloc(sizeof(t_list*) * 9);
+	t_list	*map_list;
+
+	list = (t_list**)malloc(sizeof(t_list*) * 7);
 	
 	int counter;
 	elem1 = ft_lstnew(&content1);
     elem2 = ft_lstnew(&content2);
 	elem3 = ft_lstnew(&content3);
 	elem4 = ft_lstnew(&content4);
-	//elem5 = ft_lstnew(&content5);
-	//elem6 = ft_lstnew(&content6);
-	//elem7 = ft_lstnew(&content7);
-	//elem8 = ft_lstnew(&content8);
-	//elem9 = ft_lstnew(&content9);
+	elem5 = ft_lstnew(&content5);
+	elem6 = ft_lstnew(&content6);
+	elem7 = ft_lstnew(&content7);
     elem1->next = elem2;
 	*list = elem1;
 
 	printf("\n new elem test\n");
-	first = elem1;
+	first = *list;
 	counter = 1;
 	while (first)
 	{
@@ -463,7 +471,7 @@ int	main(void)
 		first = first->next;
 	}
 
-	printf("\nlist add back test\n");
+	printf("\nlist add to the back test\n");
 	first = *list;
 	ft_lstadd_back(list, elem4);
 	counter = 1;
@@ -479,8 +487,8 @@ int	main(void)
     printf("here's the size %i\n", ft_lstsize(*list));
 	
 	printf("\nlist delete one test\n");
+	elem3->next = elem1->next;
 	ft_lstdelone(elem1, del);
-	elem3->next = elem2;
 	first = *list;
 	counter = 1;
 	while (first)
@@ -490,4 +498,44 @@ int	main(void)
 	}
 
 	printf("\nlist clear test\n");
+	ft_lstadd_back(list, elem5);
+	ft_lstadd_back(list, elem6);
+	first = *list;
+	counter = 1;
+	while (first)
+	{
+		printf("%i node content %i\n", counter++, *(int*)first->content);
+		first = first->next;
+	}
+	printf("\ncleared list after element %i\n", *(int*)elem2->content);
+	ft_lstclear(&(elem2->next), del);
+	elem2->next = NULL;
+	first = *list;
+	counter = 1;
+	while (first)
+	{
+		printf("%i node content %i\n", counter++, *(int*)first->content);
+		first = first->next;
+	}
+
+	printf("\nlist iteration test\n");
+	ft_lstadd_back(list, elem7);
+	ft_lstiter(*list, f_iter);
+	first = *list;
+	counter = 1;
+	while (first)
+	{
+		printf("%i node content %i\n", counter++, *(int*)first->content);
+		first = first->next;
+	}
+
+	printf("\nlist map test\n");
+	map_list = ft_lstmap(*list, f_map, del);
+	first = map_list;
+	counter = 1;
+	while (first)
+	{
+		printf("%i node content %i\n", counter++, *(int*)first->content);
+		first = first->next;
+	}
 }
