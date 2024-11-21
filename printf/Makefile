@@ -8,6 +8,8 @@ RM = rm -f
 
 CFLAGS += -Wall -Wextra -Werror
 
+LDFLAGS = -L$(CUR_DIR)/libft -lft
+
 MY_SOURCES = $(CUR_DIR)/ft_printf.c \
 	     $(CUR_DIR)/ft_itoa_base.c \
 	     $(CUR_DIR)/ft_toupper_str.c
@@ -21,13 +23,13 @@ MY_OBJECTS = $(MY_SOURCES:.c=.o)
 all:	$(NAME) 
 
 $(NAME): $(MY_OBJECTS) $(MY_LIBRARY)
-	ar rcs $(NAME) $(MY_OBJECTS)  $(MY_LIBRARY)
+	ar rcs $(NAME) $(MY_OBJECTS) $(MY_LIBRARY) 
 
 $(MY_LIBRARY):
 	$(MAKE) -C $(CUR_DIR)/libft all
 
 %.o: %.c $(MY_HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ $(MY_LIBRARY) $(LDFLAGS)
 
 clean: 	
 	$(RM) $(MY_OBJECTS)
@@ -39,4 +41,4 @@ fclean: clean
 
 re:	fclean all
 
-.PHONY: all clean fclean re $(MY_LIBRARY)
+.PHONY: all clean fclean re
