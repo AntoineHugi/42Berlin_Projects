@@ -11,12 +11,17 @@
 /* ************************************************************************** */
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include "libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
 
-int		ft_printf(const char *str, ...);
-char	*ft_itoa_base(unsigned int n, int base);
+int	ft_printf(const char *str, ...);
+int	ft_printchar(int c);
+int	ft_printhex(unsigned int arg, char c);
+int	ft_printpointer(void *arg, char c);
+int	ft_printnum(int n, char c);
+int	ft_printstr(char *str);
+char	*ft_itoa_hex(unsigned int n);
+char	*ft_itoa_hex_pointer(long n);
 void	ft_toupper_str(char *str);
 #endif
