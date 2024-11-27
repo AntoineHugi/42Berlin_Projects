@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-int	ft_printhex(unsigned int arg, char c)
+int	ft_printhex(unsigned long arg, char c)
 {
 	char	*result;
 	int		counter;
@@ -21,7 +21,7 @@ int	ft_printhex(unsigned int arg, char c)
 	}
 	if (c == 'p')
 	{
-		result = ft_itoa_hex_pointer((unsigned int)arg);
+		result = ft_itoa_hex_pointer(arg);
 		counter += write (1, "0x", 2);
 		counter += ft_printstr(&result[0]);
 		free(result);

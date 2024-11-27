@@ -1,5 +1,4 @@
 #include "ft_printf.h"
-#include <stdio.h>
 
 static int	ft_num_size(unsigned int n)
 {

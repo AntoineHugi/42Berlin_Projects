@@ -1,19 +1,19 @@
 #include "ft_printf.h"
 
-static int	ft_num_size(long n)
+static int	ft_num_size(unsigned long n)
 {
 	int	num_size;
 
-	if (n == 0)
-		num_size = 1;
-	else if (n > (4294960487/2))
-		num_size = 9;
-	else
-		num_size = 8;
+	num_size = 1;
+	while (n / 16 != 0)
+	{
+		num_size++;
+		n = n / 16;
+	}
 	return (num_size);
 }
 
-char	*ft_itoa_hex_pointer(long n)
+char	*ft_itoa_hex_pointer(unsigned long n)
 {
 	char	*base_symbols;
 	char	*number;
@@ -27,7 +27,7 @@ char	*ft_itoa_hex_pointer(long n)
 	number[num_size] = 0;
 	if (n == 0)
 		number[0] = '0';
-	if (num_size == 9)
+	if (n > (9223372036854775807))
 		number[0] = '1';
 	while (n != 0)
 	{
@@ -35,10 +35,7 @@ char	*ft_itoa_hex_pointer(long n)
 		n = n / 16;
 		num_size--;
 	}
-	while (num_size > 1)
-	{
-		number[num_size - 1] = base_symbols[0];
-		num_size--;
-	}
+	while (num_size-- > 1)
+		number[num_size] = base_symbols[0];
 	return (number);
 }
