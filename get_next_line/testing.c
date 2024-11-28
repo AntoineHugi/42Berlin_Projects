@@ -29,14 +29,19 @@ static size_t	ft_strlen(const char *s)
 
 int	main()
 {
-	int	fd;
-	char *result;
+	int		fd;
+	char 	*result;
 
+	result = "";
 	fd = open("./testfile.txt", O_RDWR);
 	while (result)
 	{
 		result = get_next_line(fd);
-		write(1, result, ft_strlen(result));
+		if (result)
+		{
+			write(1, result, ft_strlen(result));
+		}
 	}
+	free(result);
 	return (0);
 }

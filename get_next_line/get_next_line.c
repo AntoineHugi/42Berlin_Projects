@@ -18,10 +18,17 @@ char	*get_next_line(int fd)
     ssize_t bytes_read;
 
     result = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    if (!result)
+        return (NULL);
     bytes_read = read(fd, result, BUFFER_SIZE);
     if (bytes_read <= 0)
+    {
+        free(result);
         return (NULL);
+    }
     else
-        result[BUFFER_SIZE] = '\0';
+    {
+        result[bytes_read] = '\0';
         return (result);
+    }
 }
