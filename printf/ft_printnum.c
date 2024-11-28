@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printnum.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/28 12:28:25 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/28 12:28:27 by ahugi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static int	ft_putnbr(long n)
@@ -6,15 +18,12 @@ static int	ft_putnbr(long n)
 	int		counter;
 	int		check;
 
+	counter = 0;
+	check = 0;
 	if (n == 0)
 		counter = write(1, "0", 1);
 	else if (n < 0)
-	{
-		if (n == -2147483648)
-			counter = write(1, "-2147483648", 11);
-		else
-			counter = write(1, "-", 1) + ft_putnbr(-n);
-	}
+		counter = write(1, "-", 1) + ft_putnbr(-n);
 	else
 	{
 		if (n >= 10)
@@ -34,7 +43,7 @@ int	ft_printnum(int n, char c)
 	long	u;
 
 	if (c == 'd' || c == 'i')
-		counter = ft_putnbr(n);
+		counter = ft_putnbr((long)n);
 	if (c == 'u')
 	{
 		if (n < 0)
