@@ -7,5 +7,8 @@ int	ft_printchar(int c)
 
 	uc = (unsigned int)c;
 	counter = write(1, &uc, 1);
-	return (counter);
+	if (counter < 0)
+		return (-1);
+	else
+		return (counter);
 }

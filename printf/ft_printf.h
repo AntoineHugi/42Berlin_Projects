@@ -20,6 +20,7 @@ int		ft_printchar(int c);
 int		ft_printhex(unsigned long arg, char c);
 int		ft_printnum(int n, char c);
 int		ft_printstr(char *str);
+int     ft_printpointer(void *arg);
 char	*ft_itoa_hex(unsigned int n);
 char	*ft_itoa_hex_pointer(unsigned long n);
 void	ft_toupper_str(char *str);

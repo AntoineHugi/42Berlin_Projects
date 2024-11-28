@@ -16,15 +16,12 @@ int	ft_printstr(char *str)
 {
 	int	counter;
 
-	counter = 0;
 	if (!str)
-	{
 		counter = write(1, "(null)", 6);
-		return (counter);
-	}
 	else
-	{
 		counter = write(1, str, ft_strlen(str));
-	}
-	return (counter);
+	if (counter < 0)
+		return (-1);
+	else
+		return (counter);
 }

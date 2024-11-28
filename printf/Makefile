@@ -10,7 +10,7 @@ CFLAGS += -Wall -Wextra -Werror
 
 MY_SOURCES = $(CUR_DIR)/ft_itoa_hex.c $(CUR_DIR)/ft_itoa_hex_pointer.c $(CUR_DIR)/ft_printchar.c \
 	    $(CUR_DIR)/ft_printf.c $(CUR_DIR)/ft_printhex.c $(CUR_DIR)/ft_printnum.c \
-	    $(CUR_DIR)/ft_printstr.c $(CUR_DIR)/ft_toupper_str.c
+	    $(CUR_DIR)/ft_printpointer.c $(CUR_DIR)/ft_printstr.c $(CUR_DIR)/ft_toupper_str.c
 
 MY_HEADERS = printf.h
 
