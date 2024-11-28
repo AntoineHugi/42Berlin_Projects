@@ -15,30 +15,29 @@
 static char	*read_file_to_buffer(int fd, char *result)
 {
     char    *buffer;
+    int     counter;
     ssize_t bytes_read;
 
     //in case we have nothing at first, making a quick calloc so result is not null
     if (!result)
         result = (char *)ft_calloc(1, 1);
     bytes_read = 1;
+    counter = 0;
     buffer = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
     while (bytes_read > 0)
     {
         //adding buffer to the result until we reach a \n character
         bytes_read = read(fd, buffer, BUFFER_SIZE);
+        counter += bytes_read;
         if (!check_if_n(buffer))
-        {
             result = strjoin(result, buffer);
-        }
         else
             break;
     }
     free(buffer);
-    result[bytes_read] = '\0';
+    result[counter] = '\0';
     return (result);
 }
-
-//
 
 char	*get_next_line(int fd)
 {
@@ -47,6 +46,8 @@ char	*get_next_line(int fd)
 
     if (BUFFER_SIZE < 1 || fd < 1)
         return (NULL);
+    if (result)
+        result = ft_strchr(result, '\n');
     //in case buffer is large and covers multiple lines, we need to save the information so that on the next function call we can point the next line, and not "lose" them
     //maybe use strchr to start result from the right place
     line = read_file_to_buffer(fd, result);
