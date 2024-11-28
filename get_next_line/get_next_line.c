@@ -12,23 +12,44 @@
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+static char	*read_file_to_buffer(int fd, char *result)
 {
-    char    *result;
+    char    *buffer;
     ssize_t bytes_read;
 
-    result = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    //in case we have nothing at first, making a quick calloc so result is not null
     if (!result)
-        return (NULL);
-    bytes_read = read(fd, result, BUFFER_SIZE);
-    if (bytes_read <= 0)
+        result = (char *)ft_calloc(1, 1);
+    bytes_read = 1;
+    buffer = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
+    while (bytes_read > 0)
     {
-        free(result);
+        //adding buffer to the result until we reach a \n character
+        bytes_read = read(fd, buffer, BUFFER_SIZE);
+        if (!check_if_n(buffer))
+        {
+            result = strjoin(result, buffer);
+        }
+        else
+            break;
+    }
+    free(buffer);
+    result[bytes_read] = '\0';
+    return (result);
+}
+
+//
+
+char	*get_next_line(int fd)
+{
+    static char    *result;
+    char    *line;
+
+    if (BUFFER_SIZE < 1 || fd < 1)
         return (NULL);
-    }
-    else
-    {
-        result[bytes_read] = '\0';
-        return (result);
-    }
+    //in case buffer is large and covers multiple lines, we need to save the information so that on the next function call we can point the next line, and not "lose" them
+    //maybe use strchr to start result from the right place
+    line = read_file_to_buffer(fd, result);
+
+    return (line);
 }
