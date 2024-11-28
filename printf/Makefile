@@ -8,36 +8,27 @@ RM = rm -f
 
 CFLAGS += -Wall -Wextra -Werror
 
-LDFLAGS = -L$(CUR_DIR)/libft -lft
+MY_SOURCES = $(CUR_DIR)/ft_itoa_hex.c $(CUR_DIR)/ft_itoa_hex_pointer.c $(CUR_DIR)/ft_printchar.c \
+	    $(CUR_DIR)/ft_printf.c $(CUR_DIR)/ft_printhex.c $(CUR_DIR)/ft_printnum.c \
+	    $(CUR_DIR)/ft_printstr.c $(CUR_DIR)/ft_toupper_str.c
 
-MY_SOURCES = $(CUR_DIR)/ft_printf.c \
-	     $(CUR_DIR)/ft_itoa_base.c \
-	     $(CUR_DIR)/ft_toupper_str.c
-
-MY_LIBRARY = $(CUR_DIR)/libft/libft.a
-
-MY_HEADERS = libftprintf.h
+MY_HEADERS = printf.h
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
 all:	$(NAME) 
 
-$(NAME): $(MY_OBJECTS) $(MY_LIBRARY)
-	ar rcs $(NAME) $(MY_OBJECTS) $(MY_LIBRARY) 
-
-$(MY_LIBRARY):
-	$(MAKE) -C $(CUR_DIR)/libft all
+$(NAME): $(MY_OBJECTS)
+	ar rcs $(NAME) $(MY_OBJECTS)
 
 %.o: %.c $(MY_HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@ $(MY_LIBRARY) $(LDFLAGS)
 
 clean: 	
 	$(RM) $(MY_OBJECTS)
-	$(MAKE) -C $(CUR_DIR)/libft clean
 
 fclean: clean
 	$(RM) $(NAME)
-	$(MAKE) -C $(CUR_DIR)/libft fclean
 
 re:	fclean all
 
