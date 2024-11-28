@@ -22,7 +22,7 @@ $(NAME): $(MY_OBJECTS)
 	ar rcs $(NAME) $(MY_OBJECTS)
 
 %.o: %.c $(MY_HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@ $(MY_LIBRARY) $(LDFLAGS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean: 	
 	$(RM) $(MY_OBJECTS)

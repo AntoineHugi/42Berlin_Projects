@@ -1,3 +1,6 @@
+
+#include "ft_printf.h"
+
 int	ft_printpointer(void *arg)
 {
 	char	*result;

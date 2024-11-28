@@ -16,19 +16,18 @@ static int	ft_string_parser(char str, va_list args)
 {
 	int	counter;
 
-	counter = 0;
 	if (str == 'c')
-		counter += ft_printchar(va_arg(args, int));
+		counter = ft_printchar(va_arg(args, int));
 	else if (str == 's')
-		counter += ft_printstr(va_arg(args, char *));
+		counter = ft_printstr(va_arg(args, char *));
 	else if (str == 'i' || str == 'd' || str == 'u')
-		counter += ft_printnum(va_arg(args, int), str);
+		counter = ft_printnum(va_arg(args, int), str);
 	else if (str == 'x' || str == 'X')
-		counter += ft_printhex(va_arg(args, unsigned long), str);
+		counter = ft_printhex(va_arg(args, unsigned long), str);
 	else if (str == 'p')
-		counter += ft_printpointer(va_arg(args, void *));
+		counter = ft_printpointer(va_arg(args, void *));
 	else
-		counter += write(1, str, 1);
+		counter = write(1, &str, 1);
 	if (counter < 0)
 		return (-1);
 	else
