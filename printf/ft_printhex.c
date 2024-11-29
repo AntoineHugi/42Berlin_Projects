@@ -12,26 +12,29 @@
 
 #include "ft_printf.h"
 
-int	ft_printhex(unsigned long arg, char c)
+int	ft_printhex(unsigned int arg, char c)
 {
 	char	*result;
 	int		counter;
 
 	if (c == 'x')
 	{
-		result = ft_itoa_hex((unsigned int)arg);
+		result = ft_itoa_hex(arg);
+		if (!result)
+			return (-1);
 		counter = ft_printstr(result);
 		free(result);
 	}
 	if (c == 'X')
 	{
-		result = ft_itoa_hex((unsigned int)arg);
+		result = ft_itoa_hex(arg);
+		if (!result)
+			return (-1);
 		ft_toupper_str(result);
 		counter = ft_printstr(result);
 		free(result);
 	}
 	if (counter < 0)
 		return (-1);
-	else
-		return (counter);
+	return (counter);
 }

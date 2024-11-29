@@ -16,17 +16,20 @@ int	ft_printpointer(void *arg)
 {
 	char	*result;
 	int		counter;
+	int		check;
 
-	if (!arg)
-		counter = write (1, "(nil)", 5);
-	else
+	result = ft_itoa_hex_pointer((unsigned long)arg);
+	if (!result)
+		return (-1);
+	check = write(1, "0x", 2);
+	if (check < 0)
 	{
-		result = ft_itoa_hex_pointer((unsigned long)arg);
-		counter = write (1, "0x", 2) + ft_printstr(&result[0]);
 		free(result);
+		return (-1);
 	}
+	counter = ft_printstr(result);
+	free(result);
 	if (counter < 0)
 		return (-1);
-	else
-		return (counter);
+	return (counter + check);
 }

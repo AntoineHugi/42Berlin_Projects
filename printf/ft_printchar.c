@@ -14,13 +14,8 @@
 
 int	ft_printchar(int c)
 {
-	int				counter;
-	unsigned int	uc;
+	unsigned char	uc;
 
-	uc = (unsigned int)c;
-	counter = write(1, &uc, 1);
-	if (counter < 0)
-		return (-1);
-	else
-		return (counter);
+	uc = (unsigned char)c;
+	return (write(1, &uc, 1));
 }

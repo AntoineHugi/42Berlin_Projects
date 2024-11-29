@@ -43,9 +43,8 @@ char	*ft_itoa_hex_pointer(unsigned long n)
 		number[0] = '1';
 	while (n != 0)
 	{
-		number[num_size - 1] = base_symbols[(n) % 16];
+		number[--num_size] = base_symbols[(n) % 16];
 		n = n / 16;
-		num_size--;
 	}
 	while (num_size-- > 1)
 		number[num_size] = base_symbols[0];
