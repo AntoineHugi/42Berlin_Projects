@@ -18,6 +18,8 @@ int	ft_printpointer(void *arg)
 	int		counter;
 	int		check;
 
+	if (!arg)
+		return (write(1, "(nil)", 5));
 	result = ft_itoa_hex_pointer((unsigned long)arg);
 	if (!result)
 		return (-1);

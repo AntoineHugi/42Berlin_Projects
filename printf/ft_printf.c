@@ -12,18 +12,18 @@
 
 #include "ft_printf.h"
 
-int	ft_parameter_check(va_list *args, char str)
+int	ft_parameter_check(va_list args, char str)
 {
 	int	check;
 
 	if (str == 's')
-		check = ft_printstr(va_arg(*args, char *));
+		check = ft_printstr(va_arg(args, char *));
 	else if (str == 'i' || str == 'd' || str == 'u' || str == 'c')
-		check = ft_printnum(va_arg(*args, int), str);
+		check = ft_printnum(va_arg(args, int), str);
 	else if (str == 'x' || str == 'X')
-		check = ft_printhex(va_arg(*args, unsigned int), str);
+		check = ft_printhex(va_arg(args, unsigned int), str);
 	else if (str == 'p')
-		check = ft_printpointer(va_arg(*args, void *));
+		check = ft_printpointer(va_arg(args, void *));
 	else
 		check = write(1, &str, 1);
 	return (check);
@@ -42,7 +42,7 @@ int	ft_string_parser(const char *str, va_list args)
 			str++;
 			if (!*str)
 				break ;
-			check = ft_parameter_check(&args, *str);
+			check = ft_parameter_check(args, *str);
 		}
 		else
 			check = write(1, str, 1);
