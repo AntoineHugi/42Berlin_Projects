@@ -12,35 +12,26 @@
 
 #include "get_next_line.h"
 #include <unistd.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
-static size_t	ft_strlen(const char *s)
-{
-	size_t	length;
-
-	length = 0;
-	while (s[length] != 0)
-	{
-		length++;
-	}
-	return (length);
-}
 
 int	main()
 {
 	int		fd;
+	int		counter;
 	char 	*result;
 
-	result = "";
 	fd = open("./testfile.txt", O_RDWR);
+	result = get_next_line(fd);
+	counter = 0;
 	while (result)
 	{
+		counter++;
+		printf("\ncall #%i\n", counter);
+		write(1, result, ft_strlen(result));
+		free(result);
 		result = get_next_line(fd);
-		if (result)
-		{
-			write(1, result, ft_strlen(result));
-		}
 	}
 	free(result);
 	return (0);
