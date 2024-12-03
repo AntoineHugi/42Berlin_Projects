@@ -18,13 +18,12 @@ static char	*create_line(char *str)
 	int		i;
 	char	*line;
 
-
 	if (!str)
 		return (NULL);
 	count = 0;
 	while (str[count] && str[count] != '\n')
 		count++;
-	line = (char *)ft_calloc(sizeof(char), count + 2);
+	line = (char *)ft_calloc(count + 2, sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -41,13 +40,14 @@ static char	*create_line(char *str)
 
 static int	check_if_n(char *str)
 {
-	if (!str)
-		return (0);
-	while (*str)
+	int	i;
+	
+	i = 0;
+	while (str[i])
 	{
-		if (*str == '\n')
+		if (str[i] == '\n')
 			return (1);
-		str++;
+		i++;
 	}
 	return (0);
 }
@@ -55,45 +55,37 @@ static int	check_if_n(char *str)
 static char	*read_file_to_buffer(int fd, char *result)
 {
 	char	*buffer;
-	char	*temp;
 	ssize_t	bytes_read;
 
+	buffer = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!buffer)
+		return (NULL);
 	if (!result)
 		result = (char *)ft_calloc(1, 1);
-	buffer = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
-	if (!buffer)
+	if (!result)
+		return (NULL);
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_read == 0)
 	{
 		free(result);
-		return (NULL);
-	}
-	bytes_read = 1;
+		free(buffer);
+		return(NULL);
+	}	
 	while (bytes_read > 0)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (!check_if_n(buffer))
 		{
-			temp = result;
-			result = ft_strjoin(result, buffer);
+			result = ft_strjoin(&result, &buffer);
 			if (!result)
-			{
-    				free(temp);
-   				free(buffer);
-   				return (NULL);
-			}
-			free(temp);
+				return (NULL);
 		}
 		else
+		{
+			result = ft_strjoin(&result, &buffer);
 			break ;
+		}
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
-	temp = result;
-	result = ft_strjoin(result, buffer);
-	if (!result)
-	{
-    		free(temp);
-   		free(buffer);
-   		return (NULL);
-	}
-	free(temp);
 	free(buffer);
 	return (result);
 }
@@ -102,37 +94,19 @@ char	*get_next_line(int fd)
 {
 	static char	*result;
 	char		*line;
-	char		*temp;
 
-	if (BUFFER_SIZE < 1 || fd < 0)
+	if (BUFFER_SIZE < 1 || fd < 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
-	if (result)
+	if (result && check_if_n(result))
 	{
-		if (check_if_n(result))
-		{
-			line = create_line(result);
-			temp = result;
-			result = ft_strchr_mod(result);
-			free(temp);
-			return (line);
-		}
+		line = create_line(result);
+		result = ft_strchr_mod(&result);
+		return (line);
 	}
 	result = read_file_to_buffer(fd, result);
-	if (!result || !*result)
-	{
-		free(result);
-   		return (NULL);
-	}
-	line = create_line(result);
-	temp = result;
-	result = ft_strchr_mod(result);
-	free(temp);
-	if (!ft_strlen(line))
-	{
-		if (result)
-			free(result);
-		free(line);
+	if (!result)
 		return (NULL);
-	}
+	line = create_line(result);
+	result = ft_strchr_mod(&result);
 	return (line);
 }

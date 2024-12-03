@@ -35,23 +35,18 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (ptr);
 }
 
-void	*ft_memcpy(void *dst, void *src, size_t n)
+void	ft_memcpy(char *dst, char *src, size_t n)
 {
-	unsigned char	*tempsrc;
-	unsigned char	*tempdst;
-	size_t			i;
+	size_t	i;
 
 	if (!dst && !src)
-		return (NULL);
+		return ;
 	i = 0;
-	tempsrc = (unsigned char *)src;
-	tempdst = (unsigned char *)dst;
 	while (i < n)
 	{
-		tempdst[i] = tempsrc[i];
+		dst[i] = src[i];
 		i++;
 	}
-	return (dst);
 }
 
 size_t	ft_strlen(char *s)
@@ -59,53 +54,63 @@ size_t	ft_strlen(char *s)
 	size_t	length;
 
 	if (!s)
-		return (0);	
+		return (0);
 	length = 0;
 	while (s[length])
 		length++;
 	return (length);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char **s1, char **s2)
 {
 	size_t	s1_size;
 	size_t	s2_size;
 	char	*result;
+	char	*temp1;
+	int	i;
 
-	if (!s1 || !s2)
+	if (!(*s1) || !(*s2))
 		return (NULL);
-	s1_size = ft_strlen(s1);
-	s2_size = ft_strlen(s2);
-	result = (char *)ft_calloc(sizeof(char), (s1_size + s2_size + 1));
+	temp1 = *s1;
+	s1_size = ft_strlen(*s1);
+	s2_size = ft_strlen(*s2);
+	result = (char *)ft_calloc((s1_size + s2_size + 1), sizeof(char));
 	if (!result)
 		return (NULL);
-	ft_memcpy(&result[0], s1, s1_size);
-	ft_memcpy(&result[s1_size], s2, s2_size);
+	ft_memcpy(&result[0], *s1, s1_size);
+	ft_memcpy(&result[s1_size], *s2, s2_size);
+	i = 0;
+	while((*s2)[i])
+		(*s2)[i++] = 0;
+	free(temp1);
 	return (result);
 }
 
-char	*ft_strchr_mod(char *s)
+char	*ft_strchr_mod(char **s)
 {
 	size_t		i;
 	char	*ptr;
+	char	*temp;
 
-	while (*s)
+	temp = *s;
+	while (**s)
 	{
-		if (*s == '\n')
+		if (**s == '\n')
 		{
-			s++;
+			(*s)++;
 			break ;
 		}
-		s++;
+		(*s)++;
 	}
 	i = 0;
-	ptr = (char *)ft_calloc(sizeof(char), (ft_strlen(s) + 1));
+	ptr = (char *)ft_calloc((ft_strlen(*s) + 1), sizeof(char));
 	if (!ptr)
 		return (NULL);
-	while (s[i])
+	while ((*s)[i])
 	{
-		ptr[i] = s[i];
+		ptr[i] = (*s)[i];
 		i++;
 	}
+	free (temp);
 	return (ptr);
 }
