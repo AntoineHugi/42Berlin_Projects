@@ -16,11 +16,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int	main()
+int	main(void)
 {
 	int		fd;
 	int		counter;
-	char 	*result;
+	char	*result;
 
 	fd = open("./testfile.txt", O_RDWR);
 	result = get_next_line(fd);

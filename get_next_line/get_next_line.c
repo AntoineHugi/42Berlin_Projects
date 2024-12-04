@@ -15,7 +15,6 @@
 static char	*create_line(char *str)
 {
 	int		count;
-	int		i;
 	char	*line;
 
 	if (!str)
@@ -23,17 +22,12 @@ static char	*create_line(char *str)
 	count = 0;
 	while (str[count] && str[count] != '\n')
 		count++;
-	line = (char *)ft_calloc(count + 2, sizeof(char));
+	if (str[count] == '\n')
+		count++;
+	line = (char *)ft_calloc(count + 1, sizeof(char));
 	if (!line)
 		return (NULL);
-	i = 0;
-	while (i < count)
-	{
-		line[i] = str[i];
-		i++;
-	}
-	if (str[count] == '\n')
-		line[count++] = '\n';
+	ft_memcpy(line, str, count);
 	line[count] = '\0';
 	return (line);
 }
@@ -41,7 +35,9 @@ static char	*create_line(char *str)
 static int	check_if_n(char *str)
 {
 	int	i;
-	
+
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
 	{
@@ -52,7 +48,7 @@ static int	check_if_n(char *str)
 	return (0);
 }
 
-static char	*read_file_to_buffer(int fd, char *result)
+static char	*read_file(int fd, char **result)
 {
 	char	*buffer;
 	ssize_t	bytes_read;
@@ -60,34 +56,23 @@ static char	*read_file_to_buffer(int fd, char *result)
 	buffer = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
 		return (NULL);
-	if (!result)
-		result = (char *)ft_calloc(1, 1);
-	if (!result)
-		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
-	if (bytes_read == 0)
-	{
-		free(result);
-		free(buffer);
-		return(NULL);
-	}	
 	while (bytes_read > 0)
 	{
-		if (!check_if_n(buffer))
-		{
-			result = ft_strjoin(&result, &buffer);
-			if (!result)
-				return (NULL);
-		}
-		else
-		{
-			result = ft_strjoin(&result, &buffer);
+		buffer[bytes_read] = '\0';
+		*result = ft_strjoin(*result, buffer);
+		if (!*result || check_if_n(*result))
 			break ;
-		}
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	free(buffer);
-	return (result);
+	if (bytes_read < 0 || (*result && !**result))
+	{
+		free(*result);
+		*result = NULL;
+		return (NULL);
+	}
+	return (*result);
 }
 
 char	*get_next_line(int fd)
@@ -95,18 +80,23 @@ char	*get_next_line(int fd)
 	static char	*result;
 	char		*line;
 
+	line = NULL;
 	if (BUFFER_SIZE < 1 || fd < 0 || read(fd, NULL, 0) < 0)
+	{
+		free(result);
+		result = NULL;
 		return (NULL);
+	}
 	if (result && check_if_n(result))
 	{
 		line = create_line(result);
-		result = ft_strchr_mod(&result);
+		result = ft_strchr_mod(result);
 		return (line);
 	}
-	result = read_file_to_buffer(fd, result);
+	result = read_file(fd, &result);
 	if (!result)
 		return (NULL);
 	line = create_line(result);
-	result = ft_strchr_mod(&result);
+	result = ft_strchr_mod(result);
 	return (line);
 }
