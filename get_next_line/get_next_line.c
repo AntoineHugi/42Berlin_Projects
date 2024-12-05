@@ -48,7 +48,7 @@ static int	check_if_n(char *str)
 	return (0);
 }
 
-static char	*read_file(int fd, char **result)
+static char	*read_file(int fd, char *result)
 {
 	char	*buffer;
 	ssize_t	bytes_read;
@@ -60,19 +60,19 @@ static char	*read_file(int fd, char **result)
 	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
-		*result = ft_strjoin(*result, buffer);
-		if (!*result || check_if_n(*result))
+		result = ft_strjoin(result, buffer);
+		if (!result || check_if_n(result))
 			break ;
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	free(buffer);
-	if (bytes_read < 0 || (*result && !**result))
+	if (bytes_read < 0 || (result && !ft_strlen(result)))
 	{
-		free(*result);
-		*result = NULL;
+		free(result);
+		result = NULL;
 		return (NULL);
 	}
-	return (*result);
+	return (result);
 }
 
 char	*get_next_line(int fd)
@@ -80,7 +80,8 @@ char	*get_next_line(int fd)
 	static char	*result;
 	char		*line;
 
-	line = NULL;
+	if (!result)
+		result = NULL;
 	if (BUFFER_SIZE < 1 || fd < 0 || read(fd, NULL, 0) < 0)
 	{
 		free(result);
@@ -93,7 +94,7 @@ char	*get_next_line(int fd)
 		result = ft_strchr_mod(result);
 		return (line);
 	}
-	result = read_file(fd, &result);
+	result = read_file(fd, result);
 	if (!result)
 		return (NULL);
 	line = create_line(result);
