@@ -54,7 +54,7 @@ int	ft_printnum(int n, char c)
 	else if (c == 'u')
 	{
 		if (n < 0)
-			u = 4294967296 + n;
+			u = (unsigned int)n;
 		else
 			u = n;
 		counter = ft_putnbr(u);
