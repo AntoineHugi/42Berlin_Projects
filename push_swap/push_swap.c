@@ -10,64 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_no_dup (char **args)
-{
-	int	i;
-	int	j;
-	int	check;
-
-	check = 1;
-	i = 0;
-	while (args[i])
-	{
-		j = i + 1;
-		while(args[j])
-		{
-			if (args[i] == args[j])
-				check = 0;
-			j++;
-		}
-		i++;
-	}
-	return (check);
-}
-
-int	ft_is_valid (char **args)
-{
-	int	i;
-	int	j;
-	int	check;
-
-	check = 1;
-	i = 0;
-	while (args[i])
-	{
-		j = 0;
-		while(args[i][j])
-		{
-			if (args[i][j] = '-')
-				j++;
-			if (!ft_is_digit(args[i][j]))
-				check = 0;
-			j++;
-		}
-		i++;
-	}
-	return (check);
-}
+#include "push_swap.h"
+#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
     char    **args;
 
 	if (argc == 1)
-		return;
+		return (0);
 	if (argc == 2)
-		args = ft_split(argv, ' ');
+		args = ft_split(argv[1], ' ');
 	if (argc > 2)
-		args = argv;
+		args = ++argv;
 	if (!ft_is_valid(args) || !ft_no_dup(args))
-		write(2, "Error", 5);
+	{
+		//write(2, "Error\n", 6);
+		printf("Error - val = %i, dup = %i", ft_is_valid(args), ft_no_dup(args));
+	}
 	else
-		ft_solve(args);
+	{
+		write(1, "Valid\n", 6);
+		//ft_solve(args);
+	}
+	return (0);
 }
