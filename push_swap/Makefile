@@ -8,27 +8,35 @@ RM = rm -f
 
 CFLAGS += -Wall -Wextra -Werror
 
-MY_SOURCES = $(CUR_DIR)/push_swap.c $(CUR_DIR)/.c $(CUR_DIR)/.c \
-	    $(CUR_DIR)/.c $(CUR_DIR)/.c $(CUR_DIR)/.c \
+MY_SOURCES = $(CUR_DIR)/push_swap.c $(CUR_DIR)/push_swap_functions.c $(CUR_DIR)/rotate_functions.c \
+	    $(CUR_DIR)/solving_algorithm.c #$(CUR_DIR)/.c $(CUR_DIR)/.c \
 	    $(CUR_DIR)/.c $(CUR_DIR)/.c $(CUR_DIR)/.c
 
 MY_HEADERS = push_swap.h
 
-MY_INCLUDES = $(CUR_DIR)/libft/libft.a \
-		$(CUR_DIR)/ft_printf/libftprintf.a
+MY_OBJECTS = $(MY_SOURCES:.c=.o)
+
+MY_INCLUDES = $(CUR_DIR)/libft/libft.a $(CUR_DIR)/ft_printf/libftprintf.a
 
 LIBFT_MAKEFILE = $(CUR_DIR)/libft/Makefile
 FT_PRINTF_MAKEFILE = $(CUR_DIR)/ft_printf/Makefile
 
-MY_OBJECTS = $(MY_SOURCES:.c=.o)
+LIBFT = $(CUR_DIR)/libft/libft.a
+FT_PRINTF = $(CUR_DIR)/ft_printf/libftprintf.a
 
-all: $(MY_INCLUDES) $(NAME)
+all: $(LIBFT) $(FT_PRINTF) $(NAME)
 
 $(MY_INCLUDES):
 	$(MAKE) -C $(CUR_DIR)/libft
 	$(MAKE) -C $(CUR_DIR)/ft_printf
 
-$(NAME): $(MY_OBJECTS) 
+$(LIBFT):
+	$(MAKE) -C $(CUR_DIR)/libft
+
+$(FT_PRINTF):
+	$(MAKE) -C $(CUR_DIR)/ft_printf
+
+$(NAME): $(MY_OBJECTS) $(LIBFT) $(FT_PRINTF)
 	ar rcs $(NAME) $(MY_OBJECTS)
 
 %.o: %.c $(MY_HEADERS)
