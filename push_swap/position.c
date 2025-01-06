@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solving_algorithm.c                                :+:      :+:    :+:   */
+/*   position.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 16:02:24 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/02 16:02:26 by ahugi            ###   ########.fr       */
+/*   Created: 2025/01/06 16:07:44 by ahugi             #+#    #+#             */
+/*   Updated: 2025/01/06 16:07:59 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    sorting(t_list **stack_a, t_list **stack_b)
+void	ft_set_position(t_list **stack)
 {
-    if (ft_atoi((*stack_a)->content) < ft_atoi((*stack_a)->next->content))
-    {
-        push_to_b(stack_a, stack_b);
-        write (1, "pb", 3);
-    }
+	int		i;
+	t_list	*temp;
+
+	i = 0;
+	temp = *stack;
+	while (temp)
+	{
+		temp->pos = i;
+		i++;
+		temp = temp->next;
+	}
 }

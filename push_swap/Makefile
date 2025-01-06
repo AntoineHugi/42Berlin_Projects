@@ -8,9 +8,10 @@ RM = rm -f
 
 CFLAGS += -Wall -Wextra -Werror
 
-MY_SOURCES = $(CUR_DIR)/push_swap.c $(CUR_DIR)/push_swap_functions.c $(CUR_DIR)/rotate_functions.c \
-	    $(CUR_DIR)/solving_algorithm.c #$(CUR_DIR)/.c $(CUR_DIR)/.c \
-	    $(CUR_DIR)/.c $(CUR_DIR)/.c $(CUR_DIR)/.c
+MY_SOURCES = $(CUR_DIR)/push_swap.c $(CUR_DIR)/push.c $(CUR_DIR)/swap.c \
+	    $(CUR_DIR)/rotate.c $(CUR_DIR)/rev_rotate.c $(CUR_DIR)/input_validation.c \
+	    $(CUR_DIR)/sorting.c $(CUR_DIR)/initialisation.c $(CUR_DIR)/position.c \
+		$(CUR_DIR)/move_calculation.c
 
 MY_HEADERS = push_swap.h
 

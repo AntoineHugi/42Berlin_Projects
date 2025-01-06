@@ -1,55 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_functions.c                              :+:      :+:    :+:   */
+/*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 14:42:56 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/02 14:42:57 by ahugi            ###   ########.fr       */
+/*   Created: 2025/01/06 13:37:57 by ahugi             #+#    #+#             */
+/*   Updated: 2025/01/06 13:37:58 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_to_a(t_list **a, t_list **b)
+void	swap(t_list **stack)
 {
 	t_list	*temp;
 
-	if (*b)
+	if (*stack && (*stack)->next != NULL)
 	{
-		temp = *b;
-		*b = temp->next;
-		ft_lstadd_front(a, temp);
+		temp = (*stack)->next;
+		(*stack)->next = temp->next;
+		ft_lstadd_front(stack, temp);
 	}
 }
 
-void	push_to_b(t_list **a, t_list **b)
+void	swap_a(t_list **stack)
 {
-	t_list	*temp;
-
-	if (*a)
-	{
-		temp = *a;
-		*a = temp->next;
-		ft_lstadd_front(b, temp);
-	}
+	swap(stack);
+	write(1, "sa\n", 3);
 }
 
-void	swap(t_list **a)
+void	swap_b(t_list **stack)
 {
-	t_list	*temp;
-
-	if (*a && (*a)->next != NULL)
-	{
-		temp = (*a)->next;
-		(*a)->next = temp->next;
-		ft_lstadd_front(a, temp);
-	}
+	swap(stack);
+	write(1, "sb\n", 3);
 }
 
-void	swap_both(t_list **a, t_list **b)
+void	swap_both(t_list **stack_a, t_list **stack_b)
 {
-	swap(a);
-	swap(b);
+	swap(stack_a);
+	swap(stack_b);
+	write(1, "ss\n", 3);
 }

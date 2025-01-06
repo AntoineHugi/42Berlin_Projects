@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate_functions.c                                 :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,43 +12,34 @@
 
 #include "push_swap.h"
 
-void	rotate(t_list **a)
+void	rotate(t_list **stack)
 {
 	t_list	*first;
 
-	if (*a)
+	if (*stack)
 	{
-		first = *a;
-		*a = first->next;
-		ft_lstadd_back(a, first);
+		first = *stack;
+		*stack = first->next;
+		ft_lstadd_back(stack, first);
 		first->next = NULL;
 	}
 }
 
-void	rotate_both(t_list **a, t_list **b)
+void	rotate_a(t_list **stack)
 {
-	rotate(a);
-	rotate(b);
+	rotate(stack);
+	write(1, "ra\n", 3);
 }
 
-void	rev_rotate(t_list **a)
+void	rotate_b(t_list **stack)
 {
-	t_list	*last;
-	t_list	*temp;
-
-	if (*a)
-	{
-		last = ft_lstlast(*a);
-		temp = *a;
-		while (temp->next != last && temp->next)
-			temp = temp->next;
-		temp->next = NULL;
-		ft_lstadd_front(a, last);
-	}
+	rotate(stack);
+	write(1, "rb\n", 3);
 }
 
-void	rev_rotate_both(t_list **a, t_list **b)
+void	rotate_both(t_list **stack_a, t_list **stack_b)
 {
-	rev_rotate(a);
-	rev_rotate(b);
+	rotate(stack_a);
+	rotate(stack_b);
+	write(1, "rr\n", 3);
 }
