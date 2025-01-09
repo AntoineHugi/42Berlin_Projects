@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void	target_to_end(t_list **stack_a, t_list *elem_b)
+static void	target_largest(t_list **stack_a, t_list *elem_b)
 {
 	int		index_holder;
 	t_list	*temp;
@@ -24,7 +24,7 @@ static void	target_to_end(t_list **stack_a, t_list *elem_b)
 		if (temp->index < index_holder)
 		{
 			index_holder = temp->index;
-			elem_b->target = temp->pos;
+			elem_b->target = (temp->pos - 1) % ft_lstsize(*stack_a);
 		}
 		temp = temp->next;
 	}
@@ -47,9 +47,7 @@ static void	find_target(t_list **stack_a, t_list *elem_b)
 		temp = temp->next;
 	}
 	if (index_holder == 2147483647)
-	{
-		target_to_end(stack_a, elem_b);
-	}
+		target_largest(stack_a, elem_b);
 }
 
 void	ft_set_target(t_list **stack_a, t_list **stack_b)

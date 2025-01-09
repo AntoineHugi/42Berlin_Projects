@@ -22,12 +22,14 @@ void	ft_print_for_test(t_list **stack)
 	{
 		ft_printf("value: %i; ", temp->value);
 		ft_printf("index: %i; ", temp->index);
+		ft_printf("move a: %i; ", temp->move_a);
+		ft_printf("move b: %i; ", temp->move_b);
 		ft_printf("\n");
 		temp2 = temp->next;
 		temp = temp2;
 	}
-	ft_printf("Stack A\n");
-	ft_print_for_test(stack);
+	//ft_printf("Stack A\n");
+	//ft_print_for_test(stack);
 }
 
 int	main(int argc, char **argv)

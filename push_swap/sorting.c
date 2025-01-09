@@ -54,19 +54,19 @@ static void	reduce_a(t_list **stack_a, t_list **stack_b)
 
 	size = ft_lstsize(*stack_a);
 	pushed = 0;
-	/*while (size > 6 && pushed < size / 2 && !is_sorted(stack_a))
+	while (size > 6 && pushed < size / 2 && !is_sorted(stack_a))
 	{
-		if ((*stack_a)->index < size / 2)
+		if ((*stack_a)->index <= size / 2)
 		{
 			push_to_b(stack_a, stack_b);
 			pushed++;
 		}
 		else
 		{
-			ft_printf("reduce\n");
+			//ft_printf("reduce\n");
 			rotate_a(stack_a);
 		}	
-	}*/
+	}
 	while (size - pushed > 3 && !is_sorted(stack_a))
 	{
 		push_to_b(stack_a, stack_b);
@@ -97,22 +97,34 @@ static void	final_sorting(t_list **stack)
 	while (!is_sorted(stack))
 	{
 		if (check == 1)
+		{
+			ft_printf("final sort rev");
 			rev_rotate_a(stack);
+		}
 		else
+		{
+			ft_printf("final sort rot");
 			rotate_a(stack);
+		}
 	}
 }
 
 void	sorting(t_list **stack_a, t_list **stack_b)
 {
+	ft_printf("initial\n");
+	ft_print_for_test(stack_a);
 	reduce_a(stack_a, stack_b);
 	sort_basic(stack_a);
+	ft_printf("Stack A\n");
+	ft_print_for_test(stack_a);
+	ft_printf("Stack B\n");
+	ft_print_for_test(stack_b);
 	while (*stack_b)
 	{
 		ft_set_target(stack_a, stack_b);
 		make_best_move(stack_a, stack_b);
 	}
-	//ft_printf("Stack A\n");
-	//ft_print_for_test(stack_a);
-	final_sorting(stack_a);
+	ft_printf("Result\n");
+	ft_print_for_test(stack_a);
+	//final_sorting(stack_a);
 }
