@@ -1,39 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_printchar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 14:42:56 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/07 16:06:08 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/28 12:27:32 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/28 12:27:35 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-void	push_to_a(t_list **stack_a, t_list **stack_b)
+int	ft_printchar(int c)
 {
-	t_list	*temp;
+	unsigned char	uc;
 
-	if (*stack_b)
-	{
-		temp = *stack_b;
-		*stack_b = temp->next;
-		ft_lstadd_front(stack_a, temp);
-	}
-	write(1, "pa\n", 3);
-}
-
-void	push_to_b(t_list **stack_a, t_list **stack_b)
-{
-	t_list	*temp;
-
-	if (*stack_a)
-	{
-		temp = *stack_a;
-		*stack_a = temp->next;
-		ft_lstadd_front(stack_b, temp);
-	}
-	write(1, "pb\n", 3);
+	uc = (unsigned char)c;
+	return (write(1, &uc, 1));
 }

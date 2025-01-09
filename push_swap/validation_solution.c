@@ -1,45 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   validation_solution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 14:43:03 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/07 16:06:26 by ahugi            ###   ########.fr       */
+/*   Created: 2025/01/07 15:38:23 by ahugi             #+#    #+#             */
+/*   Updated: 2025/01/07 16:06:54 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rotate(t_list **stack)
+int	is_sorted(t_list **stack)
 {
-	t_list	*first;
+	t_list	*current;
 
-	if (*stack)
+	current = *stack;
+	while (current->next)
 	{
-		first = *stack;
-		*stack = first->next;
-		ft_lstadd_back(stack, first);
-		first->next = NULL;
+		if (current->value > current->next->value)
+			return (0);
+		current = current->next;
 	}
-}
-
-void	rotate_a(t_list **stack)
-{
-	rotate(stack);
-	write(1, "ra\n", 3);
-}
-
-void	rotate_b(t_list **stack)
-{
-	rotate(stack);
-	write(1, "rb\n", 3);
-}
-
-void	rotate_both(t_list **stack_a, t_list **stack_b)
-{
-	rotate(stack_a);
-	rotate(stack_b);
-	write(1, "rr\n", 3);
+	return (1);
 }

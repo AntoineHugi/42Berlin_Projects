@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_printpointer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 14:42:56 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/07 16:06:08 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/28 12:28:33 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/28 12:28:37 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-void	push_to_a(t_list **stack_a, t_list **stack_b)
+int	ft_printpointer(void *arg)
 {
-	t_list	*temp;
+	char	*result;
+	int		counter;
+	int		check;
 
-	if (*stack_b)
+	if (!arg)
+		return (write(1, "(nil)", 5));
+	result = ft_itoa_hex_pointer((unsigned long)arg);
+	if (!result)
+		return (-1);
+	check = write(1, "0x", 2);
+	if (check < 0)
 	{
-		temp = *stack_b;
-		*stack_b = temp->next;
-		ft_lstadd_front(stack_a, temp);
+		free(result);
+		return (-1);
 	}
-	write(1, "pa\n", 3);
-}
-
-void	push_to_b(t_list **stack_a, t_list **stack_b)
-{
-	t_list	*temp;
-
-	if (*stack_a)
-	{
-		temp = *stack_a;
-		*stack_a = temp->next;
-		ft_lstadd_front(stack_b, temp);
-	}
-	write(1, "pb\n", 3);
+	counter = ft_printstr(result);
+	free(result);
+	if (counter < 0)
+		return (-1);
+	return (counter + check);
 }

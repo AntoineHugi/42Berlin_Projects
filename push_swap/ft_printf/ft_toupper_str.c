@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_toupper_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 14:42:56 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/07 16:06:08 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/21 13:59:07 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/28 12:28:56 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-void	push_to_a(t_list **stack_a, t_list **stack_b)
+static int	ft_toupper(int c)
 {
-	t_list	*temp;
-
-	if (*stack_b)
+	if (c >= 'a' && c <= 'z')
 	{
-		temp = *stack_b;
-		*stack_b = temp->next;
-		ft_lstadd_front(stack_a, temp);
+		c = c - 32;
 	}
-	write(1, "pa\n", 3);
+	return (c);
 }
 
-void	push_to_b(t_list **stack_a, t_list **stack_b)
+void	ft_toupper_str(char *str)
 {
-	t_list	*temp;
-
-	if (*stack_a)
+	if (!str)
+		return ;
+	while (*str)
 	{
-		temp = *stack_a;
-		*stack_a = temp->next;
-		ft_lstadd_front(stack_b, temp);
+		*str = ft_toupper(*str);
+		str++;
 	}
-	write(1, "pb\n", 3);
 }

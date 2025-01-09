@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_printhex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 14:42:56 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/07 16:06:08 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/28 12:28:18 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/28 12:28:19 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-void	push_to_a(t_list **stack_a, t_list **stack_b)
+int	ft_printhex(unsigned int arg, char c)
 {
-	t_list	*temp;
+	char	*result;
+	int		counter;
 
-	if (*stack_b)
+	if (c == 'x')
 	{
-		temp = *stack_b;
-		*stack_b = temp->next;
-		ft_lstadd_front(stack_a, temp);
+		result = ft_itoa_hex(arg);
+		if (!result)
+			return (-1);
+		counter = ft_printstr(result);
+		free(result);
 	}
-	write(1, "pa\n", 3);
-}
-
-void	push_to_b(t_list **stack_a, t_list **stack_b)
-{
-	t_list	*temp;
-
-	if (*stack_a)
+	if (c == 'X')
 	{
-		temp = *stack_a;
-		*stack_a = temp->next;
-		ft_lstadd_front(stack_b, temp);
+		result = ft_itoa_hex(arg);
+		if (!result)
+			return (-1);
+		ft_toupper_str(result);
+		counter = ft_printstr(result);
+		free(result);
 	}
-	write(1, "pb\n", 3);
+	if (counter < 0)
+		return (-1);
+	return (counter);
 }
