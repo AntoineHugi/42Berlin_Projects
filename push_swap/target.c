@@ -6,7 +6,7 @@
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:07:44 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/07 16:06:41 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/01/13 13:24:49 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static void	target_largest(t_list **stack_a, t_list *elem_b)
 	int		index_holder;
 	t_list	*temp;
 
-	index_holder = 2147483647;
+	index_holder = -2147483648;
 	temp = *stack_a;
 	while (temp)
 	{
-		if (temp->index < index_holder)
+		if (temp->index > index_holder)
 		{
 			index_holder = temp->index;
-			elem_b->target = (temp->pos - 1) % ft_lstsize(*stack_a);
+			elem_b->target = (temp->pos + 1) % ft_lstsize(*stack_a);
 		}
 		temp = temp->next;
 	}
@@ -54,8 +54,8 @@ void	ft_set_target(t_list **stack_a, t_list **stack_b)
 {
 	t_list	*temp;
 
-	set_position(stack_a);
-	set_position(stack_b);
+	set_position(*stack_a);
+	set_position(*stack_b);
 	temp = *stack_b;
 	while (temp)
 	{

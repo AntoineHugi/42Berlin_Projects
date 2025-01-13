@@ -6,7 +6,7 @@
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 11:46:13 by ahugi             #+#    #+#             */
-/*   Updated: 2025/01/07 16:06:47 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/01/13 13:25:02 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	is_valid_input(int argc, char **argv, char ***args)
 		*args = argv + 1;
 	if (!is_valid(*args))
 	{
-		write(2, "Error\n", 6);
+		write(2, "Error\n", 7);
 		return (0);
 	}
 	else
