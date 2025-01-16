@@ -1,6 +1,6 @@
 CUR_DIR = $(shell pwd)
 
-NAME = push_swap.a
+NAME = push_swap
 
 CC = cc
 
@@ -25,7 +25,7 @@ $(MY_INCLUDES):
 	$(MAKE) -C $(CUR_DIR)/libft
 
 $(NAME): $(MY_OBJECTS) $(MY_INCLUDES)
-	ar rcs $(NAME) $(MY_OBJECTS)
+	$(CC) $(CFLAGS) $(MY_OBJECTS) $(MY_INCLUDES) -o $(NAME)
 
 %.o: %.c $(MY_HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
