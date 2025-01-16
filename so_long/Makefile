@@ -1,8 +1,10 @@
 CUR_DIR = $(shell pwd)
 
-NAME = so_long.a
+NAME = so_long
 
 CC = cc
+
+MLX_FLAGS = -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 RM = rm -f
 
@@ -11,10 +13,7 @@ CFLAGS += -Wall -Wextra -Werror
 LIBFT_DIR = $(CUR_DIR)/libft
 MLX_DIR = $(CUR_DIR)/mlx_linux
 
-SRCS = $(addprefix $(CUR_DIR)/, main.c  validation_input.c push.c \
-		swap.c rotate.c rev_rotate.c \
-		initialisation.c sorting.c target.c \
-		move_calculation.c move_execution.c validation_solution.c)
+SRCS = $(addprefix $(CUR_DIR)/, test.c)
 
 MY_HEADERS = so_long.h
 
@@ -23,8 +22,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(LIBFT_DIR)/libft.a $(MLX_DIR)/libmlx_Linux.a $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
-	$(CC) $(OBJS) -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(OBJS) -L$(MLX_DIR) $(MLX_FLAGS) -o $(NAME)
 
 $(LIBFT_DIR)/libft.a:
 	$(MAKE) -C $(LIBFT_DIR)

@@ -14,6 +14,7 @@
 # define SO_LONG_H
 
 # include <mlx.h>
+# include <stdlib.h>
 
 typedef struct	s_data {
 	void	*img;
@@ -22,5 +23,11 @@ typedef struct	s_data {
 	int		line_length;
 	int		endian;
 }				t_data;
+
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+	t_data	*img;
+}				t_vars;
 
 #endif
