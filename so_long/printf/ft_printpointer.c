@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_printpointer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 14:49:42 by ahugi             #+#    #+#             */
-/*   Updated: 2024/11/11 14:50:25 by ahugi            ###   ########.fr       */
+/*   Created: 2024/11/28 12:28:33 by ahugi             #+#    #+#             */
+/*   Updated: 2024/11/28 12:28:37 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_printpointer(void *arg)
 {
-	size_t	s1_size;
-	size_t	s2_size;
 	char	*result;
+	int		counter;
+	int		check;
 
-	if (!s1 || !s2)
-		return (NULL);
-	s1_size = ft_strlen(s1);
-	s2_size = ft_strlen(s2);
-	result = (char *)malloc(sizeof(char) * (s1_size + s2_size + 1));
+	if (!arg)
+		return (write(1, "(nil)", 5));
+	result = ft_itoa_hex_pointer((unsigned long)arg);
 	if (!result)
-		return (NULL);
-	ft_memcpy(&result[0], s1, s1_size);
-	ft_memcpy(&result[s1_size], s2, s2_size);
-	result[s1_size + s2_size] = '\0';
-	return (result);
+		return (-1);
+	check = write(1, "0x", 2);
+	if (check < 0)
+	{
+		free(result);
+		return (-1);
+	}
+	counter = ft_printstr(result);
+	free(result);
+	if (counter < 0)
+		return (-1);
+	return (counter + check);
 }
