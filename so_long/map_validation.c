@@ -101,6 +101,7 @@ int	is_rectangle(t_map *map)
 	return (1);
 }
 
+//path finding validation missing
 int	map_validation(t_map *map)
 {
 	if (!is_rectangle(map))
@@ -113,7 +114,7 @@ int	map_validation(t_map *map)
 		error_map("The map has no or more than one exit.", map);
 	if (!has_collectibles(map))
 		error_map("The map has no collectibles.", map);
-	if (!valid_path(map))
-		error_map("The map doesn't have a valid path.", map);
+	//if (!valid_path(map))
+	//	error_map("The map doesn't have a valid path.", map);
 	return (1);
 }

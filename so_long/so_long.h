@@ -13,6 +13,13 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# ifndef WIN_W
+#  define WIN_W 1000
+# endif
+# ifndef WIN_H
+#  define WIN_H 600
+# endif
+
 # include <mlx.h>
 # include <stdlib.h>
 # include <limits.h>
@@ -22,22 +29,14 @@
 # include "printf/ft_printf.h"
 # include "gnl/get_next_line.h"
 
-typedef struct	s_data {
+typedef struct	s_img {
 	void	*img;
 	char	*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
-}				t_data;
+}				t_img;
 
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-	t_data	*img;
-	int		color;
-}				t_vars;
-
-//add everything else inside map!!
 typedef struct s_map {
 	char	*map_raw;
 	char	*line;
@@ -46,6 +45,17 @@ typedef struct s_map {
 	int	height;
 	int	width;
 }				t_map;
+
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+	t_img	*img;
+	int		color;
+	t_map	*map;
+}				t_vars;
+
+//add everything else inside map
+
 
 
 int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
