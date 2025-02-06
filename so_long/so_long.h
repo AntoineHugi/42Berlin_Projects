@@ -15,6 +15,7 @@
 
 # define WIN_W 1000
 # define WIN_H 600
+# define PIX 32
 # define UP	1
 # define DOWN	2
 # define RIGHT	3
@@ -35,13 +36,11 @@
 # include "printf/ft_printf.h"
 # include "gnl/get_next_line.h"
 
-typedef struct	s_img {
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}				t_img;
+typedef struct s_sprite {
+	void	*xpm_ptr;
+	int		x;
+	int		y;
+}				t_sprite;
 
 typedef struct s_map {
 	char	*map_raw;
@@ -50,49 +49,29 @@ typedef struct s_map {
 	char	**map_path_check;
 	int		height;
 	int		width;
-	int		tile_h;
-	int		tile_w;
 	int		p_pos[2];
 	int		e_pos[2];
 	int		moves;
 	int		collect_count;
-}				t_map;
-
-typedef struct s_sprite {
-	void	*xpm_ptr;
-	int		x;
-	int		y;
-}				t_sprite;
-
-typedef struct	s_game {
 	void	*mlx;
 	void	*win;
-	t_img	*img;
-	t_map	*map;
 	t_sprite	wall;
 	t_sprite	floor;
 	t_sprite	player;
 	t_sprite	chicken;
 	t_sprite	exit;
-	int		color;
-}				t_game;
-
-
-
-int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b);
-unsigned char	get_t(int trgb);
-unsigned char	get_r(int trgb);
-unsigned char	get_g(int trgb);
-unsigned char	get_b(int trgb);
+}				t_map;
 
 int		input_validation(int argc, char **argv);
 int		map_validation(t_map *map);
-int		key_hook(int keycode, t_game *game);
+int		key_hook(int keycode, t_map *map);
 int		valid_path(t_map *map);
-int		exit_app(t_game *game);
+int		exit_app(t_map *map);
+int		render_map(t_map *map);
+void	game_won(t_map *map);
 void	error_input(char *str);
 void	error_map(char *str, t_map *map);
-void	init_game(t_game *game);
+void	init_game(t_map *map);
 t_map	*map_creation(char *map_file);
 
 #endif

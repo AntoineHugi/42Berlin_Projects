@@ -43,8 +43,26 @@ int	input_validation(int argc, char **argv)
 	return(1);
 }
 
-/*
 int	main(int argc, char **argv)
 {
-	
-}*/
+	t_map	*map;
+
+	if (input_validation(argc, argv))
+	{
+		map = map_creation(argv[1]);
+		if (!map)
+			error_input("failed to open file");
+		if (map_validation(map))
+		{
+			ft_printf("it's valid!\n");
+			map->mlx = mlx_init();
+			map->win = mlx_new_window(map->mlx, PIX * map->width, PIX * map->height, "./so_long");
+			init_game(map);
+			mlx_key_hook(map->win, key_hook, map);
+			mlx_hook(map->win, 17, 0L, exit_app, map);
+			mlx_loop_hook(map->mlx, render_map, map);
+			mlx_loop(map->mlx);
+		}
+	}
+	return (0);
+}
