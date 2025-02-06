@@ -77,8 +77,8 @@ int	move_to_target(t_map *map, int *p, int *t)
 
 int     valid_path(t_map *map)
 {
-        int     p_pos[2];
-        int     c_pos[2];
+    int     p_pos[2];
+    int     c_pos[2];
 	int     e_pos[2];
 	
 	set_position(map, e_pos, 'E');

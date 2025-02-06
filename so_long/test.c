@@ -41,7 +41,7 @@ void	coloring(t_img *img, int x, int y, int color)
 	}
 }
 
-int	rainbow(t_vars *vars)
+int	rainbow(t_game *game)
 {
 	unsigned char t;
 	unsigned char	r;
@@ -50,10 +50,10 @@ int	rainbow(t_vars *vars)
 	int	trgb;
 	unsigned char temp;
 	usleep(500000);
-	t = get_t(vars->color);
-	r = get_r(vars->color);
-	g = get_g(vars->color);
-	b = get_b(vars->color);
+	t = get_t(game->color);
+	r = get_r(game->color);
+	g = get_g(game->color);
+	b = get_b(game->color);
 	if (b <= g)
 	{
 		if (g <= r)
@@ -76,83 +76,83 @@ int	rainbow(t_vars *vars)
 		g = temp;
 	}
 	trgb = create_trgb(t,r,g,b);
-	vars->color = trgb;
-	coloring(vars->img, WIN_W, WIN_H, vars->color);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
+	game->color = trgb;
+	coloring(game->img, WIN_W, WIN_H, game->color);
+	mlx_put_image_to_window(game->mlx, game->win, game->img->img, 0, 0);
 	return(0);
 }
 
-int	exit_app(t_vars *vars)
+int	exit_app(t_game *game)
 {
 	int	i;
 
 	i = 0;
-	while (vars->map->map_array[i])
+	while (game->map->map_array[i])
 	{
-		free(vars->map->map_array[i]);
-		free(vars->map->map_path_check[i]);
+		free(game->map->map_array[i]);
+		free(game->map->map_path_check[i]);
 		i++;
 	}
-	free(vars->map->map_array);
-	free(vars->map->map_path_check);
-	free(vars->map);
-	mlx_destroy_image(vars->mlx, vars->img->img);
-	mlx_destroy_window(vars->mlx, vars->win);
-	mlx_destroy_display(vars->mlx);
-	free(vars->mlx);
+	free(game->map->map_array);
+	free(game->map->map_path_check);
+	free(game->map);
+	mlx_destroy_image(game->mlx, game->img->img);
+	mlx_destroy_image(game->mlx, game->chicken.xpm_ptr);
+	mlx_destroy_image(game->mlx, game->player.xpm_ptr);
+	mlx_destroy_image(game->mlx, game->exit.xpm_ptr);
+	mlx_destroy_image(game->mlx, game->wall.xpm_ptr);
+	mlx_destroy_image(game->mlx, game->floor.xpm_ptr);
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
 	exit(1);
 }
 
-int	resize(t_vars *vars)
+void	render_sprite(t_game *game, t_sprite sprite, int height, int width)
 {
-	ft_printf("Resized.\n");
-	ft_printf("\n%p\n", vars->win);
-	return (0);
+	mlx_put_image_to_window (game->mlx, game->win, \
+	sprite.xpm_ptr, width * sprite.y, height * sprite.x);
 }
 
-int	key_hook(int keycode, t_vars *vars)
+void	render_tile(t_game *game, int height, int width)
 {
-	if (keycode == 65307)
-		exit_app(vars);
-	ft_printf("The keycode is %i!\n", keycode);
-	ft_printf("\n%p\n", vars->win);
-	return (0);
+	if (game->map->map_array[height][width] == '1')
+		render_sprite(game, game->wall, height, width);
+	if (game->map->map_array[height][width] == '0')
+		render_sprite(game, game->floor, height, width);
+	if (game->map->map_array[height][width] == 'P')
+		render_sprite(game, game->player, height, width);
+	if (game->map->map_array[height][width] == 'C')
+		render_sprite(game, game->chicken, height, width);
+	if (game->map->map_array[height][width] == 'E')
+		render_sprite(game, game->exit, height, width);
 }
 
-//not working
-/*
-void	render_map(t_vars *vars)
+int	render_map(t_game *game)
 {
-	int	tile_w;
-	int	tile_h;
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 
-	i = 1;
-	tile_w = (WIN_W - 100)/vars->map->width;
-	tile_h = WIN_H/vars->map->height;
+	x = 0;
+	game->map->tile_w = (WIN_W - 100)/game->map->width;
+	game->map->tile_h = WIN_H - 100/game->map->height;
 
-	while (i <= vars->map->height)
+	while (x < game->map->height)
 	{
-		j = 1;
-		while (j <= vars->map->width)
+		y = 0;
+		while (y < game->map->width)
 		{
-			if (i * tile_h < 5 || yaxis < 5)
-				my_mlx_pixel_put(vars->img, xaxis, yaxis, 0x00000000);
-			else
-				my_mlx_pixel_put(vars->img, xaxis, yaxis, 0x00FF0000);
-			yaxis++;
-			j++;
+			render_tile(game, x, y);
+			y++;
 		}
-		i++;
+		x++;
 	}
-
-	//ft_printf("tile width is: %i, tile heigth is: %i\n", tile_w, tile_h);
-}/*
+	return (0);
+}
 
 int	main(int argc, char **argv)
 {
-	t_vars	vars;
+	t_game	game;
 	t_img	img;
 	t_map	*map;
 
@@ -160,31 +160,26 @@ int	main(int argc, char **argv)
 	{
 		map = map_creation(argv[1]);
 		if (!map)
-		{
-			free(map);
 			error_input("failed to open file");
-		}
-		ft_printf("width is : %i, height is : %i\n", map->width, map->height);
 		if (map_validation(map))
 		{
 			ft_printf("it's valid!\n");
-			vars.map = map;
+			game.map = map;
 		}
 	}
-	vars.color = 0x00FF0000;
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, WIN_W, WIN_H, "./so_long");
-	img.img = mlx_new_image(vars.mlx, WIN_W, WIN_H);
+	game.color = 0x00FF0000;
+	game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, WIN_W, WIN_H, "./so_long");
+	img.img = mlx_new_image(game.mlx, WIN_W, WIN_H);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_len, &img.endian);
-	vars.img = &img;
-	render_map(&vars);
-	//coloring(vars.img, WIN_W, WIN_H, vars.color);
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.img->img, 0, 0);
+	game.img = &img;
+	//mlx_put_image_to_window(game.mlx, game.win, game.img->img, 0, 0);
+	init_game(&game);
+//	render_map(&game);
 
-	mlx_key_hook(vars.win, key_hook, &vars);
-	mlx_hook(vars.win, 17, 0L, exit_app, &vars);
-	mlx_hook(vars.win, 25, 0L, resize, &vars);
-	//mlx_loop_hook(vars.mlx, rainbow, &vars);
-	mlx_loop(vars.mlx);
+	mlx_key_hook(game.win, key_hook, &game);
+	mlx_hook(game.win, 17, 0L, exit_app, &game);
+	mlx_loop_hook(game.mlx, render_map, &game);
+	mlx_loop(game.mlx);
 	return (argc);
 }
