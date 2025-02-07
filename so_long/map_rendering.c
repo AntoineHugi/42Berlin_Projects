@@ -20,6 +20,40 @@ void	render_tile(t_map *map, int height, int width)
 		render_sprite(map, map->exit, height, width);
 }
 
+void	render_moves(t_map *map)
+{
+	char	*moves;
+	int		height;
+	int		width;
+
+	height = map->win_y / 4 - 15;
+	width = map->win_x - 60;
+	mlx_string_put(map->mlx, map->win, width, height, 65280, "moves");
+	moves = ft_itoa(map->old_moves);
+	mlx_string_put(map->mlx, map->win, width + 10, height + 15, 0, moves);
+	free(moves);
+	moves = ft_itoa(map->moves);
+	mlx_string_put(map->mlx, map->win, width + 10, height + 15, 65280, moves);
+	free(moves);
+}
+
+void	render_collectibles(t_map *map)
+{
+	char	*coll;
+	int		height;
+	int		width;
+
+	height = map->win_y / 2 - 15;
+	width = map->win_x - 60;
+	mlx_string_put(map->mlx, map->win, width, height, 65280, "collectibles");
+	coll = ft_itoa(map->old_collect_count);
+	mlx_string_put(map->mlx, map->win, width + 10, height + 15, 0, coll);
+	free(coll);
+	coll = ft_itoa(map->collect_count);
+	mlx_string_put(map->mlx, map->win, width + 10, height + 15, 65280, coll);
+	free(coll);
+}
+
 int	render_map(t_map *map)
 {
 	int	x;
@@ -36,5 +70,7 @@ int	render_map(t_map *map)
 		}
 		x++;
 	}
+	render_moves(map);
+	render_collectibles(map);
 	return (0);
 }

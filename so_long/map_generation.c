@@ -59,20 +59,29 @@ static void	init_position(t_map *map)
 	}
 }
 
-void	map_init(t_map *map, int i)
+void	map_init(t_map *map)
 {
+	int	i;
+	
 	map->width = (int)ft_strlen(map->map_array[0]);
+	i = 0;
+	while (map->map_array[i])
+		i++;
 	map->height = i;
 	map->moves = 0;
+	map->old_moves = 0;
+	map->old_collect_count = 0;
 	init_position(map);
 	count_collectibles(map);
+	map->img = NULL;
+	map->win_x = PIX * map->width + 100;
+	map->win_y = PIX * map->height;
 }
 
 t_map	*map_creation(char *map_file)
 {
 	t_map	*map;
-	int	fd;
-	int	i;
+	int		fd;
 
 	map = (t_map *)malloc(sizeof(t_map));
 	fd = open(map_file, O_RDONLY);
@@ -82,7 +91,6 @@ t_map	*map_creation(char *map_file)
 		return (NULL);
 	}
 	map->map_raw = NULL;
-	i = 0;
 	while (1)
 	{
 		map->line = get_next_line(fd);
@@ -90,13 +98,11 @@ t_map	*map_creation(char *map_file)
 			break;
 		map->map_raw = ft_gnl_strjoin(map->map_raw, map->line);
 		free(map->line);
-		i++;
 	}
 	map->map_array = ft_split(map->map_raw, '\n');
-	//instead of creating a new map for check, could create a copy in the checker.
-	//create a copy of map for restart function
 	map->map_path_check = ft_split(map->map_raw, '\n');
+	map->map_reset = ft_split(map->map_raw, '\n');
 	free(map->map_raw);
-	map_init(map, i);
+	map_init(map);
 	return (map);
 }

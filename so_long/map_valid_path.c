@@ -75,6 +75,8 @@ int	move_to_target(t_map *map, int *p, int *t)
 	return (0);
 }
 
+//cover all possible 0, c & e with 1. if still exit and collectible remaining, map not possible
+
 int     valid_path(t_map *map)
 {
     int     p_pos[2];

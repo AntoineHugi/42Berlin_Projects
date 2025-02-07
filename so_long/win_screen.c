@@ -11,33 +11,25 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	exit_app(t_map *map)
+/*
+void	draw_end(t_map *map)
 {
-	int	i;
-
-	i = 0;
-	while (map->map_array[i])
-	{
-		free(map->map_array[i]);
-		free(map->map_path_check[i]);
-		i++;
-	}
-	free(map->map_array);
-	free(map->map_path_check);
-	mlx_destroy_image(map->mlx, map->chicken.xpm_ptr);
-	mlx_destroy_image(map->mlx, map->player.xpm_ptr);
-	mlx_destroy_image(map->mlx, map->exit.xpm_ptr);
-	mlx_destroy_image(map->mlx, map->wall.xpm_ptr);
-	mlx_destroy_image(map->mlx, map->floor.xpm_ptr);
-	mlx_destroy_window(map->mlx, map->win);
-	mlx_destroy_display(map->mlx);
-	free(map->mlx);
-	free(map);
-	exit(1);
+	int	x;
+	int	y;
+	
+	x = PIX * map->width + 100;
+	y = PIX * map->height;
 }
-
+*/
 void	game_won(t_map *map)
 {
 	map->moves++;
+	ft_printf("congratulations, you won with %i moves!\n", map->moves);
+	exit_app(map);
+/*	
+	End screen maybe, using win_sprite
+	mlx_clear_window(map->mlx, map->win);
+	mlx_string_put(map->mlx, map->win, x, y, 255, "YOU WIN!");
+	mlx_hook(map->win, 17, 0L, exit_app, map);
+	mlx_loop(map->mlx);*/
 }

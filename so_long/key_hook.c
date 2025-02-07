@@ -1,97 +1,50 @@
 #include "so_long.h"
 
-void	move_up(t_map *map)
+int	exit_app(t_map *map)
 {
-	if (map->map_array[map->p_pos[0] - 1][map->p_pos[1]] != '1')
-	{
-		if (map->map_array[map->p_pos[0] - 1][map->p_pos[1]] == 'C')
-			map->collect_count--;
-		if (map->map_array[map->p_pos[0] - 1][map->p_pos[1]] == 'E'
-			&& map->collect_count == 0)
-			game_won(map);
-		map->map_array[map->p_pos[0] - 1][map->p_pos[1]] = 'P';
-		if (map->p_pos[0] == map->e_pos[0] && map->p_pos[1] == map->e_pos[1])
-			map->map_array[map->p_pos[0]][map->p_pos[1]] = 'E';
-		else	
-			map->map_array[map->p_pos[0]][map->p_pos[1]] = '0';
-		map->p_pos[0]--;
-		map->moves++;
-	}
+	free_img(map);
+	free_map(map);
+	exit(1);
 }
 
-void	move_down(t_map *map)
+void	reset_game(t_map *map)
 {
-	if (map->map_array[map->p_pos[0] + 1][map->p_pos[1]] != '1')
-	{
-		if (map->map_array[map->p_pos[0] + 1][map->p_pos[1]] == 'C')
-			map->collect_count--;
-		if (map->map_array[map->p_pos[0] + 1][map->p_pos[1]] == 'E'
-			&& map->collect_count == 0)
-			game_won(map);
-		map->map_array[map->p_pos[0] + 1][map->p_pos[1]] = 'P';
-		if (map->p_pos[0] == map->e_pos[0] && map->p_pos[1] == map->e_pos[1])
-			map->map_array[map->p_pos[0]][map->p_pos[1]] = 'E';
-		else	
-			map->map_array[map->p_pos[0]][map->p_pos[1]] = '0';
-		map->p_pos[0]++;
-		map->moves++;
+	int	i;
+	int j;
+	int	temp_move;
+	int	temp_collect;
 
-	}
-}
-
-void	move_right(t_map *map)
-{
-	if (map->map_array[map->p_pos[0]][map->p_pos[1] + 1] != '1')
+	i = 0;
+	while (map->map_reset[i])
 	{
-		if (map->map_array[map->p_pos[0]][map->p_pos[1] + 1] == 'C')
-			map->collect_count--;
-		if (map->map_array[map->p_pos[0]][map->p_pos[1] + 1] == 'E'
-			&& map->collect_count == 0)
-			game_won(map);
-		map->map_array[map->p_pos[0]][map->p_pos[1] + 1] = 'P';
-		if (map->p_pos[0] == map->e_pos[0] && map->p_pos[1] == map->e_pos[1])
-			map->map_array[map->p_pos[0]][map->p_pos[1]] = 'E';
-		else	
-			map->map_array[map->p_pos[0]][map->p_pos[1]] = '0';
-		map->p_pos[1]++;
-		map->moves++;
+		j = 0;
+		while(map->map_reset[i][j])
+		{
+			map->map_array[i][j] = map->map_reset[i][j];
+			j++;
+		}
+		i++;
 	}
-}
-
-void	move_left(t_map *map)
-{
-	if (map->map_array[map->p_pos[0]][map->p_pos[1] - 1] != '1')
-	{
-		if (map->map_array[map->p_pos[0]][map->p_pos[1] - 1] == 'C')
-			map->collect_count--;
-		if (map->map_array[map->p_pos[0]][map->p_pos[1] - 1] == 'E'
-			&& map->collect_count == 0)
-			game_won(map);
-		map->map_array[map->p_pos[0]][map->p_pos[1] - 1] = 'P';
-		if (map->p_pos[0] == map->e_pos[0] 
-			&& map->p_pos[1] == map->e_pos[1])
-			map->map_array[map->p_pos[0]][map->p_pos[1]] = 'E';
-		else	
-			map->map_array[map->p_pos[0]][map->p_pos[1]] = '0';
-		map->p_pos[1]--;
-		map->moves++;
-	}
+	temp_collect = map->collect_count;
+	temp_move = map->moves;
+	map_init(map);
+	map->old_collect_count = temp_collect;
+	map->old_moves = temp_move;
 }
 
 int	key_hook(int keycode, t_map *map)
 {
+	if (keycode == 65362 || keycode == 119)
+		check_move(map, UP);
+	if (keycode == 65364 || keycode == 115)
+		check_move(map, DOWN);
+	if (keycode == 65361 || keycode == 97)
+		check_move(map, LEFT);
+	if (keycode == 65363 || keycode == 100)
+		check_move(map, RIGHT);
+	if (keycode == 114)
+		reset_game(map);
 	if (keycode == 65307)
 		exit_app(map);
-	if (keycode == 65362 || keycode == 119)
-		move_up(map);
-	if (keycode == 65364 || keycode == 115)
-		move_down(map);
-	if (keycode == 65363 || keycode == 100)
-		move_right(map);
-	if (keycode == 65361 || keycode == 97)
-		move_left(map);
-	if (keycode == 114)
-		init_game(map);
-	ft_printf("You have made %i moves\n", map->moves);
 	return (0);
 }

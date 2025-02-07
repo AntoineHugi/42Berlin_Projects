@@ -14,9 +14,9 @@ LIBFT_DIR = $(CUR_DIR)/libft
 PRINTF_DIR = $(CUR_DIR)/printf
 MLX_DIR = $(CUR_DIR)/mlx_linux
 
-SRCS = $(addprefix $(CUR_DIR)/, end_screen.c errors.c initialisation.c key_hook.c main.c \
+SRCS = $(addprefix $(CUR_DIR)/, errors.c free_memory.c initialisation.c key_hook.c main.c \
 								map_generation.c map_rendering.c map_valid_path.c map_validation.c \
-								gnl/get_next_line.c gnl/get_next_line_utils.c )
+								moves.c win_screen.c gnl/get_next_line.c gnl/get_next_line_utils.c )
 
 MY_HEADERS = so_long.h gnl/get_next_line.h
 

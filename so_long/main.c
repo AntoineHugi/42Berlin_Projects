@@ -54,9 +54,8 @@ int	main(int argc, char **argv)
 			error_input("failed to open file");
 		if (map_validation(map))
 		{
-			ft_printf("it's valid!\n");
 			map->mlx = mlx_init();
-			map->win = mlx_new_window(map->mlx, PIX * map->width, PIX * map->height, "./so_long");
+			map->win = mlx_new_window(map->mlx, map->win_x, map->win_y, "./so_long");
 			init_game(map);
 			mlx_key_hook(map->win, key_hook, map);
 			mlx_hook(map->win, 17, 0L, exit_app, map);
