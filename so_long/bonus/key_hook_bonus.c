@@ -19,7 +19,7 @@ int	exit_app(t_map *map)
 	exit(1);
 }
 
-void	reset_game(t_map *map)
+static void	reset_game(t_map *map)
 {
 	int	i;
 	int	j;
@@ -39,7 +39,7 @@ void	reset_game(t_map *map)
 	}
 	temp_collect = map->collect_count;
 	temp_move = map->moves;
-	map_init(map);
+	init_game(map);
 	map->old_collect_count = temp_collect;
 	map->old_moves = temp_move;
 }

@@ -11,54 +11,63 @@
 /* ************************************************************************** */
 
 #include "../so_long.h"
-/*
-void	my_mlx_pixel_put(t_img *img, int x, int y)
-{
-	char	*dst;
 
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int*)dst = 0;
-}
-
-void	black_screen(t_map *map)
+static int	count_collectibles(char **map_array)
 {
-	int		x;
-	int		y;
-	
-	x = 0;
-	while (x < map->win_x)
+	int	i;
+	int	j;
+	int	collect_count;
+
+	i = 0;
+	collect_count = 0;
+	while (map_array[i])
 	{
-		y = 0;
-		while(y < map->win_y)
+		j = 0;
+		while (map_array[i][j])
 		{
-			my_mlx_pixel_put(map->img, x, y);
-			y++;
+			if (map_array[i][j] == 'C')
+				collect_count++;
+			j++;
 		}
-		x++;
+		i++;
 	}
-}*/
-
-static t_sprite	new_sprite(void *mlx, char *path, t_map *map)
-{
-	t_sprite	sprite;
-
-	sprite.xpm_ptr = mlx_xpm_file_to_image(mlx, path, &sprite.x, &sprite.y);
-	if (sprite.xpm_ptr == NULL)
-		error_map("Couldn't find a sprite file.", map);
-	return (sprite);
+	return (collect_count);
 }
 
-static void	init_sprites(t_map *map)
+static void	init_position(t_map *map)
 {
-	map->chicken = new_sprite(map->mlx, CHICKEN_XPM, map);
-	map->player = new_sprite(map->mlx, PLAYER_XPM, map);
-	map->wall = new_sprite(map->mlx, WALL_XPM, map);
-	map->floor = new_sprite(map->mlx, FLOOR_XPM, map);
-	map->exit = new_sprite(map->mlx, EXIT_XPM, map);
-	map->won = new_sprite(map->mlx, WIN_XPM, map);
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map->map_array[i])
+	{
+		j = 0;
+		while (map->map_array[i][j])
+		{
+			if (map->map_array[i][j] == 'P')
+			{
+				map->p_pos[0] = i;
+				map->p_pos[1] = j;
+			}
+			if (map->map_array[i][j] == 'E')
+			{
+				map->e_pos[0] = i;
+				map->e_pos[1] = j;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 void	init_game(t_map *map)
 {
-	init_sprites(map);
+	map->moves = 0;
+	map->old_moves = 0;
+	map->collect_count = count_collectibles(map->map_array);
+	map->old_collect_count = 0;
+	init_position(map);
+	map->game_won = 0;
+	map->win_clear = 0;
 }

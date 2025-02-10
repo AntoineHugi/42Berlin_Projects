@@ -58,7 +58,7 @@ int	main(int argc, char **argv)
 			map->mlx = mlx_init();
 			map->win = mlx_new_window(map->mlx, map->win_x, map->win_y, 
 					"./so_long");
-			init_game(map);
+			init_sprites(map);
 			mlx_key_hook(map->win, key_hook, map);
 			mlx_hook(map->win, 17, 0L, exit_app, map);
 			mlx_loop_hook(map->mlx, render_map, map);

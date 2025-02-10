@@ -12,7 +12,7 @@
 
 #include "../so_long.h"
 
-void	move_up(t_map *map)
+static void	move_up(t_map *map)
 {
 	if (map->map_array[map->p_pos[0] - 1][map->p_pos[1]] != '1')
 	{
@@ -37,7 +37,7 @@ void	move_up(t_map *map)
 	}
 }
 
-void	move_down(t_map *map)
+static void	move_down(t_map *map)
 {
 	if (map->map_array[map->p_pos[0] + 1][map->p_pos[1]] != '1')
 	{
@@ -62,7 +62,7 @@ void	move_down(t_map *map)
 	}
 }
 
-void	move_right(t_map *map)
+static void	move_right(t_map *map)
 {
 	if (map->map_array[map->p_pos[0]][map->p_pos[1] + 1] != '1')
 	{
@@ -87,7 +87,7 @@ void	move_right(t_map *map)
 	}
 }
 
-void	move_left(t_map *map)
+static void	move_left(t_map *map)
 {
 	if (map->map_array[map->p_pos[0]][map->p_pos[1] - 1] != '1')
 	{

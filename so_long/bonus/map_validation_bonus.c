@@ -12,7 +12,7 @@
 
 #include "../so_long.h"
 
-int	has_collectibles(t_map *map)
+static int	has_collectibles(t_map *map)
 {
 	int	i;
 	int	j;
@@ -32,7 +32,7 @@ int	has_collectibles(t_map *map)
 	return (0);
 }
 
-int	unique_elements(t_map *map, char c)
+static int	unique_elements(t_map *map, char c)
 {
 	int	i;
 	int	j;
@@ -59,7 +59,7 @@ int	unique_elements(t_map *map, char c)
 		return (0);
 }
 
-int	edge_walls(t_map *map)
+static int	edge_walls(t_map *map)
 {
 	int	i;
 	int	j;
@@ -81,7 +81,7 @@ int	edge_walls(t_map *map)
 	return (1);
 }
 
-int	is_rectangle(t_map *map)
+static int	is_rectangle(t_map *map)
 {
 	int	i;
 	int	j;
