@@ -18,12 +18,16 @@
 # define DOWN	2
 # define RIGHT	3
 # define LEFT	4
+# define RED 16711680
+# define GREEN 65280
+# define BLUE 255
 
 # define WALL_XPM			"assets/sprites/wall.xpm"
 # define FLOOR_XPM			"assets/sprites/floor.xpm"
-# define CHICKEN_XPM			"assets/sprites/chicken.xpm"
+# define CHICKEN_XPM		"assets/sprites/chicken.xpm"
 # define PLAYER_XPM			"assets/sprites/player.xpm"
 # define EXIT_XPM			"assets/sprites/exit.xpm"
+# define WIN_XPM			"assets/sprites/win.xpm"
 
 # include <mlx.h>
 # include <stdlib.h>
@@ -32,13 +36,20 @@
 # include <fcntl.h>
 # include "libft/libft.h"
 # include "printf/ft_printf.h"
-# include "gnl/get_next_line.h"
 
 typedef struct s_sprite {
 	void	*xpm_ptr;
 	int		x;
 	int		y;
 }				t_sprite;
+
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}				t_img;
 
 typedef struct s_map {
 	char	*map_raw;
@@ -56,14 +67,17 @@ typedef struct s_map {
 	int		old_moves;
 	int		collect_count;
 	int		old_collect_count;
+	int		game_won;
+	int		win_clear;
 	void	*mlx;
 	void	*win;
-	void	*img;
+	t_img	*img;
 	t_sprite	wall;
 	t_sprite	floor;
 	t_sprite	player;
 	t_sprite	chicken;
 	t_sprite	exit;
+	t_sprite	won;
 }				t_map;
 
 int		input_validation(int argc, char **argv);
@@ -72,9 +86,9 @@ int		key_hook(int keycode, t_map *map);
 int		valid_path(t_map *map);
 int		exit_app(t_map *map);
 int		render_map(t_map *map);
+void	render_win_screen(t_map *map);
 void    check_move(t_map *map, int direction);
 void	map_init(t_map *map);
-void	game_won(t_map *map);
 void	error_input(char *str);
 void	error_map(char *str, t_map *map);
 void	init_game(t_map *map);
