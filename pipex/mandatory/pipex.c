@@ -1,4 +1,16 @@
-#include "pipex.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/17 14:48:09 by ahugi             #+#    #+#             */
+/*   Updated: 2025/02/17 14:48:10 by ahugi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/pipex.h"
 
 static void	parent_process(int *pipe_fd, char **argv, char **envp)
 {
@@ -32,12 +44,11 @@ static void	child_process(int *pipe_fd, char **argv, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	pipe_fd[2];
+	int		pipe_fd[2];
 	pid_t	pid;
 
 	if (input_validation(argc))
 	{
-		
 		if (pipe(pipe_fd) == -1)
 			print_error("Piping failed.");
 		pid = fork();
