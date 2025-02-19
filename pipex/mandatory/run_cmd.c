@@ -71,7 +71,7 @@ void	run_cmd(char *cmd, char **envp)
 	{
 		free_array((full_cmd));
 		free(cmd_path);
-		exit(127);
+		print_error(cmd, 127);
 	}
 	execve(cmd_path, full_cmd, envp);
 	free_array((full_cmd));

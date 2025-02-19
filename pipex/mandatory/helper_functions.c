@@ -19,6 +19,9 @@ void	print_error(char *msg, int err_num)
 	i = 0;
 	while (msg[i])
 		write(2, &msg[i++], 1);
+	if (err_num == 127)
+		write(2, ": command not found", 20);
+	write(2, "\n", 1);
 	exit (err_num);
 }
 
