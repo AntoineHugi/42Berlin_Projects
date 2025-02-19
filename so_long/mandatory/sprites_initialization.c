@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../includes/so_long.h"
 
 static t_sprite	new_sprite(void *mlx, char *path, t_map *map)
 {

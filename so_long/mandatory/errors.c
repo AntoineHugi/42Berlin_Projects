@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "../includes/so_long.h"
 
 void	error_input(char *str)
 {
@@ -25,9 +25,15 @@ void	error_map(char *str, t_map *map)
 	i = 0;
 	ft_printf("Error\n%s\n", str);
 	while (map->map_array[i])
-		free(map->map_array[i++]);
+	{
+		free(map->map_array[i]);
+		free(map->map_path_check[i]);
+		free(map->map_reset[i]);
+		i++;
+	}
 	free(map->map_array);
 	free(map->map_path_check);
+	free(map->map_reset);
 	free(map);
 	exit(1);
 }
