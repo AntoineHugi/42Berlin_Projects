@@ -18,9 +18,12 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <string.h>
+# include <stdio.h>
+# include <errno.h>
 
 int		input_validation(int argc);
-void	print_error(char *msg);
+void	print_error(char *msg, int err_num);
 void	free_array(char **array);
 void	run_cmd(char *cmd, char **envp);
 

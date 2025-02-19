@@ -58,23 +58,23 @@ void	run_cmd(char *cmd, char **envp)
 	char	*cmd_path;
 	char	**full_cmd;
 
-	if (!cmd || cmd[0] == '\0')
-		cmd = "cat";
+	if (cmd[0] == '\0')
+		print_error("command not found", 127);
 	path = fetch_path(envp);
 	if (!path)
-		print_error("path not found in envp");
+		print_error("path not found in envp", EXIT_FAILURE);
 	full_cmd = ft_split(cmd, ' ');
 	if (!full_cmd)
-		print_error("problem reading command");
+		print_error("command not found", 127);
 	cmd_path = find_command(path, full_cmd[0]);
 	if (!cmd_path)
 	{
 		free_array((full_cmd));
 		free(cmd_path);
-		print_error("could not find command.");
+		exit(127);
 	}
 	execve(cmd_path, full_cmd, envp);
 	free_array((full_cmd));
 	free(cmd_path);
-	print_error("execve failed.");
+	print_error("execve failed", EXIT_FAILURE);
 }

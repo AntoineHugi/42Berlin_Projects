@@ -12,22 +12,20 @@
 
 #include "../includes/pipex.h"
 
-void	print_error(char *msg)
+void	print_error(char *msg, int err_num)
 {
 	int	i;
 
-	write(2, "Error\n", 7);
-	i = 0; 
+	i = 0;
 	while (msg[i])
 		write(2, &msg[i++], 1);
-	write(2, "\n", 1);
-	exit(1);
+	exit (err_num);
 }
 
 int	input_validation(int argc)
 {
 	if (argc < 5)
-		print_error("Provide at least 4 arguments: infile cmd1 cmd2 outfile");
+		print_error("invalid input", EXIT_FAILURE);
 	return (1);
 }
 
