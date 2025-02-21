@@ -13,7 +13,7 @@ PRINTF_DIR = $(CUR_DIR)/printf
 
 SRCS = $(addprefix $(CUR_DIR)/mandatory/, helper_functions.c pipex.c run_cmd.c )
 
-SRCS_BONUS = $(addprefix $(CUR_DIR)/bonus/, helper_functions_bonus.c pipex_bonus.c run_cmd_bonus.c  )
+SRCS_BONUS = $(addprefix $(CUR_DIR)/bonus/, helper_functions_bonus.c parent_child_process.c pipex_bonus.c run_cmd_bonus.c  )
 
 MY_HEADERS = $(CUR_DIR)/includes/pipex.h
 

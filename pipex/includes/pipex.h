@@ -23,8 +23,12 @@
 # include <errno.h>
 
 int		input_validation(int argc);
+int		buff_check(char *limiter, char *buffer);
 void	print_error(char *msg, int err_num);
 void	free_array(char **array);
 void	run_cmd(char *cmd, char **envp);
+void	b_next_child_process(int *pipe_fd, int tmp_fd, char *cmd, char **envp);
+void	b_first_child_process(int *pipe_fd, char **argv, char **envp, int hd);
+void	b_parent_process(int tmp_fd, int argc, char **argv, char **envp, int hd);
 
 #endif

@@ -12,92 +12,7 @@
 
 #include "../includes/pipex.h"
 
-static void	hd_parent_process(int *pipe_fd, int argc, char **argv, char **envp)
-{
-	int	fd_outfile;
-
-	fd_outfile = open(argv[argc - 1], O_WRONLY | O_CREAT, 0666);
-	if (fd_outfile == -1)
-		print_error("problem opening outfile", ENOENT);
-	dup2(pipe_fd[0], STDIN_FILENO);
-	dup2(fd_outfile, STDOUT_FILENO);
-	close(fd_outfile);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	run_cmd(argv[4], envp);
-	print_error("execve failed", EXIT_FAILURE);
-}
-
-static void	parent_process(int *pipe_fd, int argc, char **argv, char **envp)
-{
-	int	fd_outfile;
-
-	fd_outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (fd_outfile == -1)
-		print_error("problem opening outfile", ENOENT);
-	dup2(pipe_fd[0], STDIN_FILENO);
-	dup2(fd_outfile, STDOUT_FILENO);
-	close(fd_outfile);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	run_cmd(argv[3], envp);
-	print_error("execve failed", EXIT_FAILURE);
-}
-
-static void	hd_child_process(int *pipe_fd, char **argv, char **envp)
-{
-	char	*param;
-	char	*cmd;
-	char	*buffer;
-
-	param = "";
-	while (1)
-	{
-		buffer = get_next_line(1);
-		if (ft_strncmp(buffer, argv[2], ft_strlen(buffer)))
-			if (ft_strlen(param) == 0)
-				ft_strlcat(param, buffer, ft_strlen(param) + strlen(buffer));
-			else
-			{
-				ft_strlcat(param, " ", ft_strlen(param) + strlen(" "));
-				ft_strlcat(param, buffer, ft_strlen(param) + strlen(buffer));
-			}
-		else
-		{
-			free(buffer);
-			break;
-		}
-		free (buffer);
-	}
-	ft_printf("\n %s \n", param);
-	buffer = ft_strjoin(argv[3], " ");
-	cmd = ft_strjoin(buffer, param);
-	free(buffer);
-	dup2(pipe_fd[1], STDOUT_FILENO);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	run_cmd(cmd, envp);
-	free(cmd);
-	print_error("execve failed", EXIT_FAILURE);
-}
-
-static void	child_process(int *pipe_fd, char **argv, char **envp)
-{
-	int	fd_infile;
-
-	fd_infile = open(argv[1], O_RDONLY);
-	if (fd_infile == -1)
-		print_error("problem opening infile", ENOENT);
-	dup2(fd_infile, STDIN_FILENO);
-	dup2(pipe_fd[1], STDOUT_FILENO);
-	close(fd_infile);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	run_cmd(argv[2], envp);
-	print_error("execve failed", EXIT_FAILURE);
-}
-
-int	check_heredoc(char *str)
+static int	check_heredoc(char *str)
 {
 	if (!ft_strncmp(str, "here_doc", 9) && ft_strlen(str) == 8)
 		return (1);
@@ -105,42 +20,61 @@ int	check_heredoc(char *str)
 		return (0);
 }
 
-int	main(int argc, char **argv, char **envp)
+static int	first(char **argv, char **envp, int hd)
 {
 	int		pipe_fd[2];
-	int		hd;
 	pid_t	pid;
+
+	if (pipe(pipe_fd) == -1)
+		print_error("piping failed", EXIT_FAILURE);
+	pid = fork();
+	if (pid == -1)
+		print_error("forking failed", EXIT_FAILURE);
+	else if (pid == 0)
+		b_first_child_process(pipe_fd, argv, envp, hd);
+	close(pipe_fd[1]);
+	waitpid(pid, NULL, 0);
+	return (pipe_fd[0]);
+}
+
+static int	middle(int tmp_fd, int argc, char **argv, char **envp, int hd)
+{
+	int		pipe_fd[2];
 	int		i;
+	pid_t	pid;
+
+	i = 3 + hd;
+	while (i < argc - 2)
+	{
+		if (pipe(pipe_fd) == -1)
+			print_error("piping failed", EXIT_FAILURE);
+		pid = fork();
+		if (pid == -1)
+			print_error("forking failed", EXIT_FAILURE);
+		if (pid == 0)
+			b_next_child_process(pipe_fd, tmp_fd, argv[i], envp);
+		waitpid(pid, NULL, 0);
+		close(tmp_fd);
+		close(pipe_fd[1]);
+		tmp_fd = pipe_fd[0];
+		i++;
+	}
+	return (tmp_fd);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	int	tmp_fd;
+	int	hd;
+
 
 	if (input_validation(argc))
-	{	
+	{
+		tmp_fd = -1;
 		hd = check_heredoc(argv[1]);
-		i = 2;
-		if (hd == 1)
-			i++;		
-		while (i < argc - 2)
-		{
-			if (!ft_strncmp(argv[1], "here_doc", 9) && ft_strlen(argv[1]) == 8)
-				hd = 1;
-			if (pipe(pipe_fd) == -1)
-				print_error("piping failed", EXIT_FAILURE);
-			pid = fork();
-			if (pid == -1)
-				print_error("forking failed", EXIT_FAILURE);
-			else if (pid == 0)
-			{
-			if (hd == 1)
-				hd_child_process(pipe_fd, argv, envp);
-			else
-				child_process(pipe_fd, argv, envp);
-			}
-			waitpid(pid, NULL, 0);
-			i++;
-		}
-		if (hd == 1)
-			hd_parent_process(pipe_fd, argc, argv, envp);
-		else
-			parent_process(pipe_fd, argc, argv, envp);
+		tmp_fd = first(argv, envp, hd);
+		tmp_fd = middle(tmp_fd, argc, argv, envp, hd);
+		b_parent_process(tmp_fd, argc, argv, envp, hd);
 	}
 	return (0);
 }
