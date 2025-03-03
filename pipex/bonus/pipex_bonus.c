@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:48:09 by ahugi             #+#    #+#             */
-/*   Updated: 2025/02/17 14:51:16 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/02/27 14:08:38 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static int	check_heredoc(char *str)
+int	check_heredoc(char *str)
 {
 	if (!ft_strncmp(str, "here_doc", 9) && ft_strlen(str) == 8)
 		return (1);
@@ -20,11 +20,13 @@ static int	check_heredoc(char *str)
 		return (0);
 }
 
-static int	first(char **argv, char **envp, int hd)
+static int	first(char **argv, char **envp)
 {
 	int		pipe_fd[2];
+	int		hd;
 	pid_t	pid;
 
+	hd = check_heredoc(argv[1]);
 	if (pipe(pipe_fd) == -1)
 		print_error("piping failed", EXIT_FAILURE);
 	pid = fork();
@@ -37,12 +39,14 @@ static int	first(char **argv, char **envp, int hd)
 	return (pipe_fd[0]);
 }
 
-static int	middle(int tmp_fd, int argc, char **argv, char **envp, int hd)
+static int	middle(int tmp_fd, int argc, char **argv, char **envp)
 {
 	int		pipe_fd[2];
 	int		i;
+	int		hd;
 	pid_t	pid;
 
+	hd = check_heredoc(argv[1]);
 	i = 3 + hd;
 	while (i < argc - 2)
 	{
@@ -65,16 +69,13 @@ static int	middle(int tmp_fd, int argc, char **argv, char **envp, int hd)
 int	main(int argc, char **argv, char **envp)
 {
 	int	tmp_fd;
-	int	hd;
-
 
 	if (input_validation(argc))
 	{
 		tmp_fd = -1;
-		hd = check_heredoc(argv[1]);
-		tmp_fd = first(argv, envp, hd);
-		tmp_fd = middle(tmp_fd, argc, argv, envp, hd);
-		b_parent_process(tmp_fd, argc, argv, envp, hd);
+		tmp_fd = first(argv, envp);
+		tmp_fd = middle(tmp_fd, argc, argv, envp);
+		b_parent_process(tmp_fd, argc, argv, envp);
 	}
 	return (0);
 }

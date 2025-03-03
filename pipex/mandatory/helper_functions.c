@@ -21,6 +21,8 @@ void	print_error(char *msg, int err_num)
 		write(2, &msg[i++], 1);
 	if (err_num == 127)
 		write(2, ": command not found", 20);
+	if (err_num == 2)
+		write(2, ": No such file or directory", 28);
 	write(2, "\n", 1);
 	exit (err_num);
 }

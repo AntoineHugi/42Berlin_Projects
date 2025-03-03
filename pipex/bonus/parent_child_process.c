@@ -1,73 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parent_child_process.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/24 15:22:49 by ahugi             #+#    #+#             */
+/*   Updated: 2025/02/27 14:10:43 by ahugi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/pipex.h"
 
-static char	*get_param(char *limiter)
+static void	generate_input(char *limiter, int fd)
 {
-	char	*param;
 	char	*buffer;
 
-	param = ft_strdup("");
 	while (1)
 	{
 		buffer = get_next_line(STDIN_FILENO);
 		if (buff_check(limiter, buffer))
-			if (!param)
-				param = ft_gnl_strjoin(param, buffer);
-			else
-			{
-				param = ft_gnl_strjoin(param, " ");
-				param = ft_gnl_strjoin(param, buffer);
-			}
+			write(fd, buffer, ft_strlen(buffer));
 		else
 		{
 			free(buffer);
-			break;
+			break ;
 		}
 		free (buffer);
 	}
-	return (param);
 }
 
-static char	*get_command(char *limiter, char *cmd)
+static int	here_doc_fd(char *limiter)
 {
-	char	*param;
-	char	*buffer;
-	char	*final_cmd;
+	int	fd_here_doc[2];
 
-	param = get_param(limiter);
-	if (!param)
-		return (cmd);
-	buffer = ft_strjoin(cmd, " ");
-	final_cmd = ft_strjoin(buffer, param);
-	free(buffer);
-	free(param);
-	return (final_cmd);
+	if (pipe(fd_here_doc) == -1)
+		print_error("piping failed", EXIT_FAILURE);
+	generate_input(limiter, fd_here_doc[1]);
+	close(fd_here_doc[1]);
+	return (fd_here_doc[0]);
 }
 
 void	b_first_child_process(int *pipe_fd, char **argv, char **envp, int hd)
 {
 	int		fd_infile;
-	char	*final_cmd;
 
 	if (hd == 1)
 	{
-		final_cmd = get_command(argv[2], argv[3]);
+		fd_infile = here_doc_fd (argv[2]);
+		dup2(fd_infile, STDIN_FILENO);
 		dup2(pipe_fd[1], STDOUT_FILENO);
+		close(fd_infile);
 		close(pipe_fd[1]);
-		run_cmd(final_cmd, envp);
-		free(final_cmd);
+		run_cmd(argv[3], envp);
 	}
 	else
 	{
 		fd_infile = open(argv[1], O_RDONLY);
 		if (fd_infile == -1)
-			print_error("problem opening infile", ENOENT);
+			print_error(argv[1], ENOENT);
 		dup2(fd_infile, STDIN_FILENO);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(fd_infile);
 		close(pipe_fd[1]);
 		run_cmd(argv[2], envp);
 	}
-	print_error("execve failed", EXIT_FAILURE);
 }
 
 void	b_next_child_process(int *pipe_fd, int tmp_fd, char *cmd, char **envp)
@@ -77,19 +74,20 @@ void	b_next_child_process(int *pipe_fd, int tmp_fd, char *cmd, char **envp)
 	close(tmp_fd);
 	close(pipe_fd[1]);
 	run_cmd(cmd, envp);
-	print_error("execve failed", EXIT_FAILURE);
 }
 
-void	b_parent_process(int tmp_fd, int ac, char **av, char **envp, int hd)
+void	b_parent_process(int tmp_fd, int ac, char **av, char **envp)
 {
 	int	fd_out;
+	int	hd;
 
+	hd = check_heredoc(av[1]);
 	if (hd == 0)
 		fd_out = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else
 		fd_out = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (fd_out == -1)
-		print_error("problem opening outfile", ENOENT);
+		print_error(av[ac - 1], ENOENT);
 	dup2(tmp_fd, STDIN_FILENO);
 	dup2(fd_out, STDOUT_FILENO);
 	close(fd_out);
