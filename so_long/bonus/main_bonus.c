@@ -6,7 +6,7 @@
 /*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:31:03 by ahugi             #+#    #+#             */
-/*   Updated: 2025/03/19 12:05:31 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:29:52 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ int	main(int argc, char **argv)
 		if (map_validation(map))
 		{
 			map->mlx = mlx_init();
-			map->win = mlx_new_window(map->mlx, map->win_x, map->win_y, 
-					"./so_long");
+			map->win = mlx_new_window(map->mlx, map->win_x, map->win_y, "./so_long");
 			init_sprites(map);
 			render_map(map);
 			mlx_key_hook(map->win, key_hook, map);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_rendering_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:45:20 by ahugi             #+#    #+#             */
-/*   Updated: 2025/02/10 14:45:22 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:35:26 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,16 @@ void	render_collectibles(t_map *map)
 	free(coll);
 }
 
+void	render_credits(t_map *map)
+{
+	int		height;
+	int		width;
+
+	height = map->win_y - 3;
+	width = 5;
+	mlx_string_put(map->mlx, map->win, width, height, RED, "Game by Antoine Hugi, Art by kenmi-art and Pebonius.");
+}
+
 int	render_map(t_map *map)
 {
 	int	x;
@@ -89,5 +99,6 @@ int	render_map(t_map *map)
 	}
 	else
 		render_win_screen(map);
+	render_credits(map);
 	return (0);
 }
