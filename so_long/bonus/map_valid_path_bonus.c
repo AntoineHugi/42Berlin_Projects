@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid_path_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:46:03 by ahugi             #+#    #+#             */
-/*   Updated: 2025/02/10 14:46:05 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:12:27 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
+/* If there still are targets left (Collectible or Exit) that could not be reached by the player, returns a non-zero value. */
 static int	remaining_target(char **map)
 {
 	int	target;
@@ -33,7 +34,7 @@ static int	remaining_target(char **map)
 	}
 	return (target);
 }
-
+/* Starting from the player position, goes to every tile on the map accessible to the player and replaces it with a wall. */
 static int	cover_map(char **map, int px, int py)
 {
 	map[px][py] = '1';

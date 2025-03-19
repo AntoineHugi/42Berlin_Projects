@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:48:19 by ahugi             #+#    #+#             */
-/*   Updated: 2025/02/04 12:32:43 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:19:23 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	error_input(char *str);
 void	error_map(char *str, t_map *map);
 void	init_game(t_map *map);
 void	init_sprites(t_map *map);
+void	free_array(char **array);
 void	free_img(t_map *map);
 void	free_map(t_map *map);
 t_map	*map_creation(char *map_file);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:45:13 by ahugi             #+#    #+#             */
-/*   Updated: 2025/02/10 14:45:15 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:04:23 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exit_app(t_map *map)
 	free_map(map);
 	exit(1);
 }
-
+/* Resets moves and collectible count, and reinitialises the map. */
 static void	reset_game(t_map *map)
 {
 	int	i;
@@ -43,7 +43,7 @@ static void	reset_game(t_map *map)
 	map->old_collect_count = temp_collect;
 	map->old_moves = temp_move;
 }
-
+/* Checks for WASD of arrow buttons on keyboard, as well as R for reset and ESC for exit. */
 int	key_hook(int keycode, t_map *map)
 {
 	if (keycode == 65362 || keycode == 119)
@@ -58,5 +58,6 @@ int	key_hook(int keycode, t_map *map)
 		reset_game(map);
 	if (keycode == 65307)
 		exit_app(map);
+	render_map(map);
 	return (0);
 }

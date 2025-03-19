@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:31:34 by ahugi             #+#    #+#             */
-/*   Updated: 2025/02/10 14:45:09 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:19:56 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,10 @@ void	error_input(char *str)
 
 void	error_map(char *str, t_map *map)
 {
-	int	i;
-
-	i = 0;
 	ft_printf("Error\n%s\n", str);
-	while (map->map_array[i])
-	{
-		free(map->map_array[i]);
-		free(map->map_path_check[i]);
-		free(map->map_reset[i]);
-		i++;
-	}
-	free(map->map_array);
-	free(map->map_path_check);
-	free(map->map_reset);
+	free_array(map->map_array);
+	free_array(map->map_path_check);
+	free_array(map->map_reset);
 	free(map);
 	exit(1);
 }

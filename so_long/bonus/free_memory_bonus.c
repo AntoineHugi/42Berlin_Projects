@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:45:27 by ahugi             #+#    #+#             */
-/*   Updated: 2025/02/10 14:45:28 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:21:26 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
 
 void	free_img(t_map *map)
 {
@@ -24,19 +37,9 @@ void	free_img(t_map *map)
 
 void	free_map(t_map *map)
 {
-	int	i;
-
-	i = 0;
-	while (map->map_array[i])
-	{
-		free(map->map_array[i]);
-		free(map->map_path_check[i]);
-		free(map->map_reset[i]);
-		i++;
-	}
-	free(map->map_array);
-	free(map->map_path_check);
-	free(map->map_reset);
+	free_array(map->map_array);
+	free_array(map->map_path_check);
+	free_array(map->map_reset);
 	mlx_destroy_window(map->mlx, map->win);
 	mlx_destroy_display(map->mlx);
 	free(map->mlx);

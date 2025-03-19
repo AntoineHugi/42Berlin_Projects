@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_creation_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahugi <ahugi@student.42berlin.de>          +#+  +:+       +#+        */
+/*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:31:17 by ahugi             #+#    #+#             */
-/*   Updated: 2025/02/10 15:55:03 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 12:07:29 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_map(t_map *map)
 	map->win_y = PIX * map->height;
 	init_game(map);
 }
-
+/* Reads the .ber map file and generates the array to be used in the rendering of the map. */
 t_map	*map_creation(char *map_file)
 {
 	t_map	*map;
@@ -33,7 +33,7 @@ t_map	*map_creation(char *map_file)
 
 	map = (t_map *)malloc(sizeof(t_map));
 	fd = open(map_file, O_RDONLY);
-	if (fd < 2)
+	if (fd == -1)
 	{
 		free(map);
 		return (NULL);
