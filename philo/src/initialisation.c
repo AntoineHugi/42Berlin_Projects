@@ -35,7 +35,7 @@ static int	init_philos(t_table *table, char **argv)
 	}
 	return (1);
 }
-
+/* need to init mutexes as well */
 t_table	*init_table(char **argv)
 {
 	t_table	*table;

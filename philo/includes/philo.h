@@ -6,7 +6,7 @@
 /*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:03:21 by ahugi             #+#    #+#             */
-/*   Updated: 2025/03/17 15:44:04 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/19 11:26:39 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_philo {
 	int			id;
@@ -33,9 +35,9 @@ typedef struct s_philo {
 typedef struct s_table {
 	t_philo			**philos;
 	pthread_t		*tid_obs;
-	pthread_mutex_t *fork;
-	pthread_mutex_t *print;
-	pthread_mutex_t *death;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	print;
+	pthread_mutex_t	death;
 }			t_table;
 
 long long	ft_atoll(const char *nptr);
