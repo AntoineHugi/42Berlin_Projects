@@ -39,7 +39,7 @@ typedef struct s_table {
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
 	pthread_mutex_t	death;
-	int				start;
+	suseconds_t		start;
 }			t_table;
 
 long long	ft_atoll(const char *nptr);
