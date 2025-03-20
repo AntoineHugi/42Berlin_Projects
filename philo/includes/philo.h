@@ -25,6 +25,7 @@ typedef struct s_philo {
 	int			tts;
 	int			ttt;
 	int			ttd;
+	int			last_meal;
 	int			times_eaten;
 	int			is_dead;
 	void		*fork_l;
@@ -38,6 +39,7 @@ typedef struct s_table {
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
 	pthread_mutex_t	death;
+	int				start;
 }			t_table;
 
 long long	ft_atoll(const char *nptr);

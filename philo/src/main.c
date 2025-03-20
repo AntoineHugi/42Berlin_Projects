@@ -20,7 +20,7 @@ int	valid_input(int argc, char **argv)
 		return (0);
 	else
 	{
-		if (ft_atoll(argv[1]) < 1)
+		if (ft_atoll(argv[1]) < 1 || ft_atoll(argv[1] > 200))
 			return (0);
 		i = 1;
 		while (i < argc)
@@ -49,7 +49,7 @@ int	main(int argc, char **argv)
 
 /*
 Create threads for each philosophers, +1 thread for an observer to see if one dies.
-Philos hold a spoon as soon as they can, and then hold on to it until they can grab another and eat.
+Philos hold a fork as soon as they can, and then hold on to it until they can grab another and eat.
 Use mutex variables to "lock" forks when being held, and also for the printing of their updates (sleeping, eating etc).
 Have a slight delay at the start for the even numbered philosophers (usleep 200), otherwise they each grab one fork and everyone dies.
 Can't use libft for this project.

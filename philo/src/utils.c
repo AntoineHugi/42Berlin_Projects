@@ -38,10 +38,13 @@ long long	ft_atoll(const char *nptr)
 
 void	error_arguments()
 {
-	printf("invalid arguments, please provide 4 or 5 arguments:\n");
-	printf("number of philosophers (at least 1), time til death (in ms), ");
-	printf("time to eat (in ms), time to sleep (in ms), (optional) ");
-	printf("number of times each philo should have eaten to end the meal.\n");
+	printf("Invalid arguments, please provide 4 or 5 arguments:\n");
+	printf("Number of philosophers (at least 1, but less than 200)\n");
+	printf("Time until death (in ms), time to eat (in ms), ");
+	printf("time to sleep (in ms)\n");
+	printf("(optional) Number of times each philo should have ");
+	printf("eaten to end the meal.\n");
+	printf("Example: 5 800 200 200 3\n");
 	exit(1);
 }
 
