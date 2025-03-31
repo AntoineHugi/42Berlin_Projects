@@ -6,12 +6,25 @@
 /*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:11:49 by ahugi             #+#    #+#             */
-/*   Updated: 2025/03/17 15:40:15 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:39:32 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+int	ft_is_numerical(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (i);
+}
 long long	ft_atoll(const char *nptr)
 {
 	long long	sign;

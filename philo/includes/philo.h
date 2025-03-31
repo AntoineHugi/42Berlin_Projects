@@ -6,7 +6,7 @@
 /*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:03:21 by ahugi             #+#    #+#             */
-/*   Updated: 2025/03/19 11:26:39 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/31 16:56:46 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_philo {
 }			t_philo;
 
 typedef struct s_table {
+	int				nb_ph;
 	t_philo			**philos;
 	pthread_t		*tid_obs;
 	pthread_mutex_t	*fork;
@@ -42,6 +43,7 @@ typedef struct s_table {
 	suseconds_t		start;
 }			t_table;
 
+int			ft_is_numerical(const char *str);
 long long	ft_atoll(const char *nptr);
 t_table		*init_table(char **argv);
 void		free_table(t_table *table);

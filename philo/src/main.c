@@ -6,7 +6,7 @@
 /*   By: ahugi <ahugi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:05:41 by ahugi             #+#    #+#             */
-/*   Updated: 2025/03/17 15:08:18 by ahugi            ###   ########.fr       */
+/*   Updated: 2025/03/31 17:38:56 by ahugi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,19 @@ int	valid_input(int argc, char **argv)
 		return (0);
 	else
 	{
-		if (ft_atoll(argv[1]) < 1 || ft_atoll(argv[1] > 200))
+		if (ft_atoll(argv[1]) < 1)
 			return (0);
 		i = 1;
 		while (i < argc)
 		{
+			if (!ft_is_numerical(argv[i]))
+				return (0);
 			if (ft_atoll(argv[i]) < 0 || ft_atoll(argv[i]) > 2147483647)
 				return (0);
+			i++;
 		}
 	}
+	return (1);
 }
 
 int	main(int argc, char **argv)
