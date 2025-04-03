@@ -24,10 +24,10 @@ static char	*create_line(char *str)
 		count++;
 	if (str[count] == '\n')
 		count++;
-	line = (char *)ft_gnl_calloc(count + 1, sizeof(char));
+	line = (char *)ft_calloc(count + 1, sizeof(char));
 	if (!line)
 		return (NULL);
-	ft_gnl_memcpy(line, str, count);
+	ft_gnl_strncpy(line, str, count);
 	line[count] = '\0';
 	return (line);
 }
@@ -53,7 +53,7 @@ static char	*read_file(int fd, char *result)
 	char	*buffer;
 	ssize_t	bytes_read;
 
-	buffer = (char *)ft_gnl_calloc((BUFFER_SIZE + 1), sizeof(char));
+	buffer = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
 		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -66,7 +66,7 @@ static char	*read_file(int fd, char *result)
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	free(buffer);
-	if (bytes_read < 0 || (result && !ft_gnl_strlen(result)))
+	if (bytes_read < 0 || (result && !ft_strlen(result)))
 	{
 		free(result);
 		result = NULL;
@@ -91,13 +91,13 @@ char	*get_next_line(int fd)
 	if (result && check_if_n(result))
 	{
 		line = create_line(result);
-		result = ft_strchr_mod(result);
+		result = ft_gnl_strchr_mod(result);
 		return (line);
 	}
 	result = read_file(fd, result);
 	if (!result)
 		return (NULL);
 	line = create_line(result);
-	result = ft_strchr_mod(result);
+	result = ft_gnl_strchr_mod(result);
 	return (line);
 }
