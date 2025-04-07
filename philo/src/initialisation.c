@@ -19,17 +19,19 @@ pthread_mutex_t	*init_forks(t_table *table)
 }
 static int	init_mutex(t_table *table)
 {
-	if (pthread_mutex_init(&table->print, NULL))
+	if (pthread_mutex_init(&table->print_lock, NULL))
 		return (0);
-	if (pthread_mutex_init(&table->death, NULL))
+	if (pthread_mutex_init(&table->death_lock, NULL))
 		return (0);
-	table->fork = init_forks(table);
-	if (!table->fork)
+	if (pthread_mutex_init(&table->feast_end_lock, NULL))
+		return (0);
+	table->forks = init_forks(table);
+	if (!table->forks)
 		return (0);
 	return (1);
 }
 
-static t_philo	*init_philo(char **argv)
+static t_philo	*init_philo(char **argv, t_table *table)
 {
 	t_philo	*philo;
 
@@ -39,9 +41,12 @@ static t_philo	*init_philo(char **argv)
 	philo->ttd = (int)ft_atoll(argv[2]);
 	philo->tte = (int)ft_atoll(argv[3]);
 	philo->tts = (int)ft_atoll(argv[4]);
+	if (argv[5])
+		philo->max_meals = (int)ft_atoll(argv[5]);
 	philo->is_dead = 0;
 	philo->times_eaten = 0;
 	philo->tid = 0;
+	philo->table = table;
 	return (philo);
 }
 
@@ -55,7 +60,8 @@ static int	init_philos(t_table *table, char **argv)
 		return (0);
 	while (i < table->nb_ph)
 	{
-		table->philos[i] = init_philo(argv);
+		table->philos[i] = init_philo(argv, table);
+		table->philos[i]->id = i + 1;
 		if (!table->philos[i])
 			return (0);
 		if (i % 2 == 0)
@@ -75,6 +81,7 @@ t_table	*init_table(char **argv)
 	if (!table)
 		return (NULL);
 	table->nb_ph = (int)ft_atoll(argv[1]);
+	table->feast_end = 1;
 	if (!init_mutex(table))
 		return (NULL);
 	if (!init_philos(table, argv))

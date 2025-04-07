@@ -20,27 +20,31 @@
 # include <unistd.h>
 
 typedef struct s_philo {
-	int			id;
-	int			tte;
-	int			tts;
-	int			ttt;
-	int			ttd;
-	int			last_meal;
-	int			times_eaten;
-	int			is_dead;
-	void		*fork_l;
-	void		*fork_r;
-	pthread_t	*tid;
+	int				id;
+	time_t			tte;
+	time_t			tts;
+	time_t			ttt;
+	time_t			ttd;
+	time_t			last_meal;
+	int				times_eaten;
+	int				max_meals;
+	int				is_dead;
+	pthread_mutex_t	*fork_l;
+	pthread_mutex_t	*fork_r;
+	pthread_t		*tid;
+	t_table			*table;
 }			t_philo;
 
 typedef struct s_table {
 	int				nb_ph;
+	int				feast_end;
 	t_philo			**philos;
 	pthread_t		*tid_obs;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	print;
-	pthread_mutex_t	death;
-	suseconds_t		start;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_lock;
+	pthread_mutex_t	death_lock;
+	pthread_mutex_t	feast_end_lock;
+	time_t			start;
 }			t_table;
 
 int			ft_is_numerical(const char *str);
