@@ -18,16 +18,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_philo {
 	int				id;
-	time_t			tte;
-	time_t			tts;
-	time_t			ttt;
-	time_t			ttd;
 	time_t			last_meal;
+	time_t			ttt;
 	int				times_eaten;
-	int				max_meals;
 	int				is_dead;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
@@ -38,6 +35,7 @@ typedef struct s_philo {
 typedef struct s_table {
 	int				nb_ph;
 	int				feast_end;
+	int				max_meals;
 	t_philo			**philos;
 	pthread_t		*tid_obs;
 	pthread_mutex_t	*forks;
@@ -45,6 +43,9 @@ typedef struct s_table {
 	pthread_mutex_t	death_lock;
 	pthread_mutex_t	feast_end_lock;
 	time_t			start;
+	time_t			tte;
+	time_t			tts;
+	time_t			ttd;
 }			t_table;
 
 int			ft_is_numerical(const char *str);
@@ -54,5 +55,6 @@ void		free_table(t_table *table);
 void		start_meal(t_table *table);
 void		error_table(t_table *table, char *msg);
 void		error_arguments();
+void		print_action(char a, t_philo *philo);
 
 #endif

@@ -27,7 +27,7 @@ int	valid_input(int argc, char **argv)
 		{
 			if (!ft_is_numerical(argv[i]))
 				return (0);
-			if (ft_atoll(argv[i]) < 0 || ft_atoll(argv[i]) > 2147483647)
+			if (ft_atoll(argv[i]) < 0 || ft_atoll(argv[i]) > INT_MAX)
 				return (0);
 			i++;
 		}

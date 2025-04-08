@@ -11,13 +11,13 @@ void	*philo_thread(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->max_meals == 0)
+	if (philo->table->max_meals == 0)
 		return (NULL);
 	if (philo->table->nb_ph == 1)
 		solo_philo_routine(philo);
 	else
 	{
-		while (philo->table->feast_end)
+		while (!philo->table->feast_end)
 		{
 			if (philo->id % 2 == 0)
 				usleep(200);
@@ -32,8 +32,29 @@ void	*philo_thread(void *arg)
 void	*obs_thread(void *arg)
 {
 	t_table	*table;
+	int	i;
+	int	full_check;
+	time_t	now;
 
 	table = (t_table *)arg;
+	while (1)
+	{
+		i = 0;
+		full_check = 0;
+		while (i < table->nb_ph)
+		{
+			if (gettimeofday(now, NULL) - table->philos[i]->last_meal > table->ttd)
+				break ;
+			if (table->philos[i]->times_eaten >= table->max_meals
+				&& table->max_meals >= 0)
+				full_check = 1;
+			else
+				full_check = 0;
+		}
+		if (full_check)
+			break ;
+	}
+	end_feast(table);
 }
 
 void	assign_forks(t_table *table)

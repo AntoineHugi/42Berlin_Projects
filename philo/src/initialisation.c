@@ -38,11 +38,6 @@ static t_philo	*init_philo(char **argv, t_table *table)
 	philo = (t_philo*)malloc(sizeof(t_philo));
 	if (!philo)
 		return (NULL);
-	philo->ttd = (int)ft_atoll(argv[2]);
-	philo->tte = (int)ft_atoll(argv[3]);
-	philo->tts = (int)ft_atoll(argv[4]);
-	if (argv[5])
-		philo->max_meals = (int)ft_atoll(argv[5]);
 	philo->is_dead = 0;
 	philo->times_eaten = 0;
 	philo->tid = 0;
@@ -81,7 +76,13 @@ t_table	*init_table(char **argv)
 	if (!table)
 		return (NULL);
 	table->nb_ph = (int)ft_atoll(argv[1]);
-	table->feast_end = 1;
+	table->feast_end = 0;
+	table->max_meals = -1;
+	table->ttd = (int)ft_atoll(argv[2]);
+	table->tte = (int)ft_atoll(argv[3]);
+	table->tts = (int)ft_atoll(argv[4]);
+	if (argv[5])
+		table->max_meals = (int)ft_atoll(argv[5]);
 	if (!init_mutex(table))
 		return (NULL);
 	if (!init_philos(table, argv))
