@@ -54,7 +54,7 @@ void	*obs_thread(void *arg)
 		if (full_check)
 			break ;
 	}
-	end_feast(table);
+	end_meal(table);
 }
 
 void	assign_forks(t_table *table)

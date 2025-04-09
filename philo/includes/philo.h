@@ -34,14 +34,14 @@ typedef struct s_philo {
 
 typedef struct s_table {
 	int				nb_ph;
-	int				feast_end;
+	int				meal_end;
 	int				max_meals;
 	t_philo			**philos;
 	pthread_t		*tid_obs;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	death_lock;
-	pthread_mutex_t	feast_end_lock;
+	pthread_mutex_t	meal_end_lock;
 	time_t			start;
 	time_t			tte;
 	time_t			tts;

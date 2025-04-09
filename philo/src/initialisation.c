@@ -60,9 +60,9 @@ static int	init_philos(t_table *table, char **argv)
 		if (!table->philos[i])
 			return (0);
 		if (i % 2 == 0)
-			table->philos[i]->ttt = table->philos[i]->tts;
+			table->philos[i]->ttt = table->tts;
 		else
-			table->philos[i]->ttt = table->philos[i]->tts/2;
+			table->philos[i]->ttt = table->tts/2;
 		i++;
 	}
 	return (1);
