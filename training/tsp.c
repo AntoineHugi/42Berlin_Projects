@@ -1,8 +1,6 @@
 #include "main.h"
 
-#define N 5
-
-float coords[N][2] = 
+float coords[5][2] = 
 {
 	{0, 0},
 	{2, 2},
@@ -15,7 +13,7 @@ float distance(int a, int b)
 {
 	float dx = coords[a][0] - coords[b][0];
 	float dy = coords[a][1] - coords[b][1];
-	return sqrt(dx * dx + dy * dy);
+	return (sqrt(dx * dx + dy * dy));
 }
 
 void swap(int *a, int *b) 
@@ -48,9 +46,7 @@ void	generate_best_route(int *cities, int start, int total, float *min_dist)
 	float	len;
 	int	i;
 
-	i = 0;
-	len = 0;
-	if (start == total)
+	if (start == total - 1)
 	{
 		len = calculate_route_len(cities, total);
 		if (*min_dist > len)
@@ -69,10 +65,9 @@ void	generate_best_route(int *cities, int start, int total, float *min_dist)
 
 void	tsp(void)
 {
-	int cities[N] = {0, 1, 2, 3, 4};
-	int best_route[N];
+	int cities[5] = {0, 1, 2, 3, 4};
 	float min_dist = 1e9;
 
-	generate_best_route(cities, 0, N, &min_dist);
+	generate_best_route(cities, 0, 5, &min_dist);
 	printf("tsp min dist = %.2f\n", min_dist);
 }

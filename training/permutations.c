@@ -15,7 +15,7 @@ size_t	ft_strlen(char *str)
 char	*ft_strdup(char *str)
 {
 	size_t	len;
-	int		i;
+	size_t	i;
 	char	*dup;
 	
 	i = 0;
@@ -77,20 +77,7 @@ void	swap_perm(char **s1, char **s2)
 	*s2 = temp;
 }
 
-void	free_permuts(char **permutations, int facto)
-{
-	int	i;
-
-	i = 0;
-	while (i < facto)
-	{
-		free(permutations[i]);
-		i++;
-	}
-	free(permutations);
-}
-
-void	print_permuts(char **permutations)
+void	printnfree_permuts(char **permutations)
 {
 	int	i;
 
@@ -98,11 +85,13 @@ void	print_permuts(char **permutations)
 	while (permutations[i])
 	{
 		printf("%s\n", permutations[i]);
+		free(permutations[i]);
 		i++;
 	}
+	free(permutations);
 }
 
-void	sort_permuts(char **permutations, int facto)
+void	sort_permuts(char **permutations)
 {
 	int	i;
 	int	j;
@@ -111,33 +100,10 @@ void	sort_permuts(char **permutations, int facto)
 	while (permutations[i])
 	{
 		j = i + 1;
-		if (j == facto)
-			break;
 		while (permutations[j])
 		{
 			if (ft_strncmp(permutations[i], permutations[j], ft_strlen(permutations[i])) > 0)
 				swap_perm(&permutations[i], &permutations[j]);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	sort_str(char *str, size_t size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (str[i])
-	{
-		j = i + 1;
-		if (j == size)
-			break;
-		while (str[j])
-		{
-			if (str[i] > str[j])
-				swap_str(&str[i], &str[j]);
 			j++;
 		}
 		i++;
@@ -157,13 +123,9 @@ void	add_permut(char *str, char **permutations)
 void	find_permutations(int index, int size, char *str, char **permutations)
 {
 	int	i;
-	int	j;
 
 	if (index == size - 1)
-	{
-		printf("%s\n", str);
-		//add_permut(str, permutations);
-	}
+		add_permut(str, permutations);
 	i = index;
 	while (i < size)
 	{
@@ -177,25 +139,18 @@ void	find_permutations(int index, int size, char *str, char **permutations)
 void	permutations(char *str)
 {
 	size_t	size;
-	size_t	i;
 	int		facto;
 	char	**permutations;
 
 	size = ft_strlen(str);
-	i = 0;
 	facto = factorial(size);
-	sort_str(str, size);
 	permutations = (char **)malloc(sizeof(char *) * (facto + 1));
-	permutations[facto] = NULL;
-	//permutations[0] = ft_strdup(str);
-	i = 1;
-	while (i < facto)
+	while (facto >= 0)
 	{
-		permutations[i] = NULL;
-		i++;
+		permutations[facto] = NULL;
+		facto--;
 	}
 	find_permutations(0, (int)size, str, permutations);
-	sort_permuts(permutations, facto);
-	print_permuts(permutations);
-	free_permuts(permutations, facto);
+	sort_permuts(permutations);
+	printnfree_permuts(permutations);
 }

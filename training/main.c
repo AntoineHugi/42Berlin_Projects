@@ -4,7 +4,7 @@ int	main(void)
 {
 	/* permutations */
 	/*char	*test_str;
-	test_str = strdup("acbd");
+	test_str = strdup("acb");
 	permutations(test_str);
 	free(test_str);*/
 
@@ -12,7 +12,7 @@ int	main(void)
 	//queens(4);
 
 	/* tsp */
-	//tsp();
+	tsp(); 
 
 	/* powerset */
 	//powerset();
