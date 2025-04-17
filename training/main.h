@@ -4,6 +4,8 @@
 #include <string.h>
 #include <strings.h>
 
+#define BUFFER_SIZE 42
+
 void	tsp(void);
 void	queens(int size);
 void	permutations(char *str);

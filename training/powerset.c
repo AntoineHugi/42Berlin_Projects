@@ -12,18 +12,18 @@ void	print_set(int *working_set, int working_set_len)
 	printf("\n");
 }
 
-void	check_sum(int index, int *set, int target, int set_size, int *working_set, int working_set_len)
+void	check_sum(int start, int *set, int target, int set_size, int *working_set, int working_set_len)
 {
 	int i;
 
 	if (target == 0)
 		print_set(working_set, working_set_len);
-	if (target < 0 || index == set_size)
+	if (target < 0 || start == set_size)
 		return;
-	working_set[working_set_len] = set[index];
-	i = index;
-	check_sum(index + 1, set, target - set[index], set_size, working_set, working_set_len + 1);
-	check_sum(index + 1, set, target, set_size, working_set, working_set_len);
+	working_set[working_set_len] = set[start];
+	i = start;
+	check_sum(start + 1, set, target - set[start], set_size, working_set, working_set_len + 1);
+	check_sum(start + 1, set, target, set_size, working_set, working_set_len);
 }
 
 void	powerset(void)

@@ -1,8 +1,8 @@
 #include "main.h"
 
-size_t	ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	size_t	len;
+	int	len;
 
 	if (!str)
 		return (0);
@@ -14,8 +14,8 @@ size_t	ft_strlen(char *str)
 
 char	*ft_strdup(char *str)
 {
-	size_t	len;
-	size_t	i;
+	int	len;
+	int	i;
 	char	*dup;
 	
 	i = 0;
@@ -30,9 +30,9 @@ char	*ft_strdup(char *str)
 	return (dup);
 }
 
-int		ft_strncmp(char	*s1, char *s2, size_t n)
+int		ft_strncmp(char	*s1, char *s2, int n)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (!s1 || !s2)
@@ -48,7 +48,7 @@ int		ft_strncmp(char	*s1, char *s2, size_t n)
 	return (s1[i] - s2[i]);
 }
 
-int		factorial(size_t n)
+int		factorial(int n)
 {
 	int	perm;
 
@@ -120,25 +120,25 @@ void	add_permut(char *str, char **permutations)
 	permutations[i] = ft_strdup(str);
 }
 
-void	find_permutations(int index, int size, char *str, char **permutations)
+void	find_permutations(int start, int size, char *str, char **permutations)
 {
 	int	i;
 
-	if (index == size - 1)
+	if (start == size - 1)
 		add_permut(str, permutations);
-	i = index;
+	i = start;
 	while (i < size)
 	{
-			swap_str(&str[index], &str[i]);
-			find_permutations(index + 1, (int)size, str, permutations);
-			swap_str(&str[index], &str[i]);
+			swap_str(&str[start], &str[i]);
+			find_permutations(start + 1, size, str, permutations);
+			swap_str(&str[start], &str[i]);
 			i++;
 	}
 }
 
 void	permutations(char *str)
 {
-	size_t	size;
+	int		size;
 	int		facto;
 	char	**permutations;
 
@@ -150,7 +150,7 @@ void	permutations(char *str)
 		permutations[facto] = NULL;
 		facto--;
 	}
-	find_permutations(0, (int)size, str, permutations);
+	find_permutations(0, size, str, permutations);
 	sort_permuts(permutations);
 	printnfree_permuts(permutations);
 }
