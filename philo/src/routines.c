@@ -16,8 +16,8 @@ void	eat_routine(t_philo *philo)
 	pthread_mutex_lock(philo->fork_r);
 	print_action('f', philo);
 	print_action('e', philo);
+	get_time(&(philo->last_meal), philo->table);
 	usleep(philo->table->tte * 1000);
-	gettimeofday(philo->last_meal, NULL);
 	philo->times_eaten++;
 	pthread_mutex_unlock(philo->fork_l);
 	pthread_mutex_unlock(philo->fork_r);

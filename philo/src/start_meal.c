@@ -1,9 +1,10 @@
 #include "../includes/philo.h"
 
-void	start_timer(t_table *table)
+void	end_meal(t_table *table)
 {
-	if (gettimeofday(&table->start, NULL) == -1)
-		error_table(table, "error recording starting time.");
+	pthread_mutex_lock(&(table->meal_end_lock));
+	table->meal_end = 1;
+	pthread_mutex_unlock(&(table->meal_end_lock));
 }
 
 void	*philo_thread(void *arg)
@@ -17,13 +18,13 @@ void	*philo_thread(void *arg)
 		solo_philo_routine(philo);
 	else
 	{
-		while (!philo->table->feast_end)
+		while (!philo->table->meal_end)
 		{
 			if (philo->id % 2 == 0)
-				usleep(200);
+				usleep(1000);
 			eat_routine(philo);
 			sleep_routine(philo);
-			think_routine(philo);
+			think_routine(philo, philo->ttt);
 		}
 	}
 	return (NULL);
@@ -33,31 +34,41 @@ void	*obs_thread(void *arg)
 {
 	t_table	*table;
 	int	i;
-	int	full_check;
+	int	end_check;
 	time_t	now;
 
 	table = (t_table *)arg;
-	while (1)
+	while (!table->meal_end)
 	{
 		i = 0;
-		full_check = 0;
+		end_check = 0;
 		while (i < table->nb_ph)
 		{
-			if (gettimeofday(now, NULL) - table->philos[i]->last_meal > table->ttd)
+			get_time(&now, table);
+			if (now - table->philos[i]->last_meal > table->ttd)
+			{
+				print_action('d', table->philos[i]);
+				end_check = 1;
 				break ;
-			if (table->philos[i]->times_eaten >= table->max_meals
-				&& table->max_meals >= 0)
-				full_check = 1;
+			}
+			if (table->philos[i]->times_eaten >= table->max_meals &&
+				table->max_meals >= 0)
+				end_check = 1;
 			else
-				full_check = 0;
+				end_check = 0;
+			i++;
 		}
-		if (full_check)
+		if (end_check)
+		{
+			printf("meal ends. they ate %i times\n", table->philos[4]->times_eaten);
 			break ;
+		}
 	}
 	end_meal(table);
+	return (NULL);
 }
 
-void	assign_forks(t_table *table)
+static void	assign_forks(t_table *table)
 {
 	int	i;
 
@@ -86,14 +97,21 @@ void	start_meal(t_table *table)
 
 	i = 0;
 	assign_forks(table);
-	start_timer(table);
-	while (table->philos[i])
+	get_time(&(table->start), table);
+	while (i < table->nb_ph)
 	{
-		if (pthread_create(table->philos[i]->tid, NULL, &philo_thread, 
+		if (pthread_create(&table->philos[i]->tid, NULL, &philo_thread, 
 			(void *)table->philos[i]))
 			error_table(table, "error creating philo thread.");
 		i++;
 	}
-	if (pthread_create(table->tid_obs, NULL, &obs_thread, (void *)table))
+	if (pthread_create(&table->tid_obs, NULL, &obs_thread, (void *)table))
 		error_table(table, "error creating obs thread.");
+	pthread_join(table->tid_obs, NULL);
+	i = 0;
+	while (i < table->nb_ph)
+	{
+		pthread_join(table->philos[i]->tid, NULL);
+		i++;
+	}
 }

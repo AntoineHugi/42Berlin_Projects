@@ -10,7 +10,7 @@ CFLAGS += -Wall -Wextra -Werror
 
 VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --trace-children=yes
 
-SRCS = $(addprefix $(CUR_DIR)/src/, freeing.c initialisation.c main.c start_meal.c utils.c)
+SRCS = $(addprefix $(CUR_DIR)/src/, errors.c freeing.c initialisation.c main.c printing.c routines.c start_meal.c utils.c)
 
 MY_HEADERS = $(CUR_DIR)/includes/so_long.h
 

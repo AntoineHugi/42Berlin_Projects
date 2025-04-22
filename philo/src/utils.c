@@ -49,21 +49,11 @@ long long	ft_atoll(const char *nptr)
 	return (sign * result);
 }
 
-void	error_arguments()
+void	get_time(time_t *time, t_table *table)
 {
-	printf("Invalid arguments, please provide 4 or 5 arguments:\n");
-	printf("Number of philosophers (at least 1, but less than 200)\n");
-	printf("Time until death (in ms), time to eat (in ms), ");
-	printf("time to sleep (in ms)\n");
-	printf("(optional) Number of times each philo should have ");
-	printf("eaten to end the meal.\n");
-	printf("Example: 5 800 200 200 3\n");
-	exit(1);
-}
+	struct timeval	now;
 
-void	error_table(t_table *table, char *msg)
-{
-	free_table(table);
-	printf("%s\n", msg);
-	exit(1);
+	if (gettimeofday(&now, NULL) == -1)
+		error_table(table, "error getting time of day.");
+	*time = now.tv_sec * 1000 + now.tv_usec / 1000;
 }

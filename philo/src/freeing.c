@@ -4,11 +4,11 @@ void	free_mutex(t_table *table)
 {
 	int i;
 
-	i= 0;
 	pthread_mutex_destroy(&table->death_lock);
 	pthread_mutex_destroy(&table->print_lock);
-	pthread_mutex_destroy(&table->feast_end_lock);
-	while (i < table->philos)
+	pthread_mutex_destroy(&table->meal_end_lock);
+	i= 0;
+	while (i < table->nb_ph)
 	{
 		pthread_mutex_destroy(&table->forks[i]);
 		i++;

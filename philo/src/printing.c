@@ -1,20 +1,21 @@
 #include "../includes/philo.h"
 
-void	write_action(char a, t_philo *philo)
+static void	write_action(char a, t_philo *philo)
 {
 	time_t	time;
 
-	time = get_time() - philo->table->start;
+	get_time(&time, philo->table);
+	time = time - philo->table->start;
 	if (a == 'f')
-		printf("%ld %i has taken a fork", time, philo->id);
+		printf("%ldms %i has taken a fork\n", time, philo->id);
 	else if (a == 'e')
-		printf("%ld %i has eaten", time, philo->id);
+		printf("%ldms %i is eating\n", time, philo->id);
 	else if (a == 's')
-		printf("%ld %i is sleeping", time, philo->id);
+		printf("%ldms %i is sleeping\n", time, philo->id);
 	else if (a == 't')
-		printf("%ld %i is thinking", time, philo->id);
+		printf("%ldms %i is thinking\n", time, philo->id);
 	else if (a == 'd')
-		printf("%ld %i has died", time, philo->id);
+		printf("%ldms %i has died\n", time, philo->id);
 }
 
 void	print_action(char a, t_philo *philo)
