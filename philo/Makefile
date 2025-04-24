@@ -8,8 +8,6 @@ RM = rm -f
 
 CFLAGS += -Wall -Wextra -Werror
 
-VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --trace-children=yes
-
 SRCS = $(addprefix $(CUR_DIR)/src/, errors.c freeing.c initialisation.c main.c obs_routine.c philo_routines.c printing.c start_meal.c utils.c)
 
 MY_HEADERS = $(CUR_DIR)/includes/so_long.h
@@ -31,8 +29,5 @@ fclean: clean
 	$(RM) $(NAME)
 
 re:	fclean all
-
-valgrind: $(LIBFT_DIR)/libft.a $(NAME)
-	valgrind $(VALGRIND_FLAGS) ./$(NAME)
 
 .PHONY: all clean fclean re
