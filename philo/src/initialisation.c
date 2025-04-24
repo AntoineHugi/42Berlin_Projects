@@ -3,7 +3,7 @@
 static pthread_mutex_t	*init_forks(t_table *table)
 {
 	int				i;
-	pthread_mutex_t *forks;
+	pthread_mutex_t	*forks;
 
 	i = 0;
 	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->nb_ph);
@@ -17,6 +17,7 @@ static pthread_mutex_t	*init_forks(t_table *table)
 	}
 	return (forks);
 }
+
 static int	init_mutex(t_table *table)
 {
 	if (pthread_mutex_init(&table->print_lock, NULL))
@@ -36,11 +37,10 @@ static t_philo	*init_philo(t_table *table)
 	t_philo	*philo;
 	time_t	now;
 
-	philo = (t_philo*)malloc(sizeof(t_philo));
+	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (!philo)
 		return (NULL);
 	get_time(&now, table);
-	philo->is_dead = 0;
 	philo->times_eaten = 0;
 	philo->last_meal = now;
 	philo->tid = 0;
@@ -53,7 +53,7 @@ static int	init_philos(t_table *table)
 	int		i;
 
 	i = 0;
-	table->philos=(t_philo**)malloc(table->nb_ph * sizeof(t_philo*));
+	table->philos = (t_philo **)malloc(table->nb_ph * sizeof(t_philo *));
 	if (!table->philos)
 		return (0);
 	while (i < table->nb_ph)
@@ -65,7 +65,7 @@ static int	init_philos(t_table *table)
 		if (i % 2 == 0)
 			table->philos[i]->ttt = table->tts;
 		else
-			table->philos[i]->ttt = table->tts/2;
+			table->philos[i]->ttt = table->tts / 2;
 		i++;
 	}
 	return (1);
@@ -75,7 +75,7 @@ t_table	*init_table(char **argv)
 {
 	t_table	*table;
 
-	table = (t_table*)malloc(sizeof(t_table));
+	table = (t_table *)malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
 	table->nb_ph = (int)ft_atoll(argv[1]);

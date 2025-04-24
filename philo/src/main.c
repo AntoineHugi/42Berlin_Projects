@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/* evaluations are tested with things like 5 800 200 200. They shouldn't die */
 #include "../includes/philo.h"
 
 int	valid_input(int argc, char **argv)
@@ -38,7 +39,7 @@ int	valid_input(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_table	*table;
-	
+
 	if (valid_input(argc, argv))
 	{
 		table = init_table(argv);
@@ -49,13 +50,3 @@ int	main(int argc, char **argv)
 	else
 		error_arguments();
 }
-
-
-/*
-Create threads for each philosophers, +1 thread for an observer to see if one dies.
-Philos hold a fork as soon as they can, and then hold on to it until they can grab another and eat.
-Use mutex variables to "lock" forks when being held, and also for the printing of their updates (sleeping, eating etc).
-Have a slight delay at the start for the even numbered philosophers (usleep 200), otherwise they each grab one fork and everyone dies.
-Can't use libft for this project.
-evaluations are tested with things like 5 800 200 200. They shouldn't die
-*/

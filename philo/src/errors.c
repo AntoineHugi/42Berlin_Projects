@@ -1,6 +1,6 @@
 #include "../includes/philo.h"
 
-void	error_arguments()
+void	error_arguments(void)
 {
 	printf("Invalid arguments, please provide 4 or 5 arguments:\n");
 	printf("Number of philosophers (at least 1, but less than 200)\n");

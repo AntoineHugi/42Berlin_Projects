@@ -25,6 +25,7 @@ int	ft_is_numerical(const char *str)
 	}
 	return (i);
 }
+
 long long	ft_atoll(const char *nptr)
 {
 	long long	sign;

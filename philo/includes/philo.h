@@ -20,19 +20,20 @@
 # include <unistd.h>
 # include <limits.h>
 
-typedef struct s_philo {
+typedef struct s_philo
+{
 	int				id;
 	time_t			last_meal;
 	time_t			ttt;
 	int				times_eaten;
-	int				is_dead;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
 	pthread_t		tid;
-	struct s_table			*table;
+	struct s_table	*table;
 }			t_philo;
 
-typedef struct s_table {
+typedef struct s_table
+{
 	int				nb_ph;
 	int				meal_end;
 	int				max_meals;
@@ -54,13 +55,11 @@ t_table		*init_table(char **argv);
 void		free_table(t_table *table);
 void		start_meal(t_table *table);
 void		error_table(t_table *table, char *msg);
-void		error_arguments();
+void		error_arguments(void);
 void		print_action(char a, t_philo *philo);
 void		solo_philo_routine(t_philo *philo);
-void		eat_routine(t_philo *philo);
-void		sleep_routine(t_philo *philo);
-void		think_routine(t_philo *philo, time_t duration);
-void	get_time(time_t *time, t_table *table);
-
+void		multi_philo_routine(t_philo *philo);
+void		get_time(time_t *time, t_table *table);
+int			meal_stops(t_table *table);
 
 #endif

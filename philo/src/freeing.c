@@ -2,12 +2,12 @@
 
 void	free_mutex(t_table *table)
 {
-	int i;
+	int	i;
 
 	pthread_mutex_destroy(&table->death_lock);
 	pthread_mutex_destroy(&table->print_lock);
 	pthread_mutex_destroy(&table->meal_end_lock);
-	i= 0;
+	i = 0;
 	while (i < table->nb_ph)
 	{
 		pthread_mutex_destroy(&table->forks[i]);
@@ -16,22 +16,22 @@ void	free_mutex(t_table *table)
 	free(table->forks);
 }
 
-void	free_philos(t_philo **philos)
+void	free_philos(t_table *table)
 {
-	int i;
+	int	i;
 
-	i= 0;
-	while (philos[i])
+	i = 0;
+	while (i < table->nb_ph)
 	{
-		free(philos[i]);
+		free(table->philos[i]);
 		i++;
 	}
-	free(philos);
+	free(table->philos);
 }
 
 void	free_table(t_table *table)
 {
-	free_philos(table->philos);
+	free_philos(table);
 	free_mutex(table);
 	free(table);
 }
