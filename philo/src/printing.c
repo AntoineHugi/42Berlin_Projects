@@ -21,7 +21,7 @@ static void	write_action(char a, t_philo *philo)
 void	print_action(char a, t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->table->print_lock));
-	if (!philo->table->meal_end)
+	if (!meal_end_check(philo->table))
 		write_action(a, philo);
 	pthread_mutex_unlock(&(philo->table->print_lock));
 }

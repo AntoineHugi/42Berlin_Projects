@@ -8,6 +8,7 @@ void	error_arguments(void)
 	printf("time to sleep (in ms)\n");
 	printf("(optional) Number of times each philo should have ");
 	printf("eaten to end the meal.\n");
+	printf("Times in ms should be more than 0\n");
 	printf("Example: 5 800 200 200 3\n");
 	exit(1);
 }

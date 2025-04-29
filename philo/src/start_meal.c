@@ -1,12 +1,5 @@
 #include "../includes/philo.h"
 
-void	end_meal(t_table *table)
-{
-	pthread_mutex_lock(&(table->meal_end_lock));
-	table->meal_end = 1;
-	pthread_mutex_unlock(&(table->meal_end_lock));
-}
-
 void	*philo_thread(void *arg)
 {
 	t_philo	*philo;
@@ -25,20 +18,7 @@ void	*philo_thread(void *arg)
 	return (NULL);
 }
 
-void	*obs_thread(void *arg)
-{
-	t_table	*table;
 
-	table = (t_table *)arg;
-	while (1)
-	{
-		if (meal_stops(table))
-			break ;
-		usleep(100);
-	}
-	end_meal(table);
-	return (NULL);
-}
 
 static void	assign_forks(t_table *table)
 {
@@ -47,19 +27,19 @@ static void	assign_forks(t_table *table)
 	i = 0;
 	if (table->nb_ph < 2)
 	{
-		table->philos[0]->fork_l = &table->forks[0];
-		table->philos[0]->fork_r = &table->forks[0];
+		table->philos[0]->fork_l = table->forks[0];
+		table->philos[0]->fork_r = table->forks[0];
 	}
 	else
 	{
 		while (i < table->nb_ph - 1)
 		{
-			table->philos[i]->fork_l = &table->forks[i];
-			table->philos[i]->fork_r = &table->forks[i + 1];
+			table->philos[i]->fork_l = table->forks[i];
+			table->philos[i]->fork_r = table->forks[i + 1];
 			i++;
 		}
-		table->philos[i]->fork_l = &table->forks[i];
-		table->philos[i]->fork_r = &table->forks[0];
+		table->philos[i]->fork_l = table->forks[i];
+		table->philos[i]->fork_r = table->forks[0];
 	}
 }
 

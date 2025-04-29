@@ -22,7 +22,7 @@ static int	init_mutex(t_table *table)
 {
 	if (pthread_mutex_init(&table->print_lock, NULL))
 		return (0);
-	if (pthread_mutex_init(&table->death_lock, NULL))
+	if (pthread_mutex_init(&table->food_coma_lock, NULL))
 		return (0);
 	if (pthread_mutex_init(&table->meal_end_lock, NULL))
 		return (0);
@@ -41,7 +41,6 @@ static t_philo	*init_philo(t_table *table)
 	if (!philo)
 		return (NULL);
 	get_time(&now, table);
-	philo->times_eaten = 0;
 	philo->last_meal = now;
 	philo->tid = 0;
 	philo->table = table;
@@ -59,13 +58,10 @@ static int	init_philos(t_table *table)
 	while (i < table->nb_ph)
 	{
 		table->philos[i] = init_philo(table);
+		table->times_eaten[i] = 0;
 		table->philos[i]->id = i + 1;
 		if (!table->philos[i])
 			return (0);
-		if (i % 2 == 0)
-			table->philos[i]->ttt = table->tts;
-		else
-			table->philos[i]->ttt = table->tts / 2;
 		i++;
 	}
 	return (1);
@@ -79,6 +75,7 @@ t_table	*init_table(char **argv)
 	if (!table)
 		return (NULL);
 	table->nb_ph = (int)ft_atoll(argv[1]);
+	table->times_eaten = (int *)malloc(sizeof(int) * table->nb_ph);
 	table->meal_end = 0;
 	table->max_meals = -1;
 	table->ttd = (int)ft_atoll(argv[2]);

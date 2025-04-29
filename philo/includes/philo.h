@@ -25,9 +25,9 @@ typedef struct s_philo
 	int				id;
 	time_t			last_meal;
 	time_t			ttt;
-	int				times_eaten;
-	pthread_mutex_t	*fork_l;
-	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	fork_l;
+	pthread_mutex_t	fork_r;
+	pthread_mutex_t	meal_time_lock;
 	pthread_t		tid;
 	struct s_table	*table;
 }			t_philo;
@@ -37,12 +37,14 @@ typedef struct s_table
 	int				nb_ph;
 	int				meal_end;
 	int				max_meals;
+	int				*times_eaten;
 	t_philo			**philos;
 	pthread_t		tid_obs;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
-	pthread_mutex_t	death_lock;
 	pthread_mutex_t	meal_end_lock;
+	pthread_mutex_t	food_coma_lock;
+	pthread_mutex_t	death_lock;
 	time_t			start;
 	time_t			tte;
 	time_t			tts;
@@ -60,6 +62,7 @@ void		print_action(char a, t_philo *philo);
 void		solo_philo_routine(t_philo *philo);
 void		multi_philo_routine(t_philo *philo);
 void		get_time(time_t *time, t_table *table);
-int			meal_stops(t_table *table);
+void		*obs_thread(void *arg);
+int		meal_end_check(t_table *table);
 
 #endif

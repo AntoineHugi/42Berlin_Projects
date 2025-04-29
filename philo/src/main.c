@@ -21,14 +21,12 @@ int	valid_input(int argc, char **argv)
 		return (0);
 	else
 	{
-		if (ft_atoll(argv[1]) < 1)
-			return (0);
 		i = 1;
 		while (i < argc)
 		{
 			if (!ft_is_numerical(argv[i]))
 				return (0);
-			if (ft_atoll(argv[i]) < 0 || ft_atoll(argv[i]) > INT_MAX)
+			if (ft_atoll(argv[i]) < 1 || ft_atoll(argv[i]) > INT_MAX)
 				return (0);
 			i++;
 		}
