@@ -17,7 +17,10 @@ void	check_sum(int start, int *set, int target, int set_size, int *working_set, 
 	int i;
 
 	if (target == 0)
+	{
+		//check_for_extra_zero
 		print_set(working_set, working_set_len);
+	}
 	if (target < 0 || start == set_size)
 		return;
 	working_set[working_set_len] = set[start];

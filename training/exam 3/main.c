@@ -12,7 +12,7 @@ int	main(void)
 	//queens(4);
 
 	/* tsp */
-	tsp(); 
+	tsp();
 
 	/* powerset */
 	//powerset();
