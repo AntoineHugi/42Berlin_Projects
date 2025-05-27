@@ -2,7 +2,7 @@
 #include <string>
 #include <cctype> 
 
-std::string	concatenate_args(int argc, char **argv)
+std::string	concat_args(int argc, char **argv)
 {
 	std::string input = argv[1];
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		input = "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
 	else
-		input = concatenate_args(argc, argv);
+		input = concat_args(argc, argv);
 	for (std::string::size_type i = 0; i < input.length(); i++)
 		input[i] = std::toupper(static_cast<unsigned char>(input[i]));
 	std::cout << input << std::endl;
