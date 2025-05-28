@@ -10,26 +10,57 @@ Contact::Contact(void):
 		return ;
 }
 
-Contact::~Contact(void){
+Contact::~Contact(void)
+{
 	return ;
 }
 
-bool	Contact::_is_alpha(std::string input)
+std::string	Contact::get_first_name()
 {
-	for (std::string::iterator i = input.begin(); i != input.end(); i++)
-	{
-		if(!std::isalpha(*i))
-			return (false);
-	}
-	return (true);
+	return (Contact::_first_name);
 }
 
-bool	Contact::_is_digit(std::string input)
+std::string	Contact::get_last_name()
 {
-	for (std::string::iterator i = input.begin(); i != input.end(); i++)
-	{
-		if(!std::isdigit(*i))
-			return (false);
-	}
-	return (true);
+	return (Contact::_last_name);
+}
+
+std::string	Contact::get_nickname()
+{
+	return (Contact::_nickname);
+}
+
+std::string	Contact::get_number()
+{
+	return (Contact::_number);
+}
+
+std::string	Contact::get_secret()
+{
+	return (Contact::_secret);
+}
+
+void	Contact::set_first_name(std::string input)
+{
+	Contact::_first_name = input;
+}
+
+void	Contact::set_last_name(std::string input)
+{
+	Contact::_last_name = input;
+}
+
+void	Contact::set_nickname(std::string input)
+{
+	Contact::_nickname = input;
+}
+
+void	Contact::set_number(std::string input)
+{
+	Contact::_number = input;
+}
+
+void	Contact::set_secret(std::string input)
+{
+	Contact::_secret = input;
 }

@@ -8,7 +8,7 @@ RM = rm -f
 
 CPPFLAGS += -Wall -Wextra -Werror -std=c++98
 
-SRCS = $(CUR_DIR)/  .cpp
+SRCS = $(CUR_DIR)/main.cpp Contacts.cpp PhoneBook.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
