@@ -5,9 +5,8 @@
 
 class	PhoneBook {
 	private:
-		Contact _Contacts[8];
+		Contact		_Contacts[8];
 		int		_index;
-		//bool		_cancel;
 		bool		_is_digits(std::string input);
 		bool		_is_alpha(std::string input);
 		void		_get_index(void);
@@ -18,5 +17,4 @@ class	PhoneBook {
 		~PhoneBook(void);
 		void	add_contact();
 		void	search_contacts();
-		void	exit_app();
 };

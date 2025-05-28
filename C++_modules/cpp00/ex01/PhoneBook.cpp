@@ -53,7 +53,7 @@ void	PhoneBook::add_contact(void)
 {
 	std::string input;
 	
-	PhoneBook::_get_index();
+	this->_get_index();
 	std::cout << "---- Add contact menu ----" << std::endl;
 	std::cout << "---- Please provide a first name ----" << std::endl;
 	while (!std::getline(std::cin, input) || std::cin.eof() || !_is_alpha(input))
@@ -80,9 +80,4 @@ void	PhoneBook::add_contact(void)
 void	PhoneBook::search_contacts(void)
 {
 	return ;
-}
-
-void	PhoneBook::exit_app(void)
-{
-	std::cout << "---- THANK YOU FOR USING PHONEBOOK3000 ----" << std::endl;
 }

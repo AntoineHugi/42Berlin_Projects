@@ -26,9 +26,7 @@ int main ()
 		if (input == "SEARCH" || input == "search")
 			pb.search_contacts();
 		if (input == "EXIT" || input == "exit")
-		{
-			pb.exit_app();
 			break ;
-		}
 	}
+	std::cout << "---- THANK YOU FOR USING PHONEBOOK3000 ----" << std::endl;
 }
