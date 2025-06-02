@@ -1,6 +1,6 @@
 CUR_DIR = $(shell pwd)
 
-NAME = phonebook_3000
+NAME = phonebook3000
 
 CC = c++
 

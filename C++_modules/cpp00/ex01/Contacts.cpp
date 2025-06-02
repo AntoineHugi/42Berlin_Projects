@@ -17,27 +17,27 @@ Contact::~Contact(void)
 
 std::string	Contact::get_first_name()
 {
-	return (Contact::_first_name);
+	return (this->_first_name);
 }
 
 std::string	Contact::get_last_name()
 {
-	return (Contact::_last_name);
+	return (this->_last_name);
 }
 
 std::string	Contact::get_nickname()
 {
-	return (Contact::_nickname);
+	return (this->_nickname);
 }
 
 std::string	Contact::get_number()
 {
-	return (Contact::_number);
+	return (this->_number);
 }
 
 std::string	Contact::get_secret()
 {
-	return (Contact::_secret);
+	return (this->_secret);
 }
 
 void	Contact::set_first_name(std::string input)
