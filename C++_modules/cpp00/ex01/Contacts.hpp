@@ -2,6 +2,9 @@
 #include <string>
 #include <cctype> 
 
+#ifndef CONTACTS_H
+# define CONTACTS_H
+
 class Contact {
 	private:
 		std::string _first_name;
@@ -26,3 +29,5 @@ class Contact {
 		void		set_number(std::string input);
 		void		set_secret(std::string input);
 };
+
+#endif

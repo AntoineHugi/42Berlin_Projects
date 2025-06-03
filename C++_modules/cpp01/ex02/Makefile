@@ -1,6 +1,6 @@
 CUR_DIR = $(shell pwd)
 
-NAME = moarbrainzzz
+NAME = this_is_brain
 
 CC = c++
 
@@ -8,7 +8,7 @@ RM = rm -f
 
 CPPFLAGS += -Wall -Wextra -Werror -std=c++98
 
-SRCS = $(CUR_DIR)/main.cpp Zombie.cpp zombieHorde.cpp
+SRCS = $(CUR_DIR)/main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

@@ -4,6 +4,9 @@
 #include <sstream>
 #include "Contacts.hpp"
 
+#ifndef PHONEBOOK_H
+# define PHONEBOOK_H
+
 class	PhoneBook {
 	private:
 		Contact		_Contacts[8];
@@ -21,3 +24,5 @@ class	PhoneBook {
 		void	add_contact();
 		void	search_contacts();
 };
+
+#endif
