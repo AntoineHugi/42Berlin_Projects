@@ -8,20 +8,25 @@ int	print_error()
 	return (1);
 }
 
-std::string	replace_sequence(std::string line, std::string sequence, std::string replacement)
+std::string	replace_sequence(const std::string& line, const std::string& sequence, const std::string& replacement)
 {
 	std::string	newline;
+	std::size_t	pos = 0;
+	std::size_t	found = 0;
 	
-	newline = line.substr(0, line.find(sequence));
-	if (newline.length() < line.length())
+	found = line.find(sequence, pos);
+	while (found != std::string::npos)
 	{
+		newline.append(line, pos, found - pos);
 		newline.append(replacement);
-		newline.append(line.substr(line.find(sequence) + sequence.length()));
+		pos = found + sequence.length();
+		found = line.find(sequence, pos);
 	}
+	newline.append(line, pos, std::string::npos);
 	return (newline);
 }
 
-std::string	create_outputname(std::string input)
+std::string	create_outputname(const std::string& input)
 {
 	std::string outputname;
 	
