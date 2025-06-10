@@ -6,11 +6,13 @@ CC = c++
 
 RM = rm -f
 
-CPPFLAGS += -Wall -Wextra -Werror -std=c++98
+CPPFLAGS += -Wall -Wextra -Werror -std=c++98 -MMD -MP
 
 SRCS = $(CUR_DIR)/main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
 
 OBJS = $(SRCS:.cpp=.o)
+
+DEPS = $(OBJS:.o=.d)
 
 all:  $(NAME)
 
@@ -19,9 +21,11 @@ $(NAME): $(OBJS)
 
 %.o: %.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
+	
+-include $(DEPS)
 
 clean: 	
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(DEPS)
 
 fclean: clean
 	$(RM) $(NAME)
