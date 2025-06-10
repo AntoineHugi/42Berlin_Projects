@@ -1,6 +1,6 @@
 CUR_DIR = $(shell pwd)
 
-NAME = harl
+NAME = fpnum
 
 CC = c++
 
@@ -8,7 +8,7 @@ RM = rm -f
 
 CPPFLAGS += -Wall -Wextra -Werror -std=c++98
 
-SRCS = $(CUR_DIR)/main.cpp Harl.cpp
+SRCS = $(CUR_DIR)/main.cpp Fixed.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
