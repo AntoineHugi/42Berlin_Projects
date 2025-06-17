@@ -1,6 +1,6 @@
 CUR_DIR = $(shell pwd)
 
-NAME = fpnum
+NAME = bsp
 
 CC = c++
 
@@ -8,7 +8,7 @@ RM = rm -f
 
 CPPFLAGS += -Wall -Wextra -Werror -std=c++98 -MMD -MP
 
-SRCS = $(CUR_DIR)/main.cpp Fixed.cpp
+SRCS = $(CUR_DIR)/main.cpp Fixed.cpp Point.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
