@@ -7,11 +7,14 @@ typedef struct node {
 	int val;
 	struct node *L;
 	struct node *R;
-    } node;
+	} node;
 
 node *parse_add(char **expr);
 node *parse_multi(char **expr);
 node *parse_parenthesis(char **expr);
 void skip_spaces(char **expr);
 int evaluate(node *n);
+void	unexpected(char c);
 void free_tree(node *n);
+int accept(char **input, char c);
+int expect(char **input, char c);
